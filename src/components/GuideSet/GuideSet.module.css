@@ -1,0 +1,72 @@
+/* src/styles/GuideStepSet.module.css */
+.guideSet {
+	/* outline: 2px solid blue; */
+	border: 1px solid #ccc;
+	padding: 20px;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	padding: 1.5rem;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+	/* border-radius: 15px; */
+	background-color: white;
+}
+
+.controls button {
+	margin-right: 10px;
+	padding: 5px 10px;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.guideSetHeader {
+	padding-left: 20px;
+	/* outline: 2px solid red; */
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	border-bottom: 1px solid #ddd;
+}
+
+.buttonContainer {
+	padding-right: 10px;
+	display: flex;
+	gap: 30px; /* Расстояние между кнопками */
+}
+
+.createStepButton {
+	background-color: #28a745; /* Зеленый цвет для кнопки */
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+}
+
+.toggleButton {
+	font-size: 1.5rem;
+	border: none;
+	background: none;
+	cursor: pointer;
+	padding: 0.5rem;
+	transition: background-color 0.3s ease;
+}
+
+.toggleButton:hover {
+	background-color: #f0f0f0;
+}
+
+.launchButton {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+.guideSetFooter {
+	border-top: 1px solid #ddd;
+	padding-left: 20px;
+}

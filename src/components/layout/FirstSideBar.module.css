@@ -1,0 +1,62 @@
+/* src/components/FirstSideBar.module.css */
+.first-sidebar {
+	grid-area: sidebar1;
+	width: 150px;
+	height: 100vh;
+	background-color: #f4f4f4;
+	padding: 10px;
+	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+	overflow-y: auto; /* Позволяет скроллить, если содержимое не помещается */
+}
+
+.first-sidebar h2 {
+	margin-top: 0;
+}
+
+.element-container {
+	display: flex;
+	flex-direction: column;
+	gap: 10px; /* Расстояние между элементами */
+}
+
+.sidebar-element {
+	display: flex;
+	align-items: center;
+	gap: 10px; /* Расстояние между иконкой/кнопкой и текстом */
+}
+
+.sidebar-button {
+	padding: 10px;
+	background-color: #007bff; /* Основной цвет кнопки */
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 0.9rem;
+	text-align: center;
+}
+
+.sidebar-button:hover {
+	background-color: #0056b3; /* Темнее при наведении */
+}
+
+.sidebar-link {
+	color: #007bff;
+	text-decoration: none;
+	font-size: 0.9rem;
+}
+
+.sidebar-link:hover {
+	text-decoration: underline;
+}
+
+.sidebar-icon {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	cursor: pointer;
+}
+
+.icon {
+	font-size: 1.5rem;
+}

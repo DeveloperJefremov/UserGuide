@@ -1,0 +1,210 @@
+/* step content */
+.step {
+	/* outline: 2px solid red; */
+	padding: 20px;
+	border: 1px solid #ddd;
+	margin: 10px 0;
+	margin-bottom: 20px;
+}
+.stepContent {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+}
+
+.stepDetails {
+	flex-direction: column;
+}
+
+.stepDetails label {
+	display: block;
+	margin-bottom: 10px;
+}
+
+.input,
+.textarea {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	padding: 8px;
+	font-size: 1rem;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.input:focus,
+.textarea:focus {
+	border-color: #007bff;
+	outline: none;
+}
+
+.stepImagePreview {
+	display: block;
+	margin-top: 10px;
+	max-width: 100%;
+	height: auto;
+}
+
+/* header */
+.stepHeader {
+	/* outline: 2px solid red; */
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 20px;
+
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 10px;
+}
+
+.headerLeft {
+	display: flex;
+	flex-direction: column;
+}
+
+.headerLeft h3 {
+	margin: 0;
+	font-size: 18px;
+}
+
+.headerLeft p {
+	margin: 0;
+	font-size: 14px;
+	color: #777;
+}
+
+.headerRight {
+	display: flex;
+	gap: 10px;
+}
+
+.headerRight button {
+	padding: 5px 10px;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.showBtn {
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+}
+
+.editBtn,
+.deleteBtn {
+	background-color: #796c7d;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+}
+
+.editBtn:hover,
+.deleteBtn:hover,
+.showBtn:hover {
+	opacity: 0.8;
+}
+
+/* footer */
+.stepFooter {
+	display: flex; /* Добавлено для работы с flex-контейнером */
+	justify-content: flex-end; /* Кнопки будут располагаться справа */
+	opacity: 0; /* Start with 0 opacity */
+	transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+	max-height: 0; /* Collapsed by default */
+	overflow: hidden; /* Hide content that exceeds max-height */
+	padding: 0 20px; /* Изменено: убираем вертикальный padding в свернутом состоянии */
+	border-top: 1px solid #ddd;
+	box-sizing: border-box; /* Учитываем padding и border в высоте */
+}
+
+.expanded .stepFooter {
+	opacity: 1; /* Fade in to full opacity */
+	max-height: 64px; /* Увеличим max-height достаточно для того, чтобы вместить весь контент */
+	padding: 10px 20px; /* Изменено: восстанавливаем padding при раскрытии */
+}
+
+.folded .stepFooter {
+	opacity: 0; /* Ensure opacity is 0 */
+	max-height: 0; /* Max-height 0 to hide the content */
+	padding: 0 20px; /* Изменено: убираем вертикальный padding в свернутом состоянии */
+}
+
+/* step body */
+/* step body start*/
+/* .stepBody {
+	outline: 2px solid red;
+	display: none;
+}
+.folded {
+	display: none;
+}
+
+.expanded {
+	display: block;
+} */
+/* Initial state of stepBody */
+/* step body start */
+.stepBody {
+	opacity: 0; /* Start with 0 opacity */
+	transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+	max-height: 0; /* Collapsed by default */
+	overflow: hidden; /* Hide content that exceeds max-height */
+}
+
+.expanded {
+	opacity: 1; /* Fade in to full opacity */
+	max-height: 1000px; /* Увеличим max-height достаточно для того, чтобы вместить весь контент */
+}
+
+.folded {
+	opacity: 0; /* Ensure opacity is 0 */
+	max-height: 0; /* Max-height 0 to hide the content */
+}
+
+/* Animation for fading in */
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+		max-height: 0;
+	}
+	100% {
+		opacity: 1;
+		max-height: 1000px; /* Достаточно большое значение */
+	}
+}
+
+/* Animation for fading out */
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+		max-height: 1000px; /* Достаточно большое значение */
+	}
+	100% {
+		opacity: 0;
+		max-height: 0;
+	}
+}
+/* step body end */
+/* use later */
+
+.executeButton:hover {
+	background-color: #45a049;
+}
+.highlighted::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 120%; /* Ширина чуть больше родительского элемента */
+	height: 130%; /* Высота чуть больше родительского элемента */
+	outline: 1px solid #ccc;
+	z-index: 30; /* Устанавливаем z-index выше для подсветки */
+	/* border: 2px solid beige; */
+	border-radius: 10px;
+	background-color: rgba(222, 225, 138, 0.5); /* Бежевый цвет с прозрачностью */
+	pointer-events: none; /* Чтобы подсветка не мешала кликам по элементу */
+
+	transform: translate(-50%, -50%); /* Центрируем по X и Y */
+}
