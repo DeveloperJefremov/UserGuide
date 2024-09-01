@@ -92,8 +92,7 @@
 	border-radius: 4px;
 }
 
-.editBtn,
-.deleteBtn {
+.editBtn {
 	background-color: #796c7d;
 	color: #fff;
 	border: none;
@@ -101,7 +100,6 @@
 }
 
 .editBtn:hover,
-.deleteBtn:hover,
 .showBtn:hover {
 	opacity: 0.8;
 }

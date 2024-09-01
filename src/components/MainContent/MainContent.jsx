@@ -6,7 +6,7 @@ const MainContentHeader = ({ title, description }) => {
 		<div className={styles.mainContentHeader}>
 			<h1>{title}</h1>
 			<h2>{description}</h2>
-			<button className={styles.loginButton}>Login</button>
+			<button className={styles.loginButton}>Login as admin</button>
 		</div>
 	);
 };

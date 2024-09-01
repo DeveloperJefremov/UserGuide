@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import ConfirmButtonsSet from '../Buttons/ConfirmButtonsSet';
+import EditButtonsSet from '../Buttons/EditButtonsSet';
 import styles from './GuideStep.module.css';
+import GuideStepForm from './GuideStepForm';
 
 const role = 'admin.';
 
@@ -35,28 +37,13 @@ const GuideStepHeader = ({ order, title, mode, modeHandler }) => {
 				>
 					Edit
 				</button>
-				<button
-					data-button-clicked='delete'
-					className={styles.deleteBtn}
-					onClick={modeHandler}
-				>
-					Delete
-				</button>
+				<EditButtonsSet />
 			</div>
 		</div>
 	);
 };
 
-const GuideStepBody = ({
-	mode,
-	title,
-	description,
-	elementId,
-	imgChecked,
-	imgWidth,
-	imgHeight,
-	imageUrl,
-}) => {
+const GuideStepBody = ({ mode, ...data }) => {
 	const cssClassList = `${styles.stepBody} ${
 		mode === 'expanded' ? styles.expanded : ''
 	} ${mode === 'folded' ? styles.folded : ''}`;
@@ -64,57 +51,7 @@ const GuideStepBody = ({
 	return (
 		<div className={cssClassList}>
 			<section className={styles.stepContent}>
-				<div className={styles.stepDetails}>
-					<label>
-						Description:
-						<textarea
-							className={styles.textarea}
-							name='description'
-							value={description}
-						/>
-					</label>
-					<label>
-						Element ID:
-						<input
-							className={styles.input}
-							type='text'
-							name='elementId'
-							value={elementId}
-						/>
-					</label>
-					<label>
-						Image:
-						<input name='imgChecked' type='checkbox' checked={imgChecked} />
-					</label>
-
-					<label>
-						Image Width:
-						<input
-							type='number'
-							name='imgWidth'
-							min='1'
-							value={imgWidth}
-							className={styles.input}
-						/>
-					</label>
-					<label>
-						Image Height:
-						<input
-							type='number'
-							name='imgHeight'
-							min='1'
-							value={imgHeight}
-							className={styles.input}
-						/>
-					</label>
-					<img
-						className={styles.stepImagePreview}
-						src={imageUrl}
-						alt={title}
-						width={imgWidth}
-						height={imgHeight}
-					/>
-				</div>
+				<GuideStepForm {...data} /> {/* Используем новый компонент */}
 			</section>
 		</div>
 	);
