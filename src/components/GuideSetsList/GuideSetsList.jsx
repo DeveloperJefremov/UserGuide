@@ -4,14 +4,29 @@ import GuideSet from '../GuideSet/GuideSet';
 
 export default function GuideSetsList() {
 	const [guideSetsList, setGuideSetsList] = useState(mockData);
-	// console.log(mockData);
+
+	const handleCreateSet = () => {
+		// Ваш код для создания нового набора
+		alert('Create Set button clicked');
+	};
 
 	return (
 		<div>
 			<h2>Guide Sets List:</h2>
-			{guideSetsList.map(guideSet => (
-				<GuideSet data={guideSet.data} key={guideSet.id} />
-			))}
+			<ul>
+				<li>
+					<GuideSet
+						key='newSet'
+						title='Create New Set'
+						onCreateSet={handleCreateSet}
+					/>
+				</li>
+				{guideSetsList.map(guideSet => (
+					<li key={guideSet.id}>
+						<GuideSet data={guideSet.data} />
+					</li>
+				))}
+			</ul>
 		</div>
 	);
 }

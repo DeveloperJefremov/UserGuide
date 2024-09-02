@@ -34,15 +34,15 @@
 	gap: 30px; /* Расстояние между кнопками */
 }
 
-.createStepButton {
-	background-color: #28a745; /* Зеленый цвет для кнопки */
+/* .createStepButton {
+	background-color: #28a745; 
 	color: white;
 	border: none;
 	padding: 5px 10px;
 	cursor: pointer;
 	border-radius: 4px;
 	transition: background-color 0.3s ease;
-}
+} */
 
 .toggleButton {
 	font-size: 1.5rem;

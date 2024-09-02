@@ -2,13 +2,22 @@ import { useState } from 'react';
 import GuideStepsList from '../GuideStepsList/GuideStepsList';
 import styles from './GuideSet.module.css';
 
-import GuideStep from '../GuideStep/GuideStep';
-const GuideSetHeader = ({ setTitle, onToggleContent, isContentVisible }) => {
+const GuideSetHeader = ({
+	setTitle,
+	onToggleContent,
+	isContentVisible,
+	onCreateSet,
+	showCreateButton,
+}) => {
 	return (
 		<div className={styles.guideSetHeader}>
 			<h2>{setTitle}</h2>
 			<div className={styles.buttonContainer}>
-				<button className={styles.createStepButton}>Create Step</button>
+				{showCreateButton && (
+					<button onClick={onCreateSet} className={styles.createSetButton}>
+						Create Set
+					</button>
+				)}
 				<button className={styles.launchButton}>Launch Set</button>
 				<button className={styles.toggleButton} onClick={onToggleContent}>
 					{isContentVisible ? '-' : '+'}
@@ -19,7 +28,7 @@ const GuideSetHeader = ({ setTitle, onToggleContent, isContentVisible }) => {
 };
 
 const GuideSetBody = ({ children }) => {
-	return <div className={styles.mainContentBody}>{children} </div>;
+	return <div className={styles.mainContentBody}>{children}</div>;
 };
 
 const GuideSetFooter = ({ content }) => {
@@ -31,29 +40,34 @@ const GuideSetFooter = ({ content }) => {
 	);
 };
 
-export default function GuideSet({ data }) {
+export default function GuideSet({ data, title, onCreateSet }) {
 	const [isContentVisible, setIsContentVisible] = useState(false);
-	const [setCase, setSetCase] = useState('');
 
 	const toggleContentVisibility = () => {
 		setIsContentVisible(prevState => !prevState);
 	};
 
+	if (!data && title !== 'Create New Set') return null;
+
 	return (
 		<div className={styles.guideSet}>
 			<GuideSetHeader
-				setTitle={data[0].setHeader}
+				setTitle={data ? data[0].setHeader : title}
 				onToggleContent={toggleContentVisibility}
 				isContentVisible={isContentVisible}
+				onCreateSet={onCreateSet}
+				showCreateButton={title === 'Create New Set'}
 			/>
 
-			{isContentVisible && (
+			{isContentVisible && data && (
 				<GuideSetBody>
 					<GuideStepsList data={data} key={data.id} />
 				</GuideSetBody>
 			)}
 
-			{isContentVisible && <GuideSetFooter content={data[0].setFooter} />}
+			{isContentVisible && data && (
+				<GuideSetFooter content={data[0].setFooter} />
+			)}
 		</div>
 	);
 }

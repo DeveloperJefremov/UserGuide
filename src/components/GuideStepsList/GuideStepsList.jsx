@@ -15,7 +15,7 @@ export default function GuideStepsList({ data, setCase }) {
 						<li key={set.setHeader}>
 							<div>
 								{set.setBody.map((step, index) => (
-									<GuideStep key={index} {...step} />
+									<GuideStep key={index} {...step} mode={'folded'} />
 								))}
 							</div>
 						</li>
