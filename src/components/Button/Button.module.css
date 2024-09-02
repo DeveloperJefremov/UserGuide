@@ -32,6 +32,12 @@
 	opacity: 0.8;
 }
 
+.iconSize {
+	width: 25px;
+	height: 25px;
+	padding: 1px;
+}
+
 .small {
 	height: 40px;
 	padding: 5 10 5 10;

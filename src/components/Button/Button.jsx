@@ -1,11 +1,6 @@
 import React from 'react';
 import styles from './Button.module.css';
-export default function Button({
-	children,
-	variant = 'default',
-	size = 'md',
-	...props
-}) {
+const Button = ({ children, variant = 'default', size = 'md', ...props }) => {
 	const variantMap = {
 		grey: styles.greyButton,
 		lightGrey: styles.lightGreyButton,
@@ -13,6 +8,7 @@ export default function Button({
 	};
 
 	const sizeMap = {
+		icon: styles.iconSize,
 		sm: styles.small,
 		md: styles.medium,
 		lg: styles.large,
@@ -20,10 +16,14 @@ export default function Button({
 
 	return (
 		<button
-			className={` ${styles.button} ${variantMap[variant]} ${sizeMap[size]}`}
+			className={` ${styles.button} ${variantMap[variant] ?? ''} ${
+				sizeMap[size] ?? ''
+			}`}
 			{...props}
 		>
 			{children}
 		</button>
 	);
-}
+};
+
+export default Button;

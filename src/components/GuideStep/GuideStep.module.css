@@ -79,13 +79,13 @@
 	gap: 10px;
 }
 
-.headerRight button {
+/* .headerRight button {
 	padding: 5px 10px;
 	font-size: 14px;
 	cursor: pointer;
-}
+} */
 
-.showBtn,
+/* .showBtn,
 .deleteBtn {
 	background-color: #007bff;
 	color: #fff;
@@ -104,7 +104,7 @@
 .showBtn:hover,
 .deleteBtn:hover {
 	opacity: 0.8;
-}
+} */
 
 /* footer */
 .stepFooter {

@@ -8,6 +8,7 @@ const GuideSetHeader = ({
 	onToggleContent,
 	isContentVisible,
 	onCreateSet,
+	onLaunchSet,
 }) => {
 	return (
 		<div className={styles.guideSetHeader}>
@@ -15,16 +16,19 @@ const GuideSetHeader = ({
 			<div className={styles.buttonContainer}>
 				{onCreateSet && (
 					<Button onClick={onCreateSet} variant='lightGrey' size='lg'>
-						Create Set
+						Add: Tutorial
 					</Button>
-					// <button onClick={onCreateSet} className={styles.createSetButton}>
-					// 	Create Set
-					// </button>
 				)}
-				<button className={styles.launchButton}>Launch Set</button>
-				<button className={styles.toggleButton} onClick={onToggleContent}>
-					{isContentVisible ? '-' : '+'}
-				</button>
+				{onLaunchSet && (
+					<Button onClick={onLaunchSet} variant='default' size='lg'>
+						Launch Set
+					</Button>
+				)}
+				{onToggleContent && (
+					<Button size='icon' onClick={onToggleContent}>
+						{isContentVisible ? '-' : '+'}
+					</Button>
+				)}
 			</div>
 		</div>
 	);
@@ -43,7 +47,7 @@ const GuideSetFooter = ({ content }) => {
 	);
 };
 
-export default function GuideSet({ data, title, onCreateSet }) {
+export default function GuideSet({ data, title, onCreateSet, onLaunchSet }) {
 	const [isContentVisible, setIsContentVisible] = useState(false);
 
 	const toggleContentVisibility = () => {
@@ -52,14 +56,17 @@ export default function GuideSet({ data, title, onCreateSet }) {
 
 	if (!data && title !== 'Create New Set') return null;
 
+	const isDataEmpty = data && data.length === 0;
+
 	return (
 		<div className={styles.guideSet}>
 			<GuideSetHeader
 				title={data ? data[0].setHeader : title}
-				onToggleContent={toggleContentVisibility}
+				onToggleContent={!onCreateSet && toggleContentVisibility}
 				isContentVisible={isContentVisible}
 				onCreateSet={onCreateSet}
 				showCreateButton={title === 'Create New Set'}
+				onLaunchSet={onLaunchSet}
 			/>
 
 			{isContentVisible && data && (

@@ -1,0 +1,36 @@
+.guideSetHeader {
+	padding: 20px;
+	background-color: #f9f9f9;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+h2 {
+	font-size: 1.5rem;
+	color: #333;
+	margin-bottom: 10px;
+}
+
+.titleInput {
+	width: 80%;
+	padding: 10px;
+	font-size: 1rem;
+	color: #333;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	margin-bottom: 20px;
+	transition: border-color 0.3s ease;
+}
+
+.titleInput:focus {
+	border-color: #007bff;
+	outline: none;
+}
+
+.buttonContainer {
+	display: flex;
+	gap: 10px;
+}

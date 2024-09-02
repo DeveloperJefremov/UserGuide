@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import ConfirmButtonsSet from '../Buttons/ConfirmButtonsSet';
-import EditButtonsSet from '../Buttons/EditButtonsSet';
+import Button from '../Button/Button';
 import styles from './GuideStep.module.css';
 import GuideStepForm from './GuideStepForm';
 
@@ -21,13 +20,15 @@ const GuideStepHeader = ({ order, title, mode, modeHandler }) => {
 				<p>Order: {order}</p>
 			</div>
 			<div className={styles.headerRight}>
-				<button
+				<Button
+					size='sm'
+					variant='default'
 					data-button-clicked='display'
 					className={styles.showBtn}
 					onClick={modeHandler}
 				>
 					{displayButtonText}
-				</button>
+				</Button>
 				<button
 					data-button-clicked='edit'
 					className={styles.editBtn}
