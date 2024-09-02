@@ -13,14 +13,10 @@ export default function GuideSetsList() {
 	return (
 		<div>
 			<h2>Guide Sets List:</h2>
+
+			<GuideSet title='Create New Set' onCreateSet={handleCreateSet} />
+
 			<ul>
-				<li>
-					<GuideSet
-						key='newSet'
-						title='Create New Set'
-						onCreateSet={handleCreateSet}
-					/>
-				</li>
 				{guideSetsList.map(guideSet => (
 					<li key={guideSet.id}>
 						<GuideSet data={guideSet.data} />
