@@ -47,7 +47,12 @@ const GuideSetFooter = ({ content }) => {
 	);
 };
 
-export default function GuideSet({ data, title, onCreateSet, onLaunchSet }) {
+export default function GuideSet({
+	data = [],
+	title,
+	onCreateSet,
+	onLaunchSet,
+}) {
 	const [isContentVisible, setIsContentVisible] = useState(false);
 
 	const toggleContentVisibility = () => {
@@ -56,27 +61,24 @@ export default function GuideSet({ data, title, onCreateSet, onLaunchSet }) {
 
 	if (!data && title !== 'Create New Set') return null;
 
-	const isDataEmpty = data && data.length === 0;
-
 	return (
 		<div className={styles.guideSet}>
 			<GuideSetHeader
-				title={data ? data[0].setHeader : title}
+				title={data && data[0] ? data[0].setHeader : title}
 				onToggleContent={!onCreateSet && toggleContentVisibility}
 				isContentVisible={isContentVisible}
 				onCreateSet={onCreateSet}
-				showCreateButton={title === 'Create New Set'}
 				onLaunchSet={onLaunchSet}
 			/>
 
-			{isContentVisible && data && (
+			{isContentVisible && (
 				<GuideSetBody>
 					<GuideStepsList data={data} key={data.id} />
 				</GuideSetBody>
 			)}
 
 			{isContentVisible && data && (
-				<GuideSetFooter content={data[0].setFooter} />
+				<GuideSetFooter content={data[0] ? data[0].setFooter : ''} />
 			)}
 		</div>
 	);

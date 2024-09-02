@@ -13,22 +13,34 @@ export default function GuideStepForm({
 	onChange,
 }) {
 	const [formData, setFormData] = useState({
+		title,
 		description,
 		elementId,
 		imgChecked,
 		imgWidth,
 		imgHeight,
+		imageUrl,
 	});
 
 	useEffect(() => {
 		setFormData({
+			title,
 			description,
 			elementId,
 			imgChecked,
 			imgWidth,
 			imgHeight,
+			imageUrl,
 		});
-	}, [description, elementId, imgChecked, imgWidth, imgHeight]);
+	}, [
+		title,
+		description,
+		elementId,
+		imgChecked,
+		imgWidth,
+		imgHeight,
+		imageUrl,
+	]);
 
 	const handleChange = e => {
 		const { name, value, type, checked } = e.target;

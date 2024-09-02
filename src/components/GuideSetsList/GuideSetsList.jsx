@@ -26,7 +26,7 @@ export default function GuideSetsList() {
 			alert('Title cannot be empty');
 			return;
 		}
-		// Создание нового набора и добавление его в список
+		// Создание нового сета и добавление его в список
 		const newSet = {
 			id: guideSetsList.length + 1,
 			data: [

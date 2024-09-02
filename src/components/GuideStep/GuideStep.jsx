@@ -159,7 +159,7 @@ const GuideStepFooter = ({ mode, onSave, onCancel }) => {
 	);
 };
 
-export default function GuideStep(data) {
+export default function GuideStep(data, handleCreateStep) {
 	const [stepMode, setStepMode] = useState(data.mode);
 	const [formData, setFormData] = useState({
 		title: data.title,
@@ -190,6 +190,11 @@ export default function GuideStep(data) {
 		if (buttonClick === 'delete') {
 			// Логика для кнопки удаления (если требуется)
 		}
+
+		if (buttonClick === 'create' && handleCreateStep) {
+			handleCreateStep(formData); // Передаем данные формы при создании
+			setStepMode('folded'); // Возвращаемся в свернутый режим
+		}
 	};
 
 	const handleSave = () => {
@@ -218,7 +223,7 @@ export default function GuideStep(data) {
 
 	return (
 		<div className={styles.step}>
-			{role === 'admin' ? <div>GuideStep: item for create</div> : null}
+			{/* {role === 'admin' ? <div>GuideStep: item for create</div> : null} */}
 			<GuideStepHeader
 				mode={stepMode}
 				modeHandler={setModeHandler}

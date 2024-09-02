@@ -14,11 +14,11 @@ const GuideSetHeaderForm = ({ title, onTitleChange, onSave, onCancel }) => {
 				placeholder='Enter title'
 			/>
 			<div className={styles.buttonContainer}>
-				<Button onClick={onSave} variant='default' size='lg'>
-					Save
-				</Button>
 				<Button onClick={onCancel} variant='lightGrey' size='lg'>
 					Cancel
+				</Button>
+				<Button onClick={onSave} variant='default' size='lg'>
+					Save
 				</Button>
 			</div>
 		</div>
