@@ -14,11 +14,11 @@ const GuideSetHeader = ({
 		<div className={styles.guideSetHeader}>
 			<h2>{title}</h2>
 			<div className={styles.buttonContainer}>
-				{onCreateSet && (
+				{/* {onCreateSet && (
 					<Button onClick={onCreateSet} variant='lightGrey' size='lg'>
 						Add: Tutorial
 					</Button>
-				)}
+				)} */}
 				{onLaunchSet && (
 					<Button onClick={onLaunchSet} variant='default' size='lg'>
 						Launch Set

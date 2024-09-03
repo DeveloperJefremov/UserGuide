@@ -24,26 +24,27 @@ const GuideStepHeader = ({ order, title, mode, modeHandler }) => {
 					size='sm'
 					variant='default'
 					data-button-clicked='display'
-					className={styles.showBtn}
 					onClick={modeHandler}
 				>
 					{displayButtonText}
 				</Button>
-				<button
+				<Button
+					size='sm'
+					variant='grey'
 					data-button-clicked='edit'
-					className={styles.editBtn}
 					onClick={modeHandler}
 				>
 					Edit
-				</button>
+				</Button>
 				{mode === 'edit' ? (
-					<button
+					<Button
+						size='sm'
+						variant='default'
 						data-button-clicked='delete'
-						className={styles.deleteBtn}
 						onClick={modeHandler}
 					>
 						Delete
-					</button>
+					</Button>
 				) : null}
 			</div>
 		</div>
@@ -65,74 +66,80 @@ const GuideStepHeader = ({ order, title, mode, modeHandler }) => {
 // };
 const GuideStepBody = ({
 	mode,
-	data: {
-		title,
-		description,
-		elementId,
-		imgChecked,
-		imgWidth,
-		imgHeight,
-		imageUrl,
-	},
+	data,
+	handleFormChange,
+	handleImgCheckboxChange,
+	formData,
 }) => {
 	let cssClassList = `${styles.stepBody} ${
-		mode === 'expanded' ? styles.expanded : ''
+		mode === 'expanded' || mode === 'edit' ? styles.expanded : ''
 	} ${mode === 'folded' ? styles.folded : ''}`;
 
 	return (
 		<div className={cssClassList}>
 			<section className={styles.stepContent}>
-				<div className={styles.stepDetails}>
-					<label>
-						Description:
-						<textarea
-							className={styles.textarea}
-							name='description'
-							value={description}
-						/>
-					</label>
-					<label>
-						Element ID:
-						<input
-							className={styles.input}
-							type='text'
-							name='elementId'
-							value={elementId}
-						/>
-					</label>
-					<label>
-						Image:
-						<input name='imgChecked' type='checkbox' checked={imgChecked} />
-					</label>
-
-					<label>
-						Image Width:
-						<input
-							type='number'
-							name='imgWidth'
-							min='1'
-							value={imgWidth}
-							className={styles.input}
-						/>
-					</label>
-					<label>
-						Image Height:
-						<input
-							type='number'
-							name='imgHeight'
-							min='1'
-							value={imgHeight}
-							className={styles.input}
-						/>
-					</label>
-					<img
-						className={styles.stepImagePreview}
-						src={imageUrl}
-						alt={title}
-						width={imgWidth}
-						height={imgHeight}
+				{mode === 'edit' ? (
+					<GuideStepForm
+						{...formData}
+						onChange={handleFormChange}
+						onImgCheckboxChange={handleImgCheckboxChange}
 					/>
-				</div>
+				) : (
+					<div className={styles.stepDetails}>
+						<label>
+							Description:
+							<textarea
+								className={styles.textarea}
+								name='description'
+								value={data.description}
+								readOnly
+							/>
+						</label>
+						<label>
+							Element ID:
+							<input
+								className={styles.input}
+								type='text'
+								name='elementId'
+								value={data.elementId}
+								readOnly
+							/>
+						</label>
+						{data.imgChecked && data.imageUrl && (
+							<>
+								<label>
+									Image Width:
+									<input
+										type='number'
+										name='imgWidth'
+										min='1'
+										value={data.imgWidth}
+										className={styles.input}
+										readOnly
+									/>
+								</label>
+								<label>
+									Image Height:
+									<input
+										type='number'
+										name='imgHeight'
+										min='1'
+										value={data.imgHeight}
+										className={styles.input}
+										readOnly
+									/>
+								</label>
+								<img
+									className={styles.stepImagePreview}
+									src={data.imageUrl}
+									alt={data.title}
+									width={data.imgWidth}
+									height={data.imgHeight}
+								/>
+							</>
+						)}
+					</div>
+				)}
 			</section>
 		</div>
 	);
@@ -147,12 +154,12 @@ const GuideStepFooter = ({ mode, onSave, onCancel }) => {
 		<div className={cssClassList}>
 			{mode === 'edit' ? (
 				<div className={styles.stepFooter}>
-					<button className={styles.cancelBtn} onCancel={onCancel}>
+					<Button variant='lightGrey' size='md' onCancel={onCancel}>
 						Cancel
-					</button>
-					<button className={styles.saveBtn} onSave={onSave}>
+					</Button>
+					<Button variant='default' size='md' onSave={onSave}>
 						Save
-					</button>
+					</Button>
 				</div>
 			) : null}
 		</div>
@@ -170,6 +177,47 @@ export default function GuideStep(data, handleCreateStep) {
 		imgHeight: data.imgHeight,
 		imageUrl: data.imageUrl,
 	});
+
+	const handleImgCheckboxChange = async event => {
+		const checked = event.target.checked;
+		setFormData(prevState => ({
+			...prevState,
+			imgChecked: checked,
+		}));
+
+		if (checked) {
+			try {
+				const response = await fetch('https://dog.ceo/api/breeds/image/random');
+				const data = await response.json();
+				if (data && data.message) {
+					setFormData(prevState => ({
+						...prevState,
+						imageUrl: data.message,
+						imgWidth: 300, // Устанавливаем ширину изображения
+						imgHeight: 300, // Устанавливаем высоту изображения
+					}));
+				} else {
+					setFormData(prevState => ({
+						...prevState,
+						imageUrl: '',
+					}));
+				}
+			} catch (error) {
+				console.error('Ошибка при получении изображения:', error);
+				setFormData(prevState => ({
+					...prevState,
+					imageUrl: '',
+				}));
+			}
+		} else {
+			setFormData(prevState => ({
+				...prevState,
+				imageUrl: '',
+				imgWidth: 0,
+				imgHeight: 0,
+			}));
+		}
+	};
 
 	const setModeHandler = clickEvent => {
 		const buttonClick = clickEvent.target.getAttribute('data-button-clicked');
@@ -230,7 +278,11 @@ export default function GuideStep(data, handleCreateStep) {
 				title={data.title}
 				order={data.order}
 			/>
-			<GuideStepBody mode={stepMode} data={data} />
+			<GuideStepBody
+				mode={stepMode}
+				data={data}
+				handleImgCheckboxChange={handleImgCheckboxChange}
+			/>
 			<GuideStepFooter
 				mode={stepMode}
 				onSave={handleSave}

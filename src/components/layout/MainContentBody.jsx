@@ -1,7 +1,7 @@
 import { useState } from 'react';
 // import StepsMockDataTwo from '../data/StepsMockDataTwo';
 import mockData from '../../data/MockData';
-import mockDataTwo from '../../data/MockDataTwo';
+// import mockDataTwo from '../../data/MockDataTwo';
 import GuideStepSet from './guides/GuideStepsSet';
 import styles from './MainContentBody.module.css';
 

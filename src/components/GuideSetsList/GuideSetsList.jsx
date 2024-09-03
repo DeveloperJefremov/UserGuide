@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import mockData from '../../data/MockData';
+import Button from '../Button/Button';
 import GuideSet from '../GuideSet/GuideSet';
 import GuideSetHeaderForm from '../GuideSet/GuideSetHeaderForm';
 import Modal from '../UI/Modal';
@@ -48,7 +49,11 @@ export default function GuideSetsList() {
 
 	return (
 		<div>
-			<GuideSet title='Create New Set' onCreateSet={handleCreateSet} />
+			{/* <GuideSet title='Create New Set' onCreateSet={handleCreateSet} /> */}
+			<h2>Create New Set</h2>
+			<Button onClick={handleCreateSet} variant='lightGrey' size='lg'>
+				Add: Tutorial
+			</Button>
 
 			<h2>Guide Sets List:</h2>
 

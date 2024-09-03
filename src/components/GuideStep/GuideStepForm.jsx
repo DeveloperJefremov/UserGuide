@@ -9,6 +9,7 @@ export default function GuideStepForm({
 	imgWidth,
 	imgHeight,
 	imageUrl,
+	order,
 	isEditMode,
 	onChange,
 }) {
@@ -20,6 +21,7 @@ export default function GuideStepForm({
 		imgWidth,
 		imgHeight,
 		imageUrl,
+		order,
 	});
 
 	useEffect(() => {
@@ -31,6 +33,7 @@ export default function GuideStepForm({
 			imgWidth,
 			imgHeight,
 			imageUrl,
+			order,
 		});
 	}, [
 		title,
@@ -40,6 +43,7 @@ export default function GuideStepForm({
 		imgWidth,
 		imgHeight,
 		imageUrl,
+		order,
 	]);
 
 	const handleChange = e => {
@@ -56,6 +60,28 @@ export default function GuideStepForm({
 
 	return (
 		<div className={styles.stepDetails}>
+			<label>
+				Title:
+				<input
+					className={styles.input}
+					type='text'
+					name='title'
+					value={formData.title}
+					onChange={isEditMode ? handleChange : null}
+					disabled={!isEditMode}
+				/>
+			</label>
+			<label>
+				Order:
+				<input
+					className={styles.input}
+					type='number'
+					name='order'
+					value={formData.order}
+					onChange={isEditMode ? handleChange : null}
+					disabled={!isEditMode}
+				/>
+			</label>
 			<label>
 				Description:
 				<textarea
