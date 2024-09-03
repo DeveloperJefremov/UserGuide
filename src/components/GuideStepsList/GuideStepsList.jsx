@@ -65,7 +65,7 @@ export default function GuideStepsList({ data }) {
 		<div>
 			{/* Кнопка и модальное окно для создания нового шага */}
 			<div>
-				<h2>Create New Step</h2>
+				<h2>Create New Lesson</h2>
 				<Button size='large' variant='lightGrey' onClick={handleCreateStep}>
 					Add: Lesson
 				</Button>

@@ -55,16 +55,6 @@ export default function GuideSetsList() {
 				Add: Tutorial
 			</Button>
 
-			<h2>Guide Sets List:</h2>
-
-			<ul>
-				{guideSetsList.map(guideSet => (
-					<li key={guideSet.id}>
-						<GuideSet data={guideSet.data} onLaunchSet={handleLaunchSet} />
-					</li>
-				))}
-			</ul>
-
 			{isModalOpen && (
 				<Modal onClick={handleCancel}>
 					<GuideSetHeaderForm
@@ -75,6 +65,15 @@ export default function GuideSetsList() {
 					/>
 				</Modal>
 			)}
+			<h2>Guide Sets List:</h2>
+
+			<ul>
+				{guideSetsList.map(guideSet => (
+					<li key={guideSet.id}>
+						<GuideSet data={guideSet.data} onLaunchSet={handleLaunchSet} />
+					</li>
+				))}
+			</ul>
 		</div>
 	);
 }

@@ -271,7 +271,6 @@ export default function GuideStep(data, handleCreateStep) {
 
 	return (
 		<div className={styles.step}>
-			{/* {role === 'admin' ? <div>GuideStep: item for create</div> : null} */}
 			<GuideStepHeader
 				mode={stepMode}
 				modeHandler={setModeHandler}

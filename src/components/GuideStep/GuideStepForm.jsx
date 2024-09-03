@@ -58,6 +58,40 @@ export default function GuideStepForm({
 		}
 	};
 
+	const handleImgCheckboxChange = async e => {
+		const checked = e.target.checked;
+		let updatedData = { ...formData, imgChecked: checked };
+
+		if (checked) {
+			try {
+				const response = await fetch('https://dog.ceo/api/breeds/image/random');
+				const data = await response.json();
+				if (data && data.message) {
+					updatedData = {
+						...updatedData,
+						imageUrl: data.message,
+						imgWidth: 300,
+						imgHeight: 300,
+					};
+				}
+			} catch (error) {
+				console.error('Ошибка при получении изображения:', error);
+			}
+		} else {
+			updatedData = {
+				...updatedData,
+				imageUrl: '',
+				imgWidth: 0,
+				imgHeight: 0,
+			};
+		}
+
+		setFormData(updatedData);
+		if (onChange) {
+			onChange(updatedData); // Передаем изменения в родительский компонент
+		}
+	};
+
 	return (
 		<div className={styles.stepDetails}>
 			<label>
@@ -109,11 +143,11 @@ export default function GuideStepForm({
 					name='imgChecked'
 					type='checkbox'
 					checked={formData.imgChecked}
-					onChange={isEditMode ? handleChange : null}
+					onChange={isEditMode ? handleImgCheckboxChange : null}
 					disabled={!isEditMode}
 				/>
 			</label>
-			{formData.imgChecked && (
+			{formData.imgChecked && formData.imageUrl && (
 				<>
 					<label>
 						Image Width:
@@ -139,15 +173,15 @@ export default function GuideStepForm({
 							className={styles.input}
 						/>
 					</label>
+					<img
+						className={styles.stepImagePreview}
+						src={formData.imageUrl}
+						alt={formData.title}
+						width={formData.imgWidth}
+						height={formData.imgHeight}
+					/>
 				</>
 			)}
-			<img
-				className={styles.stepImagePreview}
-				src={imageUrl}
-				alt={title}
-				width={formData.imgWidth}
-				height={formData.imgHeight}
-			/>
 		</div>
 	);
 }
