@@ -3,8 +3,6 @@ import Button from '../Button/Button';
 import styles from './GuideStep.module.css';
 import GuideStepForm from './GuideStepForm';
 
-const role = 'admin';
-
 const GuideStepHeader = ({ order, title, mode, modeHandler }) => {
 	let displayButtonText = '';
 	if (mode === 'folded') {
@@ -51,19 +49,6 @@ const GuideStepHeader = ({ order, title, mode, modeHandler }) => {
 	);
 };
 
-// const GuideStepBody = ({ mode, ...data }) => {
-// 	const cssClassList = `${styles.stepBody} ${
-// 		mode === 'expanded' || mode === 'edit' ? styles.expanded : ''
-// 	} ${mode === 'folded' ? styles.folded : ''}`;
-
-// 	return (
-// 		<div className={cssClassList}>
-// 			<section className={styles.stepContent}>
-// 				<GuideStepForm {...data} /> {/* Используем новый компонент */}
-// 			</section>
-// 		</div>
-// 	);
-// };
 const GuideStepBody = ({
 	mode,
 	data,
@@ -193,8 +178,8 @@ export default function GuideStep(data, handleCreateStep) {
 					setFormData(prevState => ({
 						...prevState,
 						imageUrl: data.message,
-						imgWidth: 300, // Устанавливаем ширину изображения
-						imgHeight: 300, // Устанавливаем высоту изображения
+						imgWidth: 100, // Устанавливаем ширину изображения
+						imgHeight: 100, // Устанавливаем высоту изображения
 					}));
 				} else {
 					setFormData(prevState => ({
@@ -235,14 +220,14 @@ export default function GuideStep(data, handleCreateStep) {
 			setStepMode('edit');
 		}
 
-		if (buttonClick === 'delete') {
-			// Логика для кнопки удаления (если требуется)
-		}
+		// if (buttonClick === 'delete') {
+		// 	// Логика для кнопки удаления (если требуется)
+		// }
 
-		if (buttonClick === 'create' && handleCreateStep) {
-			handleCreateStep(formData); // Передаем данные формы при создании
-			setStepMode('folded'); // Возвращаемся в свернутый режим
-		}
+		// if (buttonClick === 'create' && handleCreateStep) {
+		// 	handleCreateStep(formData); // Передаем данные формы при создании
+		// 	setStepMode('folded'); // Возвращаемся в свернутый режим
+		// }
 	};
 
 	const handleSave = () => {
@@ -253,15 +238,19 @@ export default function GuideStep(data, handleCreateStep) {
 
 	const handleCancel = () => {
 		// Отменяем изменения, возвращаемся к исходным данным
-		setFormData({
-			title: data.title,
-			description: data.description,
-			elementId: data.elementId,
-			imgChecked: data.imgChecked,
-			imgWidth: data.imgWidth,
-			imgHeight: data.imgHeight,
-			imageUrl: data.imageUrl,
-		});
+		setFormData(
+			...data
+			// 	{
+
+			// 	title: data.title,
+			// 	description: data.description,
+			// 	elementId: data.elementId,
+			// 	imgChecked: data.imgChecked,
+			// 	imgWidth: data.imgWidth,
+			// 	imgHeight: data.imgHeight,
+			// 	imageUrl: data.imageUrl,
+			// }
+		);
 		setStepMode('folded'); // Возвращаем в свернутый режим при отмене
 	};
 

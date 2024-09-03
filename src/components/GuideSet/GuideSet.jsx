@@ -50,7 +50,7 @@ const GuideSetFooter = ({ content }) => {
 export default function GuideSet({
 	data = [],
 	title,
-	// onCreateSet,
+	onCreateSet,
 	onLaunchSet,
 }) {
 	const [isContentVisible, setIsContentVisible] = useState(false);
@@ -67,7 +67,7 @@ export default function GuideSet({
 				title={data && data[0] ? data[0].setHeader : title}
 				onToggleContent={!onCreateSet && toggleContentVisibility}
 				isContentVisible={isContentVisible}
-				// onCreateSet={onCreateSet}
+				onCreateSet={onCreateSet}
 				onLaunchSet={onLaunchSet}
 			/>
 

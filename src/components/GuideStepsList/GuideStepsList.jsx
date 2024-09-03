@@ -71,6 +71,7 @@ export default function GuideStepsList({ data }) {
 				</Button>
 				{isModalOpen && (
 					<Modal onClick={handleCancel}>
+						<h2>Create New Lesson</h2>
 						<GuideStepForm
 							{...formData}
 							isEditMode={true}

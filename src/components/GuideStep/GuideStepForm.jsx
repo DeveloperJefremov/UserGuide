@@ -70,8 +70,8 @@ export default function GuideStepForm({
 					updatedData = {
 						...updatedData,
 						imageUrl: data.message,
-						imgWidth: 300,
-						imgHeight: 300,
+						imgWidth: 100,
+						imgHeight: 100,
 					};
 				}
 			} catch (error) {
