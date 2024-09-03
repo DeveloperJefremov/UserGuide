@@ -135,8 +135,6 @@ export default function GuideStep(data, handleCreateStep) {
 }
 
 const GuideStepHeader = ({
-	order,
-	title,
 	mode,
 	modeHandler,
 	data,
@@ -153,8 +151,8 @@ const GuideStepHeader = ({
 	return (
 		<div className={styles.stepHeader}>
 			<div className={styles.headerLeft}>
-				<h3>{title}</h3>
-				<p>Order: {order}</p>
+				<h3>{data.title}</h3>
+				<p>Order: {data.order}</p>
 			</div>
 			<div className={styles.headerRight}>
 				<Button
@@ -222,7 +220,7 @@ const GuideStepBody = ({
 							className={styles.textarea}
 							name='description'
 							value={data.description}
-							readOnly
+							disabled
 						/>
 					</label>
 					<label>
@@ -232,7 +230,7 @@ const GuideStepBody = ({
 							type='text'
 							name='elementId'
 							value={data.elementId}
-							readOnly
+							disabled
 						/>
 					</label>
 					{data.imgChecked && data.imageUrl && (
@@ -245,7 +243,7 @@ const GuideStepBody = ({
 									min='1'
 									value={data.imgWidth}
 									className={styles.input}
-									readOnly
+									disabled
 								/>
 							</label>
 							<label>
@@ -256,7 +254,7 @@ const GuideStepBody = ({
 									min='1'
 									value={data.imgHeight}
 									className={styles.input}
-									readOnly
+									disabled
 								/>
 							</label>
 							<img

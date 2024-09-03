@@ -73,18 +73,17 @@ export default function GuideStepsList({ data }) {
 					<Modal onClick={handleCancel}>
 						<h2>Create New Lesson</h2>
 						<GuideStepForm
-							{...formData}
+							// {...formData}
+							// isEditMode={true}
+							// onChange={handleFormChange}
+							// onSave={handleSave}
+							// onCancel={handleCancel}
+							formData={formData}
 							isEditMode={true}
 							onChange={handleFormChange}
+							onSave={handleSave}
+							onCancel={handleCancel}
 						/>
-						<div style={{ textAlign: 'right' }}>
-							<Button variant='lightGrey' size='md' onClick={handleCancel}>
-								Cancel
-							</Button>
-							<Button variant='default' size='md' onClick={handleSave}>
-								Save
-							</Button>
-						</div>
 					</Modal>
 				)}
 			</div>

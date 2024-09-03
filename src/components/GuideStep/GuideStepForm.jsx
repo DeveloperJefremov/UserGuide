@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import Button from '../Button/Button';
 import styles from './GuideStepForm.module.css';
 
 export default function GuideStepForm({
 	formData: initialFormData,
-
+	onSave,
+	onCancel,
 	mode,
 	onChange,
-	isEditMode,
 }) {
 	// const {
 	// 	title,
@@ -111,7 +112,7 @@ export default function GuideStepForm({
 					type='number'
 					name='order'
 					value={formData.order}
-					onChange={isEditMode ? handleChange : null}
+					onChange={mode === 'edit' || mode === 'create' ? handleChange : null}
 					disabled={mode === 'edit' || mode === 'create' ? false : true}
 				/>
 			</label>
@@ -121,7 +122,7 @@ export default function GuideStepForm({
 					className={styles.textarea}
 					name='description'
 					value={formData.description}
-					onChange={isEditMode ? handleChange : null}
+					onChange={mode === 'edit' || mode === 'create' ? handleChange : null}
 					disabled={mode === 'edit' || mode === 'create' ? false : true}
 				/>
 			</label>
@@ -132,7 +133,7 @@ export default function GuideStepForm({
 					type='text'
 					name='elementId'
 					value={formData.elementId}
-					onChange={isEditMode ? handleChange : null}
+					onChange={mode === 'edit' || mode === 'create' ? handleChange : null}
 					disabled={mode === 'edit' || mode === 'create' ? false : true}
 				/>
 			</label>
@@ -142,7 +143,11 @@ export default function GuideStepForm({
 					name='imgChecked'
 					type='checkbox'
 					checked={formData.imgChecked}
-					onChange={isEditMode ? handleImgCheckboxChange : null}
+					onChange={
+						mode === 'edit' || mode === 'create'
+							? handleImgCheckboxChange
+							: null
+					}
 					disabled={mode === 'edit' || mode === 'create' ? false : true}
 				/>
 			</label>
@@ -155,7 +160,9 @@ export default function GuideStepForm({
 							name='imgWidth'
 							min='1'
 							value={formData.imgWidth}
-							onChange={isEditMode ? handleChange : null}
+							onChange={
+								mode === 'edit' || mode === 'create' ? handleChange : null
+							}
 							disabled={mode === 'edit' || mode === 'create' ? false : true}
 							className={styles.input}
 						/>
@@ -167,7 +174,9 @@ export default function GuideStepForm({
 							name='imgHeight'
 							min='1'
 							value={formData.imgHeight}
-							onChange={isEditMode ? handleChange : null}
+							onChange={
+								mode === 'edit' || mode === 'create' ? handleChange : null
+							}
 							disabled={mode === 'edit' || mode === 'create' ? false : true}
 							className={styles.input}
 						/>
@@ -179,6 +188,14 @@ export default function GuideStepForm({
 						width={formData.imgWidth}
 						height={formData.imgHeight}
 					/>
+					<div style={{ textAlign: 'right' }}>
+						<Button variant='lightGrey' size='md' onClick={onCancel}>
+							Cancel
+						</Button>
+						<Button variant='default' size='md' onClick={onSave}>
+							Save
+						</Button>
+					</div>
 				</>
 			)}
 		</div>
