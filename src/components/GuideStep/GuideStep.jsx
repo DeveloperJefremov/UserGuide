@@ -1,158 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
+import Modal from '../UI/Modal';
 import styles from './GuideStep.module.css';
 import GuideStepForm from './GuideStepForm';
 
-const GuideStepHeader = ({ order, title, mode, modeHandler }) => {
-	let displayButtonText = '';
-	if (mode === 'folded') {
-		displayButtonText = 'Show';
-	} else if (mode === 'expanded' || mode === 'edit') {
-		displayButtonText = 'Hide';
-	}
-
-	return (
-		<div className={styles.stepHeader}>
-			<div className={styles.headerLeft}>
-				<h3>{title}</h3>
-				<p>Order: {order}</p>
-			</div>
-			<div className={styles.headerRight}>
-				<Button
-					size='sm'
-					variant='default'
-					data-button-clicked='display'
-					onClick={modeHandler}
-				>
-					{displayButtonText}
-				</Button>
-				<Button
-					size='sm'
-					variant='grey'
-					data-button-clicked='edit'
-					onClick={modeHandler}
-				>
-					Edit
-				</Button>
-				{mode === 'edit' ? (
-					<Button
-						size='sm'
-						variant='default'
-						data-button-clicked='delete'
-						onClick={modeHandler}
-					>
-						Delete
-					</Button>
-				) : null}
-			</div>
-		</div>
-	);
-};
-
-const GuideStepBody = ({
-	mode,
-	data,
-	handleFormChange,
-	handleImgCheckboxChange,
-	formData,
-}) => {
-	let cssClassList = `${styles.stepBody} ${
-		mode === 'expanded' || mode === 'edit' ? styles.expanded : ''
-	} ${mode === 'folded' ? styles.folded : ''}`;
-
-	return (
-		<div className={cssClassList}>
-			<section className={styles.stepContent}>
-				{mode === 'edit' ? (
-					<GuideStepForm
-						{...formData}
-						onChange={handleFormChange}
-						onImgCheckboxChange={handleImgCheckboxChange}
-					/>
-				) : (
-					<div className={styles.stepDetails}>
-						<label>
-							Description:
-							<textarea
-								className={styles.textarea}
-								name='description'
-								value={data.description}
-								readOnly
-							/>
-						</label>
-						<label>
-							Element ID:
-							<input
-								className={styles.input}
-								type='text'
-								name='elementId'
-								value={data.elementId}
-								readOnly
-							/>
-						</label>
-						{data.imgChecked && data.imageUrl && (
-							<>
-								<label>
-									Image Width:
-									<input
-										type='number'
-										name='imgWidth'
-										min='1'
-										value={data.imgWidth}
-										className={styles.input}
-										readOnly
-									/>
-								</label>
-								<label>
-									Image Height:
-									<input
-										type='number'
-										name='imgHeight'
-										min='1'
-										value={data.imgHeight}
-										className={styles.input}
-										readOnly
-									/>
-								</label>
-								<img
-									className={styles.stepImagePreview}
-									src={data.imageUrl}
-									alt={data.title}
-									width={data.imgWidth}
-									height={data.imgHeight}
-								/>
-							</>
-						)}
-					</div>
-				)}
-			</section>
-		</div>
-	);
-};
-
-const GuideStepFooter = ({ mode, onSave, onCancel }) => {
-	const cssClassList = `${styles.stepFooter} ${
-		mode === 'expanded' || mode === 'edit' ? styles.expanded : ''
-	} ${mode === 'folded' ? styles.folded : ''}`;
-
-	return (
-		<div className={cssClassList}>
-			{mode === 'edit' ? (
-				<div className={styles.stepFooter}>
-					<Button variant='lightGrey' size='md' onCancel={onCancel}>
-						Cancel
-					</Button>
-					<Button variant='default' size='md' onSave={onSave}>
-						Save
-					</Button>
-				</div>
-			) : null}
-		</div>
-	);
-};
-
 export default function GuideStep(data, handleCreateStep) {
-	const [stepMode, setStepMode] = useState(data.mode);
+	const [stepMode, setStepMode] = useState('folded');
 	const [formData, setFormData] = useState({
 		title: data.title,
 		description: data.description,
@@ -206,7 +59,7 @@ export default function GuideStep(data, handleCreateStep) {
 
 	const setModeHandler = clickEvent => {
 		const buttonClick = clickEvent.target.getAttribute('data-button-clicked');
-		console.log(buttonClick);
+		console.log('mode setModeHandler - ', buttonClick);
 
 		if (buttonClick === 'display') {
 			if (stepMode === 'folded') {
@@ -217,7 +70,7 @@ export default function GuideStep(data, handleCreateStep) {
 		}
 
 		if (buttonClick === 'edit') {
-			setStepMode('edit');
+			setStepMode(() => 'edit');
 		}
 
 		// if (buttonClick === 'delete') {
@@ -263,8 +116,9 @@ export default function GuideStep(data, handleCreateStep) {
 			<GuideStepHeader
 				mode={stepMode}
 				modeHandler={setModeHandler}
-				title={data.title}
-				order={data.order}
+				data={data}
+				handleFormChange={handleFormChange}
+				handleImgCheckboxChange={handleImgCheckboxChange}
 			/>
 			<GuideStepBody
 				mode={stepMode}
@@ -279,3 +133,164 @@ export default function GuideStep(data, handleCreateStep) {
 		</div>
 	);
 }
+
+const GuideStepHeader = ({
+	order,
+	title,
+	mode,
+	modeHandler,
+	data,
+	handleFormChange,
+	handleImgCheckboxChange,
+}) => {
+	let displayButtonText = '';
+	if (mode === 'folded') {
+		displayButtonText = 'Show';
+	} else if (mode === 'expanded' || mode === 'edit') {
+		displayButtonText = 'Hide';
+	}
+
+	return (
+		<div className={styles.stepHeader}>
+			<div className={styles.headerLeft}>
+				<h3>{title}</h3>
+				<p>Order: {order}</p>
+			</div>
+			<div className={styles.headerRight}>
+				<Button
+					size='sm'
+					variant='default'
+					data-button-clicked='display'
+					onClick={modeHandler}
+				>
+					{displayButtonText}
+				</Button>
+				<Button
+					size='sm'
+					variant='grey'
+					data-button-clicked='edit'
+					onClick={modeHandler}
+				>
+					Edit
+				</Button>
+				{mode === 'edit' && (
+					<Button
+						size='sm'
+						variant='default'
+						data-button-clicked='delete'
+						onClick={modeHandler}
+					>
+						Delete
+					</Button>
+				)}
+			</div>
+			{mode === 'edit' ? (
+				<Modal>
+					<GuideStepForm
+						mode={mode}
+						//FIXME: props
+						formData={data}
+						onChange={handleFormChange}
+						onImgCheckboxChange={handleImgCheckboxChange}
+					/>
+				</Modal>
+			) : null}
+		</div>
+	);
+};
+
+const GuideStepBody = ({
+	mode,
+	data,
+
+	// formData,
+}) => {
+	let cssClassList = `${styles.stepBody} ${
+		mode === 'expanded' || mode === 'edit' ? styles.expanded : ''
+	} ${mode === 'folded' ? styles.folded : ''}`;
+
+	useEffect(() => {
+		console.log('mode in body: ', mode);
+	}, [mode]);
+	return (
+		<div className={cssClassList}>
+			<section className={styles.stepContent}>
+				<div className={styles.stepDetails}>
+					<label>
+						Description:
+						<textarea
+							className={styles.textarea}
+							name='description'
+							value={data.description}
+							readOnly
+						/>
+					</label>
+					<label>
+						Element ID:
+						<input
+							className={styles.input}
+							type='text'
+							name='elementId'
+							value={data.elementId}
+							readOnly
+						/>
+					</label>
+					{data.imgChecked && data.imageUrl && (
+						<div>
+							<label>
+								Image Width:
+								<input
+									type='number'
+									name='imgWidth'
+									min='1'
+									value={data.imgWidth}
+									className={styles.input}
+									readOnly
+								/>
+							</label>
+							<label>
+								Image Height:
+								<input
+									type='number'
+									name='imgHeight'
+									min='1'
+									value={data.imgHeight}
+									className={styles.input}
+									readOnly
+								/>
+							</label>
+							<img
+								className={styles.stepImagePreview}
+								src={data.imageUrl}
+								alt={data.title}
+								width={data.imgWidth}
+								height={data.imgHeight}
+							/>
+						</div>
+					)}
+				</div>
+			</section>
+		</div>
+	);
+};
+
+const GuideStepFooter = ({ mode, onSave, onCancel }) => {
+	const cssClassList = `${styles.stepFooter} ${
+		mode === 'expanded' || mode === 'edit' ? styles.expanded : ''
+	} ${mode === 'folded' ? styles.folded : ''}`;
+
+	return (
+		<div className={cssClassList}>
+			{mode === 'edit' ? (
+				<div className={styles.stepFooter}>
+					<Button variant='lightGrey' size='md' onCancel={onCancel}>
+						Cancel
+					</Button>
+					<Button variant='default' size='md' onSave={onSave}>
+						Save
+					</Button>
+				</div>
+			) : null}
+		</div>
+	);
+};

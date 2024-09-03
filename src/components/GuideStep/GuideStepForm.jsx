@@ -2,49 +2,46 @@ import React, { useEffect, useState } from 'react';
 import styles from './GuideStepForm.module.css';
 
 export default function GuideStepForm({
-	title,
-	description,
-	elementId,
-	imgChecked,
-	imgWidth,
-	imgHeight,
-	imageUrl,
-	order,
-	isEditMode,
-	onChange,
-}) {
-	const [formData, setFormData] = useState({
-		title,
-		description,
-		elementId,
-		imgChecked,
-		imgWidth,
-		imgHeight,
-		imageUrl,
-		order,
-	});
+	formData: initialFormData,
 
-	useEffect(() => {
-		setFormData({
-			title,
-			description,
-			elementId,
-			imgChecked,
-			imgWidth,
-			imgHeight,
-			imageUrl,
-			order,
-		});
-	}, [
-		title,
-		description,
-		elementId,
-		imgChecked,
-		imgWidth,
-		imgHeight,
-		imageUrl,
-		order,
-	]);
+	mode,
+	onChange,
+	isEditMode,
+}) {
+	// const {
+	// 	title,
+	// 	description,
+	// 	elementId,
+	// 	imgChecked,
+	// 	imgWidth,
+	// 	imgHeight,
+	// 	imageUrl,
+	// 	order,
+	// } = formData;
+
+	const [formData, setFormData] = useState(initialFormData);
+
+	// useEffect(() => {
+	// 	setFormData({
+	// 		title,
+	// 		description,
+	// 		elementId,
+	// 		imgChecked,
+	// 		imgWidth,
+	// 		imgHeight,
+	// 		imageUrl,
+	// 		order,
+	// 	});
+	// }, [
+	// 	title,
+	// 	description,
+	// 	elementId,
+	// 	imgChecked,
+	// 	imgWidth,
+	// 	imgHeight,
+	// 	imageUrl,
+	// 	order,
+	// ]);
 
 	const handleChange = e => {
 		const { name, value, type, checked } = e.target;
@@ -91,6 +88,7 @@ export default function GuideStepForm({
 			onChange(updatedData); // Передаем изменения в родительский компонент
 		}
 	};
+	console.log('guidestepform.jsx = mode: ', mode);
 
 	return (
 		<div className={styles.stepDetails}>
@@ -101,8 +99,9 @@ export default function GuideStepForm({
 					type='text'
 					name='title'
 					value={formData.title}
-					onChange={isEditMode ? handleChange : null}
-					disabled={!isEditMode}
+					onChange={handleChange}
+					disabled={mode === 'edit' || mode === 'create' ? false : true}
+					// {...(mode === 'edit' ? null : 'disabled')}
 				/>
 			</label>
 			<label>
@@ -113,7 +112,7 @@ export default function GuideStepForm({
 					name='order'
 					value={formData.order}
 					onChange={isEditMode ? handleChange : null}
-					disabled={!isEditMode}
+					disabled={mode === 'edit' || mode === 'create' ? false : true}
 				/>
 			</label>
 			<label>
@@ -123,7 +122,7 @@ export default function GuideStepForm({
 					name='description'
 					value={formData.description}
 					onChange={isEditMode ? handleChange : null}
-					disabled={!isEditMode}
+					disabled={mode === 'edit' || mode === 'create' ? false : true}
 				/>
 			</label>
 			<label>
@@ -134,7 +133,7 @@ export default function GuideStepForm({
 					name='elementId'
 					value={formData.elementId}
 					onChange={isEditMode ? handleChange : null}
-					disabled={!isEditMode}
+					disabled={mode === 'edit' || mode === 'create' ? false : true}
 				/>
 			</label>
 			<label>
@@ -144,7 +143,7 @@ export default function GuideStepForm({
 					type='checkbox'
 					checked={formData.imgChecked}
 					onChange={isEditMode ? handleImgCheckboxChange : null}
-					disabled={!isEditMode}
+					disabled={mode === 'edit' || mode === 'create' ? false : true}
 				/>
 			</label>
 			{formData.imgChecked && formData.imageUrl && (
@@ -157,7 +156,7 @@ export default function GuideStepForm({
 							min='1'
 							value={formData.imgWidth}
 							onChange={isEditMode ? handleChange : null}
-							disabled={!isEditMode}
+							disabled={mode === 'edit' || mode === 'create' ? false : true}
 							className={styles.input}
 						/>
 					</label>
@@ -169,7 +168,7 @@ export default function GuideStepForm({
 							min='1'
 							value={formData.imgHeight}
 							onChange={isEditMode ? handleChange : null}
-							disabled={!isEditMode}
+							disabled={mode === 'edit' || mode === 'create' ? false : true}
 							className={styles.input}
 						/>
 					</label>
