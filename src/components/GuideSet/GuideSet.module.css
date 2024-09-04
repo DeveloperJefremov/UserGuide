@@ -71,3 +71,46 @@
 	border-top: 1px solid #ddd;
 	padding-left: 20px;
 }
+
+/* 
+body */
+.setBody {
+	opacity: 0; /* Start with 0 opacity */
+	transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+	max-height: 0; /* Collapsed by default */
+	overflow: hidden; /* Hide content that exceeds max-height */
+}
+
+.expanded {
+	opacity: 1; /* Fade in to full opacity */
+	max-height: 1000px; /* Увеличим max-height достаточно для того, чтобы вместить весь контент */
+}
+
+.folded {
+	opacity: 0; /* Ensure opacity is 0 */
+	max-height: 0; /* Max-height 0 to hide the content */
+}
+
+/* Animation for fading in */
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+		max-height: 0;
+	}
+	100% {
+		opacity: 1;
+		max-height: 1000px; /* Достаточно большое значение */
+	}
+}
+
+/* Animation for fading out */
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+		max-height: 1000px; /* Достаточно большое значение */
+	}
+	100% {
+		opacity: 0;
+		max-height: 0;
+	}
+}
