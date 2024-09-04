@@ -3,7 +3,7 @@ import Button from '../Button/Button';
 import styles from './GuideSetHeaderForm.module.css';
 
 const GuideSetHeaderForm = ({
-	setMode, // Режим: 'create' или 'edit'
+	setListMode, // Режим: 'create' или 'edit'
 	title, // Заголовок набора
 	onTitleChange, // Функция для изменения заголовка
 	onSave, // Функция для сохранения набора
@@ -12,7 +12,7 @@ const GuideSetHeaderForm = ({
 	return (
 		<div className={styles.guideSetHeader}>
 			<h2>
-				{setMode === 'edit'
+				{setListMode === 'edit'
 					? 'Edit Tutorial Title'
 					: 'Create New Tutorial Title'}
 			</h2>

@@ -4,7 +4,7 @@ import Modal from '../UI/Modal';
 import styles from './GuideStep.module.css';
 import GuideStepForm from './GuideStepForm';
 
-export default function GuideStep(data, handleCreateStep) {
+export default function GuideStep(data, onEdit) {
 	const [stepMode, setStepMode] = useState('folded');
 	const [formData, setFormData] = useState({
 		title: data.title,
@@ -69,9 +69,9 @@ export default function GuideStep(data, handleCreateStep) {
 			}
 		}
 
-		if (buttonClick === 'edit') {
-			setStepMode(() => 'edit');
-		}
+		// if (buttonClick === 'edit') {
+		// 	setStepMode(() => 'edit');
+		// }
 
 		// if (buttonClick === 'delete') {
 		// 	// Логика для кнопки удаления (если требуется)
@@ -114,6 +114,7 @@ export default function GuideStep(data, handleCreateStep) {
 	return (
 		<div className={styles.step}>
 			<GuideStepHeader
+				onEdit={onEdit}
 				mode={stepMode}
 				modeHandler={setModeHandler}
 				data={data}
@@ -135,6 +136,7 @@ export default function GuideStep(data, handleCreateStep) {
 }
 
 const GuideStepHeader = ({
+	onEdit,
 	mode,
 	modeHandler,
 	data,
@@ -144,7 +146,7 @@ const GuideStepHeader = ({
 	let displayButtonText = '';
 	if (mode === 'folded') {
 		displayButtonText = 'Show';
-	} else if (mode === 'expanded' || mode === 'edit') {
+	} else if (mode === 'expanded') {
 		displayButtonText = 'Hide';
 	}
 
@@ -176,7 +178,7 @@ const GuideStepHeader = ({
 						size='sm'
 						variant='default'
 						data-button-clicked='delete'
-						onClick={modeHandler}
+						onClick={onEdit}
 					>
 						Delete
 					</Button>
@@ -185,7 +187,7 @@ const GuideStepHeader = ({
 			{mode === 'edit' ? (
 				<Modal>
 					<GuideStepForm
-						mode={mode}
+						// mode={mode}
 						//FIXME: props
 						formData={data}
 						onChange={handleFormChange}
@@ -204,7 +206,7 @@ const GuideStepBody = ({
 	// formData,
 }) => {
 	let cssClassList = `${styles.stepBody} ${
-		mode === 'expanded' || mode === 'edit' ? styles.expanded : ''
+		mode === 'expanded' ? styles.expanded : ''
 	} ${mode === 'folded' ? styles.folded : ''}`;
 
 	useEffect(() => {
@@ -274,12 +276,12 @@ const GuideStepBody = ({
 
 const GuideStepFooter = ({ mode, onSave, onCancel }) => {
 	const cssClassList = `${styles.stepFooter} ${
-		mode === 'expanded' || mode === 'edit' ? styles.expanded : ''
+		mode === 'expanded' ? styles.expanded : ''
 	} ${mode === 'folded' ? styles.folded : ''}`;
 
 	return (
 		<div className={cssClassList}>
-			{mode === 'edit' ? (
+			{/* {mode === 'edit' ? (
 				<div className={styles.stepFooter}>
 					<Button variant='lightGrey' size='md' onCancel={onCancel}>
 						Cancel
@@ -288,7 +290,7 @@ const GuideStepFooter = ({ mode, onSave, onCancel }) => {
 						Save
 					</Button>
 				</div>
-			) : null}
+			) : null} */}
 		</div>
 	);
 };

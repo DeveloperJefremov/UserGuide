@@ -9,12 +9,12 @@ export default function GuideSetsList() {
 	const [guideSetsList, setGuideSetsList] = useState(mockData);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [newSetTitle, setNewSetTitle] = useState('');
-	const [setMode, setSetMode] = useState('folded');
+	const [setListMode, setSetListMode] = useState('folded');
 	const [currentSetId, setCurrentSetId] = useState(null);
 
 	const handleCreateSet = () => {
 		setNewSetTitle('');
-		setSetMode('create');
+		setSetListMode('create');
 		setIsModalOpen(true);
 	};
 
@@ -22,7 +22,7 @@ export default function GuideSetsList() {
 		const selectedSet = guideSetsList.find(set => set.id === id);
 		setNewSetTitle(selectedSet.data[0].setHeader); // Заполняем заголовок выбранного набора
 		setCurrentSetId(id); // Запоминаем ID текущего набора
-		setSetMode('edit');
+		setSetListMode('edit');
 		setIsModalOpen(true);
 	};
 
@@ -39,7 +39,7 @@ export default function GuideSetsList() {
 			return;
 		}
 
-		if (setMode === 'create') {
+		if (setListMode === 'create') {
 			// Создаем новый набор
 			const newSet = {
 				id: guideSetsList.length + 1,
@@ -51,7 +51,7 @@ export default function GuideSetsList() {
 				],
 			};
 			setGuideSetsList([...guideSetsList, newSet]);
-		} else if (setMode === 'edit') {
+		} else if (setListMode === 'edit') {
 			// Обновляем существующий набор
 			const updatedGuideSetsList = guideSetsList.map(guideSet => {
 				if (guideSet.id === currentSetId) {
@@ -85,7 +85,7 @@ export default function GuideSetsList() {
 			{isModalOpen && (
 				<Modal onClick={handleCancel}>
 					<GuideSetHeaderForm
-						setMode={setMode}
+						setListMode={setListMode}
 						title={newSetTitle}
 						onTitleChange={setNewSetTitle}
 						onSave={handleSaveNewSet}
@@ -101,7 +101,7 @@ export default function GuideSetsList() {
 						<GuideSet
 							handleEditSet={() => handleEditSet(guideSet.id)} // Передаем ID для редактирования
 							handleDeleteSet={() => handleDeleteSet(guideSet.id)} // Передаем ID для удаления
-							setMode={setMode}
+							setListMode={setListMode}
 							data={guideSet.data}
 							onLaunchSet={() => alert('Launch button clicked')}
 							setGuideSetsList={setGuideSetsList}
@@ -113,3 +113,5 @@ export default function GuideSetsList() {
 		</div>
 	);
 }
+
+// disabled={mode === 'edit' || mode === 'create' ? false : true}

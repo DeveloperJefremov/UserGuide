@@ -4,7 +4,7 @@ import GuideStepsList from '../GuideStepsList/GuideStepsList';
 import styles from './GuideSet.module.css';
 
 export default function GuideSet({
-	setMode: initialSetMode, // Начальное состояние: 'folded' или 'expanded'
+	setListMode: initialSetMode, // Начальное состояние: 'folded' или 'expanded'
 	data = [],
 	title,
 	handleSetChange,
