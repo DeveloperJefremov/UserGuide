@@ -16,6 +16,7 @@ export default function GuideStepsList({
 	const [formData, setFormData] = useState({
 		title: '',
 		description: '',
+		pageUrl: '',
 		elementId: '',
 		imgChecked: false,
 		imgWidth: 0,
@@ -37,6 +38,20 @@ export default function GuideStepsList({
 		setCurrentStepIndex({ setIndex, stepIndex }); // Запоминаем индекс редактируемого шага
 		setStepListMode('edit'); // Устанавливаем режим редактирования
 		setIsModalOpen(true); // Открываем модальное окно
+	};
+
+	const handleDeleteStep = (setIndex, stepIndex) => {
+		const updatedSteps = steps.map((set, sIndex) => {
+			if (sIndex === setIndex) {
+				return {
+					...set,
+					setBody: set.setBody.filter((_, stIndex) => stIndex !== stepIndex),
+				};
+			}
+			return set;
+		});
+
+		setSteps(updatedSteps); // Обновляем состояние шагов
 	};
 
 	// Сохранение нового шага или редактирование существующего
@@ -90,6 +105,7 @@ export default function GuideStepsList({
 		setFormData({
 			title: '',
 			description: '',
+			pageUrl: '',
 			elementId: '',
 			imgChecked: false,
 			imgWidth: 0,
@@ -108,6 +124,7 @@ export default function GuideStepsList({
 		setFormData({
 			title: '',
 			description: '',
+			pageUrl: '',
 			elementId: '',
 			imgChecked: false,
 			imgWidth: 0,
@@ -150,6 +167,9 @@ export default function GuideStepsList({
 										data={step}
 										mode='folded'
 										handleEditStep={() => handleEditStep(setIndex, stepIndex)} // Привязываем обработчик редактирования к кнопке
+										handleDeleteStep={() =>
+											handleDeleteStep(setIndex, stepIndex)
+										} // Привязываем обработчик удаления к кнопке
 									/>
 								))}
 						</div>

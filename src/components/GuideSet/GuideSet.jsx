@@ -20,7 +20,9 @@ export default function GuideSet({
 
 	// Логика переключения режима отображения
 	const toggleSetMode = () => {
-		setSetMode(prevMode => (prevMode === 'folded' ? 'expanded' : 'folded'));
+		setSetMode(prevMode =>
+			prevMode === 'folded' || setMode === 'create' ? 'expanded' : 'folded'
+		);
 	};
 
 	if (!data && title !== 'Create New Set') return null;
@@ -33,7 +35,6 @@ export default function GuideSet({
 				handleDeleteSet={handleDeleteSet}
 				title={data && data[0] ? data[0].setHeader : title}
 				onToggleContent={toggleSetMode} // Добавляем логику переключения
-				onLaunchSet={onLaunchSet}
 			/>
 
 			{/* Отображаем GuideSetBody и GuideSetFooter только в режиме expanded */}
@@ -49,7 +50,7 @@ export default function GuideSet({
 			)}
 
 			{setMode === 'expanded' && (
-				<GuideSetFooter content={data[0] ? data[0].setFooter : ''} />
+				<GuideSetFooter onLaunchSet={onLaunchSet} setMode={setMode} />
 			)}
 		</div>
 	);
@@ -61,7 +62,6 @@ const GuideSetHeader = ({
 	handleEditSet,
 	title,
 	onToggleContent,
-	onLaunchSet,
 }) => {
 	// Определяем текст для кнопки в зависимости от состояния setMode
 	console.log(setMode);
@@ -79,14 +79,8 @@ const GuideSetHeader = ({
 					Delete: Tutorial
 				</Button>
 
-				{onLaunchSet && (
-					<Button onClick={onLaunchSet} variant='default' size='lg'>
-						Launch: Lesson
-					</Button>
-				)}
-
 				{/* Кнопка для переключения свёрнутого/развернутого состояния */}
-				<Button size='icon' variant='default' onClick={onToggleContent}>
+				<Button size='icon' variant='lightGrey' onClick={onToggleContent}>
 					{displayButtonText}
 				</Button>
 			</div>
@@ -103,14 +97,17 @@ const GuideSetBody = ({ children, setMode }) => {
 	return <div className={cssClassList}>{children}</div>;
 };
 
-const GuideSetFooter = ({ content, setMode }) => {
+const GuideSetFooter = ({ onLaunchSet, setMode }) => {
 	const cssClassList = `${styles.stepFooter} ${
 		setMode === 'expanded' || setMode === 'edit' ? styles.expanded : ''
 	} ${setMode === 'folded' ? styles.folded : ''}`;
-	if (!content) return null;
 	return (
 		<div className={cssClassList}>
-			<p>{content}</p>
+			{onLaunchSet && (
+				<Button onClick={onLaunchSet} variant='default' size='lg'>
+					Launch: Lesson
+				</Button>
+			)}
 		</div>
 	);
 };

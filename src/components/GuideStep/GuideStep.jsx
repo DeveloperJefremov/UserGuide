@@ -4,11 +4,12 @@ import Modal from '../UI/Modal';
 import styles from './GuideStep.module.css';
 import GuideStepForm from './GuideStepForm';
 
-export default function GuideStep({ data, handleEditStep }) {
+export default function GuideStep({ data, handleEditStep, handleDeleteStep }) {
 	const [stepMode, setStepMode] = useState('folded');
 	const [formData, setFormData] = useState({
 		title: data.title,
 		description: data.description,
+		pageUrl: data.pageUrl,
 		elementId: data.elementId,
 		imgChecked: data.imgChecked,
 		imgWidth: data.imgWidth,
@@ -118,6 +119,7 @@ export default function GuideStep({ data, handleEditStep }) {
 	return (
 		<div className={styles.step}>
 			<GuideStepHeader
+				handleDeleteStep={handleDeleteStep}
 				handleEditStep={handleEditStep}
 				mode={stepMode}
 				modeHandler={setModeHandler}
@@ -140,6 +142,7 @@ export default function GuideStep({ data, handleEditStep }) {
 }
 
 const GuideStepHeader = ({
+	handleDeleteStep,
 	handleEditStep,
 	mode,
 	modeHandler,
@@ -149,9 +152,9 @@ const GuideStepHeader = ({
 }) => {
 	let displayButtonText = '';
 	if (mode === 'folded') {
-		displayButtonText = 'Show';
+		displayButtonText = '+';
 	} else if (mode === 'expanded') {
-		displayButtonText = 'Hide';
+		displayButtonText = '-';
 	}
 
 	return (
@@ -161,14 +164,6 @@ const GuideStepHeader = ({
 				<p>Order: {data.order}</p>
 			</div>
 			<div className={styles.headerRight}>
-				<Button
-					size='sm'
-					variant='default'
-					data-button-clicked='display'
-					onClick={modeHandler}
-				>
-					{displayButtonText}
-				</Button>
 				<Button
 					size='sm'
 					variant='grey'
@@ -182,9 +177,17 @@ const GuideStepHeader = ({
 					size='sm'
 					variant='default'
 					data-button-clicked='delete'
-					onClick={modeHandler}
+					onClick={handleDeleteStep}
 				>
 					Delete
+				</Button>
+				<Button
+					size='icon'
+					variant='lightGrey'
+					data-button-clicked='display'
+					onClick={modeHandler}
+				>
+					{displayButtonText}
 				</Button>
 				{/* )} */}
 			</div>
@@ -226,6 +229,16 @@ const GuideStepBody = ({
 							className={styles.textarea}
 							name='description'
 							value={data.description}
+							disabled
+						/>
+					</label>
+					<label>
+						PageUrl:
+						<input
+							className={styles.input}
+							type='text'
+							name='pageUrl'
+							value={data.pageUrl}
 							disabled
 						/>
 					</label>

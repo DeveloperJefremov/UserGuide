@@ -105,6 +105,17 @@ export default function GuideStepForm({
 				/>
 			</label>
 			<label>
+				PageUrl:
+				<input
+					className={styles.input}
+					name='pageUrl'
+					value={formData.pageUrl}
+					disabled={
+						stepListMode === 'create' || stepListMode === 'edit' ? false : true
+					}
+				/>
+			</label>
+			<label>
 				Element ID:
 				<input
 					className={styles.input}
