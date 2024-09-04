@@ -64,7 +64,9 @@ const GuideSetHeader = ({
 	onLaunchSet,
 }) => {
 	// Определяем текст для кнопки в зависимости от состояния setMode
-	let displayButtonText = setMode === 'folded' ? '+' : '-';
+	console.log(setMode);
+	let displayButtonText =
+		setMode === 'folded' || setMode === 'create' ? '+' : '-';
 
 	return (
 		<div className={styles.guideSetHeader}>

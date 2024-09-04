@@ -147,9 +147,9 @@ export default function GuideStepsList({
 								set.setBody.map((step, stepIndex) => (
 									<GuideStep
 										key={`${set.setHeader}-${stepIndex}`}
-										{...step}
+										data={step}
 										mode='folded'
-										onEdit={() => handleEditStep(setIndex, stepIndex)} // Привязываем обработчик редактирования к кнопке
+										handleEditStep={() => handleEditStep(setIndex, stepIndex)} // Привязываем обработчик редактирования к кнопке
 									/>
 								))}
 						</div>

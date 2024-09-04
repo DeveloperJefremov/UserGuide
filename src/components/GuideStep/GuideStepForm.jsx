@@ -74,7 +74,9 @@ export default function GuideStepForm({
 					name='title'
 					value={formData.title}
 					onChange={handleChange}
-					disabled={stepListMode === 'create' || mode === 'edit' ? false : true}
+					disabled={
+						stepListMode === 'create' || stepListMode === 'edit' ? false : true
+					}
 				/>
 			</label>
 			<label>
@@ -85,7 +87,9 @@ export default function GuideStepForm({
 					name='order'
 					value={formData.order}
 					onChange={handleChange}
-					disabled={stepListMode === 'create' || mode === 'edit' ? false : true}
+					disabled={
+						stepListMode === 'create' || stepListMode === 'edit' ? false : true
+					}
 				/>
 			</label>
 			<label>
@@ -95,7 +99,9 @@ export default function GuideStepForm({
 					name='description'
 					value={formData.description}
 					onChange={handleChange}
-					disabled={stepListMode === 'create' || mode === 'edit' ? false : true}
+					disabled={
+						stepListMode === 'create' || stepListMode === 'edit' ? false : true
+					}
 				/>
 			</label>
 			<label>
@@ -106,7 +112,9 @@ export default function GuideStepForm({
 					name='elementId'
 					value={formData.elementId}
 					onChange={handleChange}
-					disabled={stepListMode === 'create' || mode === 'edit' ? false : true}
+					disabled={
+						stepListMode === 'create' || stepListMode === 'edit' ? false : true
+					}
 				/>
 			</label>
 			<label>
@@ -116,7 +124,9 @@ export default function GuideStepForm({
 					type='checkbox'
 					checked={formData.imgChecked}
 					onChange={handleImgCheckboxChange}
-					disabled={stepListMode === 'create' || mode === 'edit' ? false : true}
+					disabled={
+						stepListMode === 'create' || stepListMode === 'edit' ? false : true
+					}
 				/>
 			</label>
 			{formData.imgChecked && formData.imageUrl && (
@@ -130,7 +140,9 @@ export default function GuideStepForm({
 							value={formData.imgWidth}
 							onChange={handleChange}
 							disabled={
-								stepListMode === 'create' || mode === 'edit' ? false : true
+								stepListMode === 'create' || stepListMode === 'edit'
+									? false
+									: true
 							}
 							className={styles.input}
 						/>
@@ -144,7 +156,9 @@ export default function GuideStepForm({
 							value={formData.imgHeight}
 							onChange={handleChange}
 							disabled={
-								stepListMode === 'create' || mode === 'edit' ? false : true
+								stepListMode === 'create' || stepListMode === 'edit'
+									? false
+									: true
 							}
 							className={styles.input}
 						/>

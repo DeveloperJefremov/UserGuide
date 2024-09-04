@@ -4,7 +4,7 @@ import Modal from '../UI/Modal';
 import styles from './GuideStep.module.css';
 import GuideStepForm from './GuideStepForm';
 
-export default function GuideStep(data, onEdit) {
+export default function GuideStep({ data, handleEditStep }) {
 	const [stepMode, setStepMode] = useState('folded');
 	const [formData, setFormData] = useState({
 		title: data.title,
@@ -15,6 +15,10 @@ export default function GuideStep(data, onEdit) {
 		imgHeight: data.imgHeight,
 		imageUrl: data.imageUrl,
 	});
+
+	useEffect(() => {
+		console.dir(handleEditStep instanceof Function);
+	}, [handleEditStep]);
 
 	const handleImgCheckboxChange = async event => {
 		const checked = event.target.checked;
@@ -114,7 +118,7 @@ export default function GuideStep(data, onEdit) {
 	return (
 		<div className={styles.step}>
 			<GuideStepHeader
-				onEdit={onEdit}
+				handleEditStep={handleEditStep}
 				mode={stepMode}
 				modeHandler={setModeHandler}
 				data={data}
@@ -136,7 +140,7 @@ export default function GuideStep(data, onEdit) {
 }
 
 const GuideStepHeader = ({
-	onEdit,
+	handleEditStep,
 	mode,
 	modeHandler,
 	data,
@@ -168,23 +172,23 @@ const GuideStepHeader = ({
 				<Button
 					size='sm'
 					variant='grey'
-					data-button-clicked='edit'
-					onClick={modeHandler}
+					// data-button-clicked='edit'
+					onClick={handleEditStep}
 				>
 					Edit
 				</Button>
-				{mode === 'edit' && (
-					<Button
-						size='sm'
-						variant='default'
-						data-button-clicked='delete'
-						onClick={onEdit}
-					>
-						Delete
-					</Button>
-				)}
+				{/* {mode === 'edit' && ( */}
+				<Button
+					size='sm'
+					variant='default'
+					data-button-clicked='delete'
+					onClick={modeHandler}
+				>
+					Delete
+				</Button>
+				{/* )} */}
 			</div>
-			{mode === 'edit' ? (
+			{/* {mode === 'edit' ? (
 				<Modal>
 					<GuideStepForm
 						// mode={mode}
@@ -194,7 +198,7 @@ const GuideStepHeader = ({
 						onImgCheckboxChange={handleImgCheckboxChange}
 					/>
 				</Modal>
-			) : null}
+			) : null} */}
 		</div>
 	);
 };
