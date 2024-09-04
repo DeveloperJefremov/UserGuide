@@ -2,10 +2,16 @@ import { useState } from 'react';
 import Button from '../Button/Button';
 import GuideStep from '../GuideStep/GuideStep';
 import GuideStepForm from '../GuideStep/GuideStepForm';
-// import Modal from '../UI/Modal';
+import Modal from '../UI/Modal';
 
-export default function GuideStepsList({ data, setGuideSetsList }) {
-	// const [isModalOpen, setIsModalOpen] = useState(false);
+export default function GuideStepsList({
+	data,
+	guideSetsList,
+	setGuideSetsList,
+}) {
+	const [steps, setSteps] = useState(data || []);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isCreatingStep, setIsCreatingStep] = useState(false);
 	const [formData, setFormData] = useState({
 		title: '',
 		description: '',
@@ -15,22 +21,25 @@ export default function GuideStepsList({ data, setGuideSetsList }) {
 		imgHeight: 0,
 		imageUrl: '',
 	});
-	const [steps, setSteps] = useState(data || []);
+	const [stepMode, setStepMode] = useState('folded');
 
 	const handleCreateStep = () => {
-		// setIsModalOpen(true);
+		setIsCreatingStep(true);
+	};
+
+	const handleEditStep = id => {
+		const selectedStep = guideSetsList.find();
 	};
 
 	const handleSave = () => {
 		// Создаем новый шаг
 		const newStep = { ...formData, mode: 'folded' };
-
-		// Обновляем шаги, добавляя новый шаг в существующий setBody
 		let updatedSteps;
+
 		if (steps.length === 0) {
 			updatedSteps = [
 				{
-					setHeader: 'New Set', // Можно задать значение по умолчанию или использовать другой подход
+					setHeader: 'New Set',
 					setBody: [newStep],
 				},
 			];
@@ -46,11 +55,9 @@ export default function GuideStepsList({ data, setGuideSetsList }) {
 			});
 		}
 
-		// Обновляем состояние шагов
 		setSteps(updatedSteps);
-		// setIsModalOpen(false); // Закрываем модальное окно после сохранения
+		setIsCreatingStep(false);
 
-		// Сбрасываем форму после сохранения
 		setFormData({
 			title: '',
 			description: '',
@@ -62,33 +69,24 @@ export default function GuideStepsList({ data, setGuideSetsList }) {
 		});
 	};
 
-	// const handleCancel = () => {
-	// 	setIsModalOpen(false); // Закрываем модальное окно при отмене
-	// }
-
 	const handleFormChange = newFormData => {
 		setFormData(newFormData); // Обновляем данные формы
 	};
 
 	return (
 		<div>
-			{/* Кнопка и модальное окно для создания нового шага */}
 			<div>
 				<h2>Create New Lesson</h2>
 				<Button size='large' variant='lightGrey' onClick={handleCreateStep}>
 					Add: Lesson
 				</Button>
-				{/* {isModalOpen && (
-					<Modal onClick={handleCancel}> */}
-				<h2>Create New Lesson</h2>
-				<GuideStepForm
-					formData={formData}
-					// isEditMode={true}
-					onChange={handleFormChange}
-					// onSave={handleSave}
-					// onCancel={handleCancel}
-				/>
-				{/* </Modal> */}
+				{isCreatingStep && (
+					<GuideStepForm
+						formData={formData}
+						onChange={handleFormChange}
+						onSave={handleSave}
+					/>
+				)}
 			</div>
 
 			<ul>

@@ -4,19 +4,23 @@ import GuideStepsList from '../GuideStepsList/GuideStepsList';
 import styles from './GuideSet.module.css';
 
 export default function GuideSet({
+	setMode: initialSetMode, // Начальное состояние: 'folded' или 'expanded'
 	data = [],
 	title,
 	handleSetChange,
 	onCreateSet,
 	onLaunchSet,
-
+	guideSetsList,
+	setGuideSetsList,
 	handleEditSet,
 	handleDeleteSet,
 }) {
-	const [isContentVisible, setIsContentVisible] = useState(false);
+	// Устанавливаем режим (свёрнутый или развернутый)
+	const [setMode, setSetMode] = useState(initialSetMode);
 
-	const toggleContentVisibility = () => {
-		setIsContentVisible(prevState => !prevState);
+	// Логика переключения режима отображения
+	const toggleSetMode = () => {
+		setSetMode(prevMode => (prevMode === 'folded' ? 'expanded' : 'folded'));
 	};
 
 	if (!data && title !== 'Create New Set') return null;
@@ -24,26 +28,27 @@ export default function GuideSet({
 	return (
 		<div className={styles.guideSet}>
 			<GuideSetHeader
+				setMode={setMode} // Передаем текущее состояние в Header
 				handleEditSet={handleEditSet}
 				handleDeleteSet={handleDeleteSet}
 				title={data && data[0] ? data[0].setHeader : title}
-				onToggleContent={!onCreateSet && toggleContentVisibility}
-				isContentVisible={isContentVisible}
-				onClick={handleSetChange}
+				onToggleContent={toggleSetMode} // Добавляем логику переключения
 				onLaunchSet={onLaunchSet}
 			/>
 
-			{isContentVisible && (
-				<GuideSetBody>
-					{/* <GuideStepsList
+			{/* Отображаем GuideSetBody и GuideSetFooter только в режиме expanded */}
+			{setMode === 'expanded' && (
+				<GuideSetBody setMode={setMode}>
+					<GuideStepsList
 						data={data}
 						key={data.id}
 						setGuideSetsList={setGuideSetsList}
-					/> */}
+						guideSetsList={guideSetsList}
+					/>
 				</GuideSetBody>
 			)}
 
-			{isContentVisible && data && (
+			{setMode === 'expanded' && (
 				<GuideSetFooter content={data[0] ? data[0].setFooter : ''} />
 			)}
 		</div>
@@ -51,15 +56,16 @@ export default function GuideSet({
 }
 
 const GuideSetHeader = ({
+	setMode,
 	handleDeleteSet,
 	handleEditSet,
 	title,
-	handleSetChange,
 	onToggleContent,
-	isContentVisible,
-
 	onLaunchSet,
 }) => {
+	// Определяем текст для кнопки в зависимости от состояния setMode
+	let displayButtonText = setMode === 'folded' ? '+' : '-';
+
 	return (
 		<div className={styles.guideSetHeader}>
 			<h2>{title}</h2>
@@ -76,24 +82,32 @@ const GuideSetHeader = ({
 						Launch: Lesson
 					</Button>
 				)}
-				{onToggleContent && (
-					<Button size='icon' onClick={onToggleContent}>
-						{isContentVisible ? '-' : '+'}
-					</Button>
-				)}
+
+				{/* Кнопка для переключения свёрнутого/развернутого состояния */}
+				<Button size='icon' variant='default' onClick={onToggleContent}>
+					{displayButtonText}
+				</Button>
 			</div>
 		</div>
 	);
 };
 
-const GuideSetBody = ({ children }) => {
-	return <div className={styles.mainContentBody}>{children}</div>;
+const GuideSetBody = ({ children, setMode }) => {
+	// Применяем CSS классы в зависимости от состояния setMode
+	let cssClassList = `${styles.setBody} ${
+		setMode === 'expanded' ? styles.expanded : styles.folded
+	}`;
+
+	return <div className={cssClassList}>{children}</div>;
 };
 
-const GuideSetFooter = ({ content }) => {
+const GuideSetFooter = ({ content, setMode }) => {
+	const cssClassList = `${styles.stepFooter} ${
+		setMode === 'expanded' || setMode === 'edit' ? styles.expanded : ''
+	} ${setMode === 'folded' ? styles.folded : ''}`;
 	if (!content) return null;
 	return (
-		<div className={styles.guideSetFooter}>
+		<div className={cssClassList}>
 			<p>{content}</p>
 		</div>
 	);

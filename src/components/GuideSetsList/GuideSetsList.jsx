@@ -105,6 +105,7 @@ export default function GuideSetsList() {
 							data={guideSet.data}
 							onLaunchSet={() => alert('Launch button clicked')}
 							setGuideSetsList={setGuideSetsList}
+							guideSetsList={guideSetsList}
 						/>
 					</li>
 				))}
