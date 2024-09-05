@@ -17,7 +17,7 @@ const mockData = [
 						pageUrl: 'enter page url',
 						elementId: 'btn-1',
 						imgChecked: true,
-						imgWidth: 300,
+						imgWidth: 200,
 						imgHeight: 200,
 						imageUrl:
 							'https://images.dog.ceo/breeds/labrador/n02099712_7866.jpg',

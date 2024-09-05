@@ -4,7 +4,13 @@ import Modal from '../UI/Modal';
 import styles from './GuideStep.module.css';
 import GuideStepForm from './GuideStepForm';
 
-export default function GuideStep({ data, handleEditStep, handleDeleteStep }) {
+export default function GuideStep({
+	data,
+	handleEditStep,
+	handleDeleteStep,
+	totalSteps,
+	setListMode,
+}) {
 	const [stepMode, setStepMode] = useState('folded');
 	const [formData, setFormData] = useState({
 		title: data.title,
@@ -17,9 +23,22 @@ export default function GuideStep({ data, handleEditStep, handleDeleteStep }) {
 		imageUrl: data.imageUrl,
 	});
 
-	useEffect(() => {
-		console.dir(handleEditStep instanceof Function);
-	}, [handleEditStep]);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	// useEffect(() => {
+	// 	console.dir(handleEditStep instanceof Function);
+	// }, [handleEditStep]);
+
+	// Следим за изменением setListMode
+	// useEffect(() => {
+	// 	if (setListMode === 'execute') {
+	// 		setStepMode('execute'); // Устанавливаем stepMode в 'execute'
+	// 		setIsModalOpen(true); // Открываем модальное окно
+	// 	} else {
+	// 		setStepMode('folded'); // Возвращаем в 'folded' если setListMode изменился
+	// 		setIsModalOpen(false); // Закрываем модальное окно
+	// 	}
+	// }, [setListMode]);
 
 	const handleImgCheckboxChange = async event => {
 		const checked = event.target.checked;
@@ -90,7 +109,7 @@ export default function GuideStep({ data, handleEditStep, handleDeleteStep }) {
 
 	const handleSave = () => {
 		// Сохраняем изменения
-		console.log('Saved data:', formData);
+		// console.log('Saved data:', formData);
 		setStepMode('folded'); // Возвращаем в свернутый режим после сохранения
 	};
 
@@ -118,6 +137,8 @@ export default function GuideStep({ data, handleEditStep, handleDeleteStep }) {
 
 	return (
 		<div className={styles.step}>
+			<h2>setListMode: {setListMode}</h2>
+
 			<GuideStepHeader
 				handleDeleteStep={handleDeleteStep}
 				handleEditStep={handleEditStep}
@@ -128,6 +149,8 @@ export default function GuideStep({ data, handleEditStep, handleDeleteStep }) {
 				handleImgCheckboxChange={handleImgCheckboxChange}
 			/>
 			<GuideStepBody
+				totalSteps={totalSteps}
+				setListMode={setListMode}
 				mode={stepMode}
 				data={data}
 				handleImgCheckboxChange={handleImgCheckboxChange}
@@ -207,6 +230,8 @@ const GuideStepHeader = ({
 };
 
 const GuideStepBody = ({
+	totalSteps,
+	setListMode,
 	mode,
 	data,
 
@@ -216,9 +241,9 @@ const GuideStepBody = ({
 		mode === 'expanded' ? styles.expanded : ''
 	} ${mode === 'folded' ? styles.folded : ''}`;
 
-	useEffect(() => {
-		console.log('mode in body: ', mode);
-	}, [mode]);
+	// useEffect(() => {
+	// 	console.log('mode in body: ', mode);
+	// }, [mode]);
 	return (
 		<div className={cssClassList}>
 			<section className={styles.stepContent}>
@@ -293,6 +318,28 @@ const GuideStepBody = ({
 					)}
 				</div>
 			</section>
+
+			{setListMode === 'execute' && (
+				<Modal>
+					<div>
+						<h3>{data.title}</h3>
+						{data.imageUrl && (
+							<img
+								src={data.imageUrl}
+								alt={data.title}
+								width={data.imgWidth}
+								height={data.imgHeight}
+							/>
+						)}
+						<p>
+							Step: {totalSteps} of {totalSteps.length}
+						</p>
+						<Button>Previous</Button>
+						<Button>Close</Button>
+						<Button>Next</Button>
+					</div>
+				</Modal>
+			)}
 		</div>
 	);
 };

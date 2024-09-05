@@ -4,7 +4,7 @@ import GuideStepsList from '../GuideStepsList/GuideStepsList';
 import styles from './GuideSet.module.css';
 
 export default function GuideSet({
-	setListMode: initialSetMode, // Начальное состояние: 'folded' или 'expanded'
+	setListMode, // Начальное состояние: 'folded' или 'expanded'
 	data = [],
 	title,
 	handleSetChange,
@@ -16,7 +16,7 @@ export default function GuideSet({
 	handleDeleteSet,
 }) {
 	// Устанавливаем режим (свёрнутый или развернутый)
-	const [setMode, setSetMode] = useState(initialSetMode);
+	const [setMode, setSetMode] = useState(setListMode);
 
 	// Логика переключения режима отображения
 	const toggleSetMode = () => {
@@ -24,6 +24,8 @@ export default function GuideSet({
 			prevMode === 'folded' || setMode === 'create' ? 'expanded' : 'folded'
 		);
 	};
+
+	// const totalSteps = data ? data.length : 0;
 
 	if (!data && title !== 'Create New Set') return null;
 
@@ -41,6 +43,8 @@ export default function GuideSet({
 			{setMode === 'expanded' && (
 				<GuideSetBody setMode={setMode}>
 					<GuideStepsList
+						setListMode={setListMode}
+						// totalSteps={totalSteps}
 						data={data}
 						key={data.id}
 						setGuideSetsList={setGuideSetsList}

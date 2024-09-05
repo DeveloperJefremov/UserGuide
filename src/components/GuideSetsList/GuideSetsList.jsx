@@ -11,11 +11,17 @@ export default function GuideSetsList() {
 	const [newSetTitle, setNewSetTitle] = useState('');
 	const [setListMode, setSetListMode] = useState('folded');
 	const [currentSetId, setCurrentSetId] = useState(null);
+	// const [targetElementId, setTargetElementId] = useState('');
 
 	const handleCreateSet = () => {
 		setNewSetTitle('');
 		setSetListMode('create');
 		setIsModalOpen(true);
+	};
+
+	const handleLaunchSet = () => {
+		setSetListMode('execute');
+		console.log('Launching set:', { setListMode });
 	};
 
 	const handleEditSet = id => {
@@ -74,6 +80,20 @@ export default function GuideSetsList() {
 		setNewSetTitle(''); // Очищаем заголовок
 	};
 
+	// const handleLaunchSet = id => {
+	// 	const element = document.getElementById(id); // Получаем элемент по id
+	// 	if (element) {
+	// 		const rect = element.getBoundingClientRect();
+	// 		setPosition({
+	// 			top: `${rect.top + window.scrollY}px`,
+	// 			left: `${rect.right + window.scrollX + 30}px`, // Отступ вправо на 30px
+	// 		});
+	// 		setTargetElementId(id);
+	// 		setShowModal(true); // Показать модальное окно
+	// 		console.log('position', position);
+	// 	}
+	// };
+
 	return (
 		<div>
 			<h2>Create New Set</h2>
@@ -103,7 +123,7 @@ export default function GuideSetsList() {
 							handleDeleteSet={() => handleDeleteSet(guideSet.id)} // Передаем ID для удаления
 							setListMode={setListMode}
 							data={guideSet.data}
-							onLaunchSet={() => alert('Launch button clicked')}
+							onLaunchSet={handleLaunchSet}
 							setGuideSetsList={setGuideSetsList}
 							guideSetsList={guideSetsList}
 						/>
@@ -113,5 +133,3 @@ export default function GuideSetsList() {
 		</div>
 	);
 }
-
-// disabled={mode === 'edit' || mode === 'create' ? false : true}
