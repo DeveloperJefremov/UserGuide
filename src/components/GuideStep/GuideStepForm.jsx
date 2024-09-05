@@ -110,6 +110,7 @@ export default function GuideStepForm({
 					className={styles.input}
 					name='pageUrl'
 					value={formData.pageUrl}
+					onChange={handleChange}
 					disabled={
 						stepListMode === 'create' || stepListMode === 'edit' ? false : true
 					}

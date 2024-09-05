@@ -223,35 +223,41 @@ const GuideStepBody = ({
 		<div className={cssClassList}>
 			<section className={styles.stepContent}>
 				<div className={styles.stepDetails}>
-					<label>
-						Description:
-						<textarea
-							className={styles.textarea}
-							name='description'
-							value={data.description}
-							disabled
-						/>
-					</label>
-					<label>
-						PageUrl:
-						<input
-							className={styles.input}
-							type='text'
-							name='pageUrl'
-							value={data.pageUrl}
-							disabled
-						/>
-					</label>
-					<label>
-						Element ID:
-						<input
-							className={styles.input}
-							type='text'
-							name='elementId'
-							value={data.elementId}
-							disabled
-						/>
-					</label>
+					{data.description && (
+						<label>
+							Description:
+							<textarea
+								className={styles.textarea}
+								name='description'
+								value={data.description}
+								disabled
+							/>
+						</label>
+					)}
+					{data.pageUrl && (
+						<label>
+							PageUrl:
+							<input
+								className={styles.input}
+								type='text'
+								name='pageUrl'
+								value={data.pageUrl}
+								disabled
+							/>
+						</label>
+					)}
+					{data.elementId && (
+						<label>
+							Element ID:
+							<input
+								className={styles.input}
+								type='text'
+								name='elementId'
+								value={data.elementId}
+								disabled
+							/>
+						</label>
+					)}
 					{data.imgChecked && data.imageUrl && (
 						<div>
 							<label>

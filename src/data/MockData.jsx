@@ -14,7 +14,7 @@ const mockData = [
 						order: 1,
 						title: 'Step 1: Introduction',
 						description: 'This is the first step of the guide.',
-						pageUrl: '',
+						pageUrl: 'enter page url',
 						elementId: 'btn-1',
 						imgChecked: true,
 						imgWidth: 300,
@@ -27,7 +27,7 @@ const mockData = [
 						order: 4,
 						title: 'Step 4: Execution',
 						description: 'Execute the following commands to proceed.',
-						pageUrl: '',
+						pageUrl: 'enter page url',
 						elementId: 'btn-2',
 						imgChecked: false,
 						imgWidth: 300,
@@ -53,7 +53,7 @@ const mockData = [
 
 						description:
 							'Setup your environment with the following instructions.',
-						pageUrl: '',
+						pageUrl: 'enter page url',
 						elementId: 'link-1',
 						imgChecked: false,
 						imgWidth: 300,
@@ -67,7 +67,7 @@ const mockData = [
 						title: 'Step 5: Verification',
 
 						description: 'Verify that everything is working as expected.',
-						pageUrl: '',
+						pageUrl: 'enter page url',
 						elementId: 'link-2',
 						imgChecked: true,
 						imgWidth: 500,
@@ -90,9 +90,8 @@ const mockData = [
 						id: '3',
 						order: 3,
 						title: 'Step 3: Configuration',
-
 						description: 'Configure your settings to match the requirements.',
-						pageUrl: '',
+						pageUrl: 'enter page url',
 						elementId: 'icon-1',
 						imgChecked: true,
 						imgWidth: 400,
@@ -104,9 +103,8 @@ const mockData = [
 						id: '6',
 						order: 6,
 						title: 'Step 6: Troubleshooting',
-
 						description: 'Troubleshoot common issues that might arise.',
-						pageUrl: '',
+						pageUrl: 'enter page url',
 						elementId: 'icon-2',
 						imgChecked: true,
 						imgWidth: 350,
