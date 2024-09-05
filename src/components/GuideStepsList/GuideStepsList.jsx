@@ -13,6 +13,8 @@ export default function GuideStepsList({
 	const [stepListMode, setStepListMode] = useState('folded');
 	const [steps, setSteps] = useState(data || []);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [activeStepId, setActiveStepId] = useState(0);
+	const [activeSteps, setActiveSteps] = useState([]);
 	const [currentStepIndex, setCurrentStepIndex] = useState(null); // Для хранения индекса редактируемого шага
 	const [formData, setFormData] = useState({
 		title: '',
@@ -135,6 +137,43 @@ export default function GuideStepsList({
 		setCurrentStepIndex(null); // Сбрасываем текущий индекс
 	};
 
+	const handleNext = () => {
+		if (
+			activeStepId <
+			steps[currentStepIndex?.setIndex]?.setBody.length - 1 // Проверяем, что есть куда идти дальше
+		) {
+			setActiveStepId(prev => prev + 1);
+			setCurrentStepIndex(prev => ({
+				...prev,
+				stepIndex: prev?.stepIndex + 1, // Обновляем индекс текущего шага
+			}));
+		}
+	};
+
+	const handlePrevious = () => {
+		if (activeStepId > 0) {
+			// Проверяем, что не находимся на первом шаге
+			setActiveStepId(prev => prev - 1);
+			setCurrentStepIndex(prev => ({
+				...prev,
+				stepIndex: prev?.stepIndex - 1, // Обновляем индекс текущего шага
+			}));
+		}
+	};
+
+	const toggleStep = (setIndex, stepIndex) => {
+		const stepId = `${setIndex}-${stepIndex}`; // Уникальный идентификатор шага
+		setActiveSteps(prevActiveSteps => {
+			if (prevActiveSteps.includes(stepId)) {
+				// Убираем шаг из активных
+				return prevActiveSteps.filter(id => id !== stepId);
+			} else {
+				// Добавляем шаг в активные
+				return [...prevActiveSteps, stepId];
+			}
+		});
+	};
+
 	return (
 		<div>
 			<div>
@@ -160,25 +199,50 @@ export default function GuideStepsList({
 				<h2>Guide Steps List:</h2>
 				{steps.map((set, setIndex) => {
 					const totalSteps = set.setBody ? set.setBody.length : 0; // Динамическое вычисление totalSteps
-
+					// const totalSteps = set.setBody.length;
 					return (
 						<div key={set.setHeader || `set-${setIndex}`}>
 							<div>
-								<h2>total steps:{totalSteps}</h2>
-								{set.setBody &&
-									set.setBody.map((step, stepIndex) => (
-										<GuideStep
-											setListMode={setListMode}
-											totalSteps={totalSteps} // Передаем totalSteps в компонент GuideStep
-											key={`${set.setHeader}-${stepIndex}`}
-											data={step}
-											mode='folded'
-											handleEditStep={() => handleEditStep(setIndex, stepIndex)} // Привязываем обработчик редактирования к кнопке
-											handleDeleteStep={() =>
-												handleDeleteStep(setIndex, stepIndex)
-											} // Привязываем обработчик удаления к кнопке
-										/>
-									))}
+								{setListMode === 'execute'
+									? // Если режим execute, отображаем только активный шаг
+									  set.setBody
+											.filter((_, stepIndex) => stepIndex === activeStepId)
+											.map((step, stepIndex) => (
+												<GuideStep
+													handleNext={handleNext}
+													handlePrevious={handlePrevious}
+													setListMode={setListMode}
+													totalSteps={totalSteps} // Передаем totalSteps в компонент GuideStep
+													key={`${set.setHeader}-${stepIndex}`}
+													data={step}
+													mode='folded'
+													handleEditStep={() =>
+														handleEditStep(setIndex, stepIndex)
+													} // Привязываем обработчик редактирования к кнопке
+													handleDeleteStep={() =>
+														handleDeleteStep(setIndex, stepIndex)
+													} // Привязываем обработчик удаления к кнопке
+												/>
+											))
+									: // В остальных случаях отображаем все шаги
+									  set.setBody &&
+									  set.setBody.map((step, stepIndex) => (
+											<GuideStep
+												handleNext={handleNext}
+												handlePrevious={handlePrevious}
+												setListMode={setListMode}
+												totalSteps={totalSteps} // Передаем totalSteps в компонент GuideStep
+												key={`${set.setHeader}-${stepIndex}`}
+												data={step}
+												mode='folded'
+												handleEditStep={() =>
+													handleEditStep(setIndex, stepIndex)
+												} // Привязываем обработчик редактирования к кнопке
+												handleDeleteStep={() =>
+													handleDeleteStep(setIndex, stepIndex)
+												} // Привязываем обработчик удаления к кнопке
+											/>
+									  ))}
 							</div>
 						</div>
 					);

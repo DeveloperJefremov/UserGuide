@@ -6,10 +6,13 @@ import GuideStepForm from './GuideStepForm';
 
 export default function GuideStep({
 	data,
+	handleNext,
+	handlePrevious,
 	handleEditStep,
 	handleDeleteStep,
 	totalSteps,
 	setListMode,
+	currentStepIndex, // Передаем индекс текущего шага из родительского компонента
 }) {
 	const [stepMode, setStepMode] = useState('folded');
 	const [formData, setFormData] = useState({
@@ -135,6 +138,8 @@ export default function GuideStep({
 		setFormData(newFormData); // Обновляем состояние при изменении в форме
 	};
 
+	// Обработчик для кнопки "Previous"
+
 	return (
 		<div className={styles.step}>
 			<h2>setListMode: {setListMode}</h2>
@@ -149,11 +154,14 @@ export default function GuideStep({
 				handleImgCheckboxChange={handleImgCheckboxChange}
 			/>
 			<GuideStepBody
+				handlePrevious={handlePrevious}
+				handleNext={handleNext}
 				totalSteps={totalSteps}
 				setListMode={setListMode}
 				mode={stepMode}
 				data={data}
 				handleImgCheckboxChange={handleImgCheckboxChange}
+				currentStepIndex={currentStepIndex}
 			/>
 			<GuideStepFooter
 				mode={stepMode}
@@ -230,6 +238,9 @@ const GuideStepHeader = ({
 };
 
 const GuideStepBody = ({
+	handleNext,
+	handlePrevious,
+
 	totalSteps,
 	setListMode,
 	mode,
@@ -318,26 +329,28 @@ const GuideStepBody = ({
 					)}
 				</div>
 			</section>
-
 			{setListMode === 'execute' && (
 				<Modal>
-					<div>
-						<h3>{data.title}</h3>
-						{data.imageUrl && (
-							<img
-								src={data.imageUrl}
-								alt={data.title}
-								width={data.imgWidth}
-								height={data.imgHeight}
-							/>
-						)}
-						<p>
-							Step: {totalSteps} of {totalSteps.length}
-						</p>
-						<Button>Previous</Button>
-						<Button>Close</Button>
-						<Button>Next</Button>
-					</div>
+					<h3>{data.title}</h3>
+					{data.imageUrl && (
+						<img
+							src={data.imageUrl}
+							alt={data.title}
+							width={data.imgWidth}
+							height={data.imgHeight}
+						/>
+					)}
+					<p>{/* Step: {currentStepIndex + 1} of {totalSteps} */}</p>
+					<Button onClick={handlePrevious} disabled={data.stepIndex === 0}>
+						Previous
+					</Button>
+					<Button variant='lightGrey'>Close</Button>
+					<Button
+						onClick={handleNext}
+						disabled={data.stepIndex === totalSteps - 1}
+					>
+						Next
+					</Button>
 				</Modal>
 			)}
 		</div>

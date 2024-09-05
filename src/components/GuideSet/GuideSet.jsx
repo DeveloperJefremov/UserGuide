@@ -109,7 +109,7 @@ const GuideSetFooter = ({ onLaunchSet, setMode }) => {
 		<div className={cssClassList}>
 			{onLaunchSet && (
 				<Button onClick={onLaunchSet} variant='default' size='lg'>
-					Launch: Lesson
+					Launch: Tutorial
 				</Button>
 			)}
 		</div>
