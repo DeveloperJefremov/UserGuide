@@ -11,22 +11,23 @@ export default function GuideStepForm({
 }) {
 	const [formData, setFormData] = useState(initialFormData);
 
+	// Обновляем форму при изменении начальных данных
 	useEffect(() => {
 		setFormData(initialFormData);
 	}, [initialFormData]);
 
-	const handleChange = e => {
+	// Обрабатываем изменения формы
+	const handleInputChange = e => {
 		const { name, value, type, checked } = e.target;
-		const updatedData = {
+		const updatedFormData = {
 			...formData,
-			[name]: type === 'checkbox' ? checked : value,
+			[name]: type === 'checkbox' ? checked : value, // Обрабатываем checkbox отдельно
 		};
-		setFormData(updatedData);
-		// if (onChange) {
-		// 	onChange(updatedData); // Передаем изменения в родительский компонент
-		// }
+		setFormData(updatedFormData);
+		onChange(updatedFormData); // Передаем изменения в родительский компонент
 	};
 
+	// Обработка изменения checkbox для изображения
 	const handleImgCheckboxChange = async e => {
 		const checked = e.target.checked;
 		let updatedData = { ...formData, imgChecked: checked };
@@ -56,12 +57,8 @@ export default function GuideStepForm({
 		}
 
 		setFormData(updatedData);
-		if (onChange) {
-			onChange(updatedData); // Передаем изменения в родительский компонент
-		}
+		onChange(updatedData); // Передаем изменения в родительский компонент
 	};
-
-	// Проверка, активны ли поля (если mode === 'create')
 
 	return (
 		<div className={styles.stepDetails}>
@@ -72,8 +69,8 @@ export default function GuideStepForm({
 					type='text'
 					name='title'
 					value={formData.title}
-					onChange={handleChange}
-					disabled={mode === 'create' || mode === 'edit' ? false : true}
+					onChange={handleInputChange}
+					disabled={mode !== 'create' && mode !== 'edit'}
 				/>
 			</label>
 			<label>
@@ -83,8 +80,8 @@ export default function GuideStepForm({
 					type='number'
 					name='order'
 					value={formData.order}
-					onChange={handleChange}
-					disabled={mode === 'create' || mode === 'edit' ? false : true}
+					onChange={handleInputChange}
+					disabled={mode !== 'create' && mode !== 'edit'}
 				/>
 			</label>
 			<label>
@@ -93,8 +90,8 @@ export default function GuideStepForm({
 					className={styles.textarea}
 					name='description'
 					value={formData.description}
-					onChange={handleChange}
-					disabled={mode === 'create' || mode === 'edit' ? false : true}
+					onChange={handleInputChange}
+					disabled={mode !== 'create' && mode !== 'edit'}
 				/>
 			</label>
 			<label>
@@ -103,8 +100,8 @@ export default function GuideStepForm({
 					className={styles.input}
 					name='pageUrl'
 					value={formData.pageUrl}
-					onChange={handleChange}
-					disabled={mode === 'create' || mode === 'edit' ? false : true}
+					onChange={handleInputChange}
+					disabled={mode !== 'create' && mode !== 'edit'}
 				/>
 			</label>
 			<label>
@@ -114,8 +111,8 @@ export default function GuideStepForm({
 					type='text'
 					name='elementId'
 					value={formData.elementId}
-					onChange={handleChange}
-					disabled={mode === 'create' || mode === 'edit' ? false : true}
+					onChange={handleInputChange}
+					disabled={mode !== 'create' && mode !== 'edit'}
 				/>
 			</label>
 			<label>
@@ -125,20 +122,20 @@ export default function GuideStepForm({
 					type='checkbox'
 					checked={formData.imgChecked}
 					onChange={handleImgCheckboxChange}
-					disabled={mode === 'create' || mode === 'edit' ? false : true}
+					disabled={mode !== 'create' && mode !== 'edit'}
 				/>
 			</label>
 			{formData.imgChecked && formData.imageUrl && (
 				<>
 					<label>
-						Image
+						Image Width:
 						<input
 							type='number'
 							name='imgWidth'
 							min='1'
 							value={formData.imgWidth}
-							onChange={handleChange}
-							disabled={mode === 'create' || mode === 'edit' ? false : true}
+							onChange={handleInputChange}
+							disabled={mode !== 'create' && mode !== 'edit'}
 							className={styles.input}
 						/>
 					</label>
@@ -149,8 +146,8 @@ export default function GuideStepForm({
 							name='imgHeight'
 							min='1'
 							value={formData.imgHeight}
-							onChange={handleChange}
-							disabled={mode === 'create' || mode === 'edit' ? false : true}
+							onChange={handleInputChange}
+							disabled={mode !== 'create' && mode !== 'edit'}
 							className={styles.input}
 						/>
 					</label>

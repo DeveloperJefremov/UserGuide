@@ -47,19 +47,19 @@ export default function GuideSet({
 			/>
 
 			{/* Отображаем GuideSetBody и GuideSetFooter только в режиме expanded */}
-			{/* {isShownSet && ( */}
-			<GuideSetBody isShownSet={isShownSet}>
-				<GuideStepsList
-					mode={mode}
-					onModeChange={onModeChange}
-					// totalSteps={totalSteps}
-					// stepsData={setData}
-					key={guideSet.id}
-					// setGuideSetsList={setGuideSetsList}
-					steps={guideSet.setBody}
-				/>
-			</GuideSetBody>
-			{/* )} */}
+			{isShownSet && (
+				<GuideSetBody isShownSet={isShownSet}>
+					<GuideStepsList
+						mode={mode}
+						onModeChange={onModeChange}
+						// totalSteps={totalSteps}
+						// stepsData={setData}
+						key={guideSet.id}
+						// setGuideSetsList={setGuideSetsList}
+						steps={guideSet.setBody}
+					/>
+				</GuideSetBody>
+			)}
 
 			{isShownSet && (
 				<GuideSetFooter

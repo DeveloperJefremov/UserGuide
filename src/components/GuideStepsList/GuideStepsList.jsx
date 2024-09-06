@@ -7,20 +7,10 @@ import Modal from '../UI/Modal';
 export default function GuideStepsList({
 	mode,
 	onModeChange,
-	steps,
-	onStepsUpdate,
-	// stepsData,
-	// guideSetsList,
-	// setGuideSetsList,
+	steps: initialSteps,
 }) {
-	useEffect(() => {
-		console.log('steps', steps);
-	}, [steps]);
-	// const [stepListMode, setStepListMode] = useState('folded');
-	// const [steps, setSteps] = useState(stepsData || []);
+	const [steps, setSteps] = useState(initialSteps || []);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	// const [activeStepId, setActiveStepId] = useState(0);
-	// const [activeSteps, setActiveSteps] = useState([]);
 	const [currentStepIndex, setCurrentStepIndex] = useState(0); // Для хранения индекса редактируемого шага
 	const [formData, setFormData] = useState({
 		title: '',
@@ -33,58 +23,34 @@ export default function GuideStepsList({
 		imageUrl: '',
 	});
 
-	useEffect(() => {
-		console.log('stepsData', steps);
-	}, [steps]);
 	// Создание нового шага
 	const handleCreateStep = () => {
-		setFormData(''); // Очищаем данные формы
+		setFormData({
+			title: '',
+			description: '',
+			pageUrl: '',
+			elementId: '',
+			imgChecked: false,
+			imgWidth: 0,
+			imgHeight: 0,
+			imageUrl: '',
+		}); // Очищаем данные формы
 		onModeChange('create'); // Устанавливаем режим создания
 		setIsModalOpen(true); // Открываем модальное окно
 	};
 
-	// Редактирование существующего шага
-	const handleEditStep = stepIndex => {
-		const selectedStep = steps[stepIndex]; // Получаем данные выбранного шага
-		setFormData(selectedStep); // Заполняем форму данными редактируемого шага
-		setCurrentStepIndex({ stepIndex }); // Запоминаем индекс редактируемого шага
-		onModeChange('edit'); // Устанавливаем режим редактирования
-		setIsModalOpen(true); // Открываем модальное окно
-	};
-
-	const handleDeleteStep = stepIndex => {
-		// Фильтруем шаги, исключая тот, который должен быть удален
-		const updatedSteps = steps.filter((_, index) => index !== stepIndex);
-
-		// Обновляем список шагов
-		onStepsUpdate(updatedSteps);
-	};
-
-	// Сохранение нового шага или редактирование существующего
+	// Сохранение нового шага
 	const handleSaveStep = () => {
 		if (mode === 'create') {
-			// Создаем новый шаг
-			const newStep = { ...formData, mode: 'folded' };
-			let updatedSteps;
+			// Создаем новый шаг с уникальным ID
+			const newStep = {
+				...formData,
+				id: String(steps.length + 1), // Генерируем новый ID
+				order: steps.length + 1, // Устанавливаем порядок
+			};
 
-			if (steps.length === 0) {
-				updatedSteps = [
-					{
-						setHeader: 'New Set',
-						setBody: [newStep],
-					},
-				];
-			} else {
-				updatedSteps = steps.map((set, index) => {
-					if (index === steps.length - 1) {
-						return {
-							...set,
-							setBody: [...(set.setBody || []), newStep],
-						};
-					}
-					return set;
-				});
-			}
+			// Обновляем состояние шагов
+			setSteps([...steps, newStep]);
 
 			// Закрываем модальное окно и сбрасываем форму
 			setIsModalOpen(false);
@@ -98,13 +64,43 @@ export default function GuideStepsList({
 				imgHeight: 0,
 				imageUrl: '',
 			});
-			setCurrentStepIndex(null); // Сбрасываем текущий индекс шага
+			setCurrentStepIndex(steps.length); // Устанавливаем новый индекс для execute режима
+		} else if (mode === 'edit') {
+			const updatedSteps = steps.map((step, index) =>
+				index === currentStepIndex ? { ...step, ...formData } : step
+			);
+			setSteps(updatedSteps);
+
+			// Закрываем модальное окно
+			setIsModalOpen(false);
+			setCurrentStepIndex(null);
+		}
+	};
+
+	// Удаление шага
+	const handleDeleteStep = stepIndex => {
+		const updatedSteps = steps.filter((_, index) => index !== stepIndex);
+		setSteps(updatedSteps); // Обновляем шаги в состоянии
+
+		// Обновляем currentStepIndex, чтобы не выйти за пределы массива
+		if (currentStepIndex >= updatedSteps.length) {
+			setCurrentStepIndex(updatedSteps.length - 1);
 		}
 	};
 
 	const handleFormChange = newFormData => {
 		setFormData(newFormData); // Обновляем данные формы
 	};
+
+	const handleEditStep = stepIndex => {
+		const selectedStep = steps[stepIndex]; // Получаем данные выбранного шага
+		setFormData(selectedStep); // Заполняем форму данными редактируемого шага
+		setCurrentStepIndex(stepIndex); // Запоминаем индекс редактируемого шага
+		onModeChange('edit'); // Устанавливаем режим редактирования
+		setIsModalOpen(true); // Открываем модальное окно
+	};
+
+	// Сохранение нового шага или редактирование существующего
 
 	const handleCancel = () => {
 		setIsModalOpen(false); // Закрываем окно
@@ -121,12 +117,18 @@ export default function GuideStepsList({
 		setCurrentStepIndex(null); // Сбрасываем текущий индекс
 	};
 
+	// Переход на следующий шаг
 	const handleNext = () => {
-		setCurrentStepIndex(prev => prev + 1);
+		if (currentStepIndex < steps.length - 1) {
+			setCurrentStepIndex(prev => prev + 1);
+		}
 	};
 
+	// Переход на предыдущий шаг
 	const handlePrevious = () => {
-		setCurrentStepIndex(prev => prev - 1);
+		if (currentStepIndex > 0) {
+			setCurrentStepIndex(prev => prev - 1);
+		}
 	};
 
 	return (
@@ -155,24 +157,19 @@ export default function GuideStepsList({
 				{steps.map((step, stepIndex) => {
 					return (
 						<GuideStep
-							// handleNext={handleNext}
-							// handlePrevious={handlePrevious}
-							// totalSteps={steps.length}
-
-							// onChange={(newStep) => }
 							key={`step-${step.id}`}
 							step={step}
-							// mode={mode}
 							handleEditStep={() => handleEditStep(stepIndex)}
 							handleDeleteStep={() => handleDeleteStep(stepIndex)}
 						/>
 					);
 				})}
 			</ul>
-			{mode === 'execute' && (
+
+			{mode === 'execute' && steps[currentStepIndex] && (
 				<Modal>
-					<h3>{steps[currentStepIndex].title}</h3>
-					{steps[currentStepIndex].imageUrl && (
+					<h3>{steps[currentStepIndex]?.title}</h3>
+					{steps[currentStepIndex]?.imageUrl && (
 						<img
 							src={steps[currentStepIndex].imageUrl}
 							alt={steps[currentStepIndex].title}
@@ -180,17 +177,16 @@ export default function GuideStepsList({
 							height={steps[currentStepIndex].imgHeight}
 						/>
 					)}
-					<p>TotalSteps {`${currentStepIndex + 1} of ${steps.length}`}</p>
-					<Button
-						onClick={handlePrevious}
-						disabled={steps[currentStepIndex].stepIndex === 0}
-					>
+					<p>Total Steps: {`${currentStepIndex + 1} of ${steps.length}`}</p>
+					<Button onClick={handlePrevious} disabled={currentStepIndex === 0}>
 						Previous
 					</Button>
-					<Button variant='lightGrey'>Close</Button>
+					<Button variant='lightGrey' onClick={handleCancel}>
+						Close
+					</Button>
 					<Button
 						onClick={handleNext}
-						disabled={steps[currentStepIndex].stepIndex === steps.length - 1}
+						disabled={currentStepIndex === steps.length - 1}
 					>
 						Next
 					</Button>

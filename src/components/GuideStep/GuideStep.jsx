@@ -15,6 +15,10 @@ export default function GuideStep({
 	// mode,
 	// currentStepIndex, // Передаем индекс текущего шага из родительского компонента
 }) {
+	// useEffect(() => {
+	// 	console.log('step', step);
+	// }, [step]);
+
 	const [isShownStep, setIsShownStep] = useState(false);
 	const [formData, setFormData] = useState({
 		title: step.title,
@@ -114,7 +118,7 @@ export default function GuideStep({
 				// mode={mode}
 				// onChange={handleFormChange}
 				isShownStep={isShownStep}
-				step={formData}
+				step={step}
 				handleImgCheckboxChange={handleImgCheckboxChange}
 				// currentStepIndex={currentStepIndex}
 			/>
@@ -188,6 +192,7 @@ const GuideStepHeader = ({
 };
 
 const GuideStepBody = ({
+	step,
 	formData,
 	// onChange,
 	// handleNext,
@@ -202,26 +207,23 @@ const GuideStepBody = ({
 		isShownStep ? styles.expanded : ''
 	} ${!isShownStep ? styles.folded : ''}`;
 
-	useEffect(() => {
-		console.log('step in body: ', formData);
-	}, [formData]);
 	return (
 		<div className={cssClassList}>
 			<section className={styles.stepContent}>
 				<div className={styles.stepDetails}>
-					{formData.description && (
+					{step.description && (
 						<label>
 							Description:
 							<textarea
 								// onChange={event => onChange(event.target.value, 'description')}
 								className={styles.textarea}
 								name='description'
-								value={formData.description}
+								value={step.description}
 								disabled
 							/>
 						</label>
 					)}
-					{formData.pageUrl && (
+					{step.pageUrl && (
 						<label>
 							PageUrl:
 							<input
@@ -229,12 +231,12 @@ const GuideStepBody = ({
 								className={styles.input}
 								type='text'
 								name='pageUrl'
-								value={formData.pageUrl}
+								value={step.pageUrl}
 								disabled
 							/>
 						</label>
 					)}
-					{formData.elementId && (
+					{step.elementId && (
 						<label>
 							Element ID:
 							<input
@@ -242,12 +244,12 @@ const GuideStepBody = ({
 								className={styles.input}
 								type='text'
 								name='elementId'
-								value={formData.elementId}
+								value={step.elementId}
 								disabled
 							/>
 						</label>
 					)}
-					{formData.imgChecked && formData.imageUrl && (
+					{step.imgChecked && step.imageUrl && (
 						<div>
 							<label>
 								Image Width:
@@ -256,7 +258,7 @@ const GuideStepBody = ({
 									type='number'
 									name='imgWidth'
 									min='1'
-									value={formData.imgWidth}
+									value={step.imgWidth}
 									className={styles.input}
 									disabled
 								/>
@@ -268,17 +270,17 @@ const GuideStepBody = ({
 									type='number'
 									name='imgHeight'
 									min='1'
-									value={formData.imgHeight}
+									value={step.imgHeight}
 									className={styles.input}
 									disabled
 								/>
 							</label>
 							<img
 								className={styles.stepImagePreview}
-								src={formData.imageUrl}
-								alt={formData.title}
-								width={formData.imgWidth}
-								height={formData.imgHeight}
+								src={step.imageUrl}
+								alt={step.title}
+								width={step.imgWidth}
+								height={step.imgHeight}
 							/>
 						</div>
 					)}

@@ -26,7 +26,7 @@ export default function GuideSetsList() {
 
 	const handleEditSet = id => {
 		const selectedSet = guideSetsList.find(set => set.id === id);
-		setNewSetTitle(selectedSet.data[0].setHeader); // Заполняем заголовок выбранного набора
+		setNewSetTitle(selectedSet.setHeader); // Заполняем заголовок выбранного набора
 		setCurrentSetId(id); // Запоминаем ID текущего набора
 		setMode('edit');
 		setIsModalOpen(true);
@@ -49,12 +49,9 @@ export default function GuideSetsList() {
 			// Создаем новый набор
 			const newSet = {
 				id: guideSetsList.length + 1,
-				data: [
-					{
-						setHeader: newSetTitle,
-						setFooter: 'Footer for the new set',
-					},
-				],
+				setHeader: newSetTitle,
+				setFooter: 'Footer for the new set',
+				setBody: [], // Пустой body для нового набора
 			};
 			setGuideSetsList([...guideSetsList, newSet]);
 		} else if (mode === 'edit') {
@@ -63,7 +60,7 @@ export default function GuideSetsList() {
 				if (guideSet.id === currentSetId) {
 					return {
 						...guideSet,
-						data: [{ ...guideSet.data[0], setHeader: newSetTitle }],
+						setHeader: newSetTitle,
 					};
 				}
 				return guideSet;
