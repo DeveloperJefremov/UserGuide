@@ -23,6 +23,10 @@ export default function GuideStepsList({
 		imageUrl: '',
 	});
 
+	useEffect(() => {
+		console.log('index - ', currentStepIndex);
+	}, [currentStepIndex]);
+
 	// Создание нового шага
 	const handleCreateStep = () => {
 		setFormData({
@@ -64,7 +68,6 @@ export default function GuideStepsList({
 				imgHeight: 0,
 				imageUrl: '',
 			});
-			setCurrentStepIndex(steps.length); // Устанавливаем новый индекс для execute режима
 		} else if (mode === 'edit') {
 			const updatedSteps = steps.map((step, index) =>
 				index === currentStepIndex ? { ...step, ...formData } : step
@@ -73,7 +76,7 @@ export default function GuideStepsList({
 
 			// Закрываем модальное окно
 			setIsModalOpen(false);
-			setCurrentStepIndex(null);
+			setCurrentStepIndex(0);
 		}
 	};
 
@@ -177,6 +180,7 @@ export default function GuideStepsList({
 							height={steps[currentStepIndex].imgHeight}
 						/>
 					)}
+					<p>{steps[currentStepIndex]?.description}</p>
 					<p>Total Steps: {`${currentStepIndex + 1} of ${steps.length}`}</p>
 					<Button onClick={handlePrevious} disabled={currentStepIndex === 0}>
 						Previous
