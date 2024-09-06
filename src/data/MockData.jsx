@@ -18,8 +18,8 @@ export const MockGuideSets = [
 				imageUrl: 'https://images.dog.ceo/breeds/labrador/n02099712_7866.jpg',
 			},
 			{
-				id: '4',
-				order: 4,
+				id: '2',
+				order: 2,
 				title: 'Step 4: Execution',
 				description: 'Execute the following commands to proceed.',
 				pageUrl: 'enter page url',
@@ -37,8 +37,8 @@ export const MockGuideSets = [
 		setFooter: 'Set footer 2',
 		setBody: [
 			{
-				id: '2',
-				order: 2,
+				id: '1',
+				order: 1,
 				title: 'Step 2: Setup',
 
 				description: 'Setup your environment with the following instructions.',
@@ -51,8 +51,8 @@ export const MockGuideSets = [
 					'https://images.dog.ceo/breeds/spaniel-sussex/n02102480_6569.jpg',
 			},
 			{
-				id: '5',
-				order: 5,
+				id: '2',
+				order: 2,
 				title: 'Step 5: Verification',
 
 				description: 'Verify that everything is working as expected.',

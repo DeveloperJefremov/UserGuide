@@ -117,7 +117,8 @@ export default function GuideStepsList({
 			imgHeight: 0,
 			imageUrl: '',
 		});
-		setCurrentStepIndex(null); // Сбрасываем текущий индекс
+		setCurrentStepIndex(0); // Сбрасываем текущий индекс
+		onModeChange('display');
 	};
 
 	// Переход на следующий шаг

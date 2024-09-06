@@ -9,7 +9,17 @@ export default function GuideStepForm({
 	handleSaveStep,
 	handleCancel,
 }) {
-	const [formData, setFormData] = useState(initialFormData);
+	const obj = {
+		title: '',
+		description: '',
+		pageUrl: '',
+		elementId: '',
+		imgChecked: false,
+		imgWidth: 0,
+		imgHeight: 0,
+		imageUrl: '',
+	};
+	const [formData, setFormData] = useState(initialFormData ?? obj);
 
 	// Обновляем форму при изменении начальных данных
 	useEffect(() => {
