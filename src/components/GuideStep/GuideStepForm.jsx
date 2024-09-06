@@ -5,7 +5,6 @@ import styles from './GuideStepForm.module.css';
 export default function GuideStepForm({
 	formData: initialFormData,
 	mode,
-	stepListMode,
 	onChange,
 	handleSaveStep,
 	handleCancel,
@@ -62,7 +61,7 @@ export default function GuideStepForm({
 		}
 	};
 
-	// Проверка, активны ли поля (если stepListMode === 'create')
+	// Проверка, активны ли поля (если mode === 'create')
 
 	return (
 		<div className={styles.stepDetails}>
@@ -74,9 +73,7 @@ export default function GuideStepForm({
 					name='title'
 					value={formData.title}
 					onChange={handleChange}
-					disabled={
-						stepListMode === 'create' || stepListMode === 'edit' ? false : true
-					}
+					disabled={mode === 'create' || mode === 'edit' ? false : true}
 				/>
 			</label>
 			<label>
@@ -87,9 +84,7 @@ export default function GuideStepForm({
 					name='order'
 					value={formData.order}
 					onChange={handleChange}
-					disabled={
-						stepListMode === 'create' || stepListMode === 'edit' ? false : true
-					}
+					disabled={mode === 'create' || mode === 'edit' ? false : true}
 				/>
 			</label>
 			<label>
@@ -99,9 +94,7 @@ export default function GuideStepForm({
 					name='description'
 					value={formData.description}
 					onChange={handleChange}
-					disabled={
-						stepListMode === 'create' || stepListMode === 'edit' ? false : true
-					}
+					disabled={mode === 'create' || mode === 'edit' ? false : true}
 				/>
 			</label>
 			<label>
@@ -111,9 +104,7 @@ export default function GuideStepForm({
 					name='pageUrl'
 					value={formData.pageUrl}
 					onChange={handleChange}
-					disabled={
-						stepListMode === 'create' || stepListMode === 'edit' ? false : true
-					}
+					disabled={mode === 'create' || mode === 'edit' ? false : true}
 				/>
 			</label>
 			<label>
@@ -124,9 +115,7 @@ export default function GuideStepForm({
 					name='elementId'
 					value={formData.elementId}
 					onChange={handleChange}
-					disabled={
-						stepListMode === 'create' || stepListMode === 'edit' ? false : true
-					}
+					disabled={mode === 'create' || mode === 'edit' ? false : true}
 				/>
 			</label>
 			<label>
@@ -136,9 +125,7 @@ export default function GuideStepForm({
 					type='checkbox'
 					checked={formData.imgChecked}
 					onChange={handleImgCheckboxChange}
-					disabled={
-						stepListMode === 'create' || stepListMode === 'edit' ? false : true
-					}
+					disabled={mode === 'create' || mode === 'edit' ? false : true}
 				/>
 			</label>
 			{formData.imgChecked && formData.imageUrl && (
@@ -151,11 +138,7 @@ export default function GuideStepForm({
 							min='1'
 							value={formData.imgWidth}
 							onChange={handleChange}
-							disabled={
-								stepListMode === 'create' || stepListMode === 'edit'
-									? false
-									: true
-							}
+							disabled={mode === 'create' || mode === 'edit' ? false : true}
 							className={styles.input}
 						/>
 					</label>
@@ -167,11 +150,7 @@ export default function GuideStepForm({
 							min='1'
 							value={formData.imgHeight}
 							onChange={handleChange}
-							disabled={
-								stepListMode === 'create' || stepListMode === 'edit'
-									? false
-									: true
-							}
+							disabled={mode === 'create' || mode === 'edit' ? false : true}
 							className={styles.input}
 						/>
 					</label>

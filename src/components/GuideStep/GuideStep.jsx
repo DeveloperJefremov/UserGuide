@@ -5,28 +5,33 @@ import styles from './GuideStep.module.css';
 import GuideStepForm from './GuideStepForm';
 
 export default function GuideStep({
-	data,
-	handleNext,
-	handlePrevious,
+	step,
+	// handleNext,
+	// handlePrevious,
+	//onChange, FIXME: need implement changin logic which send new wxwmplar of steo
 	handleEditStep,
 	handleDeleteStep,
-	totalSteps,
-	setListMode,
-	currentStepIndex, // Передаем индекс текущего шага из родительского компонента
+	// totalSteps,
+	// mode,
+	// currentStepIndex, // Передаем индекс текущего шага из родительского компонента
 }) {
-	const [stepMode, setStepMode] = useState('folded');
+	const [isShownStep, setIsShownStep] = useState(false);
 	const [formData, setFormData] = useState({
-		title: data.title,
-		description: data.description,
-		pageUrl: data.pageUrl,
-		elementId: data.elementId,
-		imgChecked: data.imgChecked,
-		imgWidth: data.imgWidth,
-		imgHeight: data.imgHeight,
-		imageUrl: data.imageUrl,
+		title: step.title,
+		description: step.description,
+		pageUrl: step.pageUrl,
+		elementId: step.elementId,
+		imgChecked: step.imgChecked,
+		imgWidth: step.imgWidth,
+		imgHeight: step.imgHeight,
+		imageUrl: step.imageUrl,
 	});
 
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	useEffect(() => {
+		console.log('step - ', step);
+	}, [step]);
+
+	// const [isModalOpen, setIsModalOpen] = useState(false);
 
 	// useEffect(() => {
 	// 	console.dir(handleEditStep instanceof Function);
@@ -53,11 +58,11 @@ export default function GuideStep({
 		if (checked) {
 			try {
 				const response = await fetch('https://dog.ceo/api/breeds/image/random');
-				const data = await response.json();
-				if (data && data.message) {
+				const step = await response.json();
+				if (step && step.message) {
 					setFormData(prevState => ({
 						...prevState,
-						imageUrl: data.message,
+						imageUrl: step.message,
 						imgWidth: 100, // Устанавливаем ширину изображения
 						imgHeight: 100, // Устанавливаем высоту изображения
 					}));
@@ -89,11 +94,7 @@ export default function GuideStep({
 		console.log('mode setModeHandler - ', buttonClick);
 
 		if (buttonClick === 'display') {
-			if (stepMode === 'folded') {
-				setStepMode('expanded');
-			} else if (stepMode === 'expanded') {
-				setStepMode('folded');
-			}
+			setIsShownStep(prevState => !prevState);
 		}
 
 		// if (buttonClick === 'edit') {
@@ -113,25 +114,27 @@ export default function GuideStep({
 	const handleSave = () => {
 		// Сохраняем изменения
 		// console.log('Saved data:', formData);
-		setStepMode('folded'); // Возвращаем в свернутый режим после сохранения
+		// setStepMode('folded'); // Возвращаем в свернутый режим после сохранения
+		setIsShownStep(false);
 	};
 
 	const handleCancel = () => {
 		// Отменяем изменения, возвращаемся к исходным данным
 		setFormData(
-			...data
+			...step
 			// 	{
 
 			// 	title: data.title,
 			// 	description: data.description,
-			// 	elementId: data.elementId,
-			// 	imgChecked: data.imgChecked,
-			// 	imgWidth: data.imgWidth,
-			// 	imgHeight: data.imgHeight,
-			// 	imageUrl: data.imageUrl,
+			// 	elementId: step.elementId,
+			// 	imgChecked: step.imgChecked,
+			// 	imgWidth: step.imgWidth,
+			// 	imgHeight: step.imgHeight,
+			// 	imageUrl: step.imageUrl,
 			// }
 		);
-		setStepMode('folded'); // Возвращаем в свернутый режим при отмене
+		setIsShownStep(false);
+		// setStepMode('folded'); // Возвращаем в свернутый режим при отмене
 	};
 
 	const handleFormChange = newFormData => {
@@ -142,31 +145,31 @@ export default function GuideStep({
 
 	return (
 		<div className={styles.step}>
-			<h2>setListMode: {setListMode}</h2>
+			{/* <h2>setListMode: {mode}</h2> */}
 
 			<GuideStepHeader
 				handleDeleteStep={handleDeleteStep}
 				handleEditStep={handleEditStep}
-				mode={stepMode}
-				modeHandler={setModeHandler}
-				data={data}
-				handleFormChange={handleFormChange}
-				handleImgCheckboxChange={handleImgCheckboxChange}
+				isShownStep={isShownStep}
+				onDisplayChange={setModeHandler}
+				step={step}
+				// handleFormChange={handleFormChange}
+				// handleImgCheckboxChange={handleImgCheckboxChange}
 			/>
 			<GuideStepBody
-				handlePrevious={handlePrevious}
-				handleNext={handleNext}
-				totalSteps={totalSteps}
-				setListMode={setListMode}
-				mode={stepMode}
-				data={data}
+				// handlePrevious={handlePrevious}
+				// handleNext={handleNext}
+				// totalSteps={totalSteps}
+				// mode={mode}
+				isShownStep={isShownStep}
+				step={step}
 				handleImgCheckboxChange={handleImgCheckboxChange}
-				currentStepIndex={currentStepIndex}
+				// currentStepIndex={currentStepIndex}
 			/>
 			<GuideStepFooter
-				mode={stepMode}
-				onSave={handleSave}
-				onCancel={handleCancel}
+				isShownStep={isShownStep}
+				// onSave={handleSave}
+				// onCancel={handleCancel}
 			/>
 		</div>
 	);
@@ -175,24 +178,19 @@ export default function GuideStep({
 const GuideStepHeader = ({
 	handleDeleteStep,
 	handleEditStep,
-	mode,
-	modeHandler,
-	data,
-	handleFormChange,
-	handleImgCheckboxChange,
+	isShownStep,
+	onDisplayChange,
+	step,
+	// handleFormChange,
+	// handleImgCheckboxChange,
 }) => {
-	let displayButtonText = '';
-	if (mode === 'folded') {
-		displayButtonText = '+';
-	} else if (mode === 'expanded') {
-		displayButtonText = '-';
-	}
+	let displayButtonText = isShownStep ? '-' : '+';
 
 	return (
 		<div className={styles.stepHeader}>
 			<div className={styles.headerLeft}>
-				<h3>{data.title}</h3>
-				<p>Order: {data.order}</p>
+				<h3>{step.title}</h3>
+				<p>Order: {step.order}</p>
 			</div>
 			<div className={styles.headerRight}>
 				<Button
@@ -216,7 +214,7 @@ const GuideStepHeader = ({
 					size='icon'
 					variant='lightGrey'
 					data-button-clicked='display'
-					onClick={modeHandler}
+					onClick={onDisplayChange}
 				>
 					{displayButtonText}
 				</Button>
@@ -227,7 +225,7 @@ const GuideStepHeader = ({
 					<GuideStepForm
 						// mode={mode}
 						//FIXME: props
-						formData={data}
+						formData={step}
 						onChange={handleFormChange}
 						onImgCheckboxChange={handleImgCheckboxChange}
 					/>
@@ -238,19 +236,17 @@ const GuideStepHeader = ({
 };
 
 const GuideStepBody = ({
-	handleNext,
-	handlePrevious,
-
-	totalSteps,
-	setListMode,
-	mode,
-	data,
-
-	// formData,
+	// handleNext,
+	// handlePrevious,
+	// totalSteps,
+	isShownStep,
+	// mode,
+	step,
+	// handleImgCheckboxChange,
 }) => {
 	let cssClassList = `${styles.stepBody} ${
-		mode === 'expanded' ? styles.expanded : ''
-	} ${mode === 'folded' ? styles.folded : ''}`;
+		isShownStep ? styles.expanded : ''
+	} ${!isShownStep ? styles.folded : ''}`;
 
 	// useEffect(() => {
 	// 	console.log('mode in body: ', mode);
@@ -259,42 +255,42 @@ const GuideStepBody = ({
 		<div className={cssClassList}>
 			<section className={styles.stepContent}>
 				<div className={styles.stepDetails}>
-					{data.description && (
+					{step.description && (
 						<label>
 							Description:
 							<textarea
 								className={styles.textarea}
 								name='description'
-								value={data.description}
+								value={step.description}
 								disabled
 							/>
 						</label>
 					)}
-					{data.pageUrl && (
+					{step.pageUrl && (
 						<label>
 							PageUrl:
 							<input
 								className={styles.input}
 								type='text'
 								name='pageUrl'
-								value={data.pageUrl}
+								value={step.pageUrl}
 								disabled
 							/>
 						</label>
 					)}
-					{data.elementId && (
+					{step.elementId && (
 						<label>
 							Element ID:
 							<input
 								className={styles.input}
 								type='text'
 								name='elementId'
-								value={data.elementId}
+								value={step.elementId}
 								disabled
 							/>
 						</label>
 					)}
-					{data.imgChecked && data.imageUrl && (
+					{step.imgChecked && step.imageUrl && (
 						<div>
 							<label>
 								Image Width:
@@ -302,7 +298,7 @@ const GuideStepBody = ({
 									type='number'
 									name='imgWidth'
 									min='1'
-									value={data.imgWidth}
+									value={step.imgWidth}
 									className={styles.input}
 									disabled
 								/>
@@ -313,54 +309,57 @@ const GuideStepBody = ({
 									type='number'
 									name='imgHeight'
 									min='1'
-									value={data.imgHeight}
+									value={step.imgHeight}
 									className={styles.input}
 									disabled
 								/>
 							</label>
 							<img
 								className={styles.stepImagePreview}
-								src={data.imageUrl}
-								alt={data.title}
-								width={data.imgWidth}
-								height={data.imgHeight}
+								src={step.imageUrl}
+								alt={step.title}
+								width={step.imgWidth}
+								height={step.imgHeight}
 							/>
 						</div>
 					)}
 				</div>
 			</section>
-			{setListMode === 'execute' && (
+			{/* {setListMode === 'execute' && (
 				<Modal>
-					<h3>{data.title}</h3>
-					{data.imageUrl && (
+					<h3>{step.title}</h3>
+					{step.imageUrl && (
 						<img
-							src={data.imageUrl}
-							alt={data.title}
-							width={data.imgWidth}
-							height={data.imgHeight}
+							src={step.imageUrl}
+							alt={step.title}
+							width={step.imgWidth}
+							height={step.imgHeight}
 						/>
 					)}
-					<p>{/* Step: {currentStepIndex + 1} of {totalSteps} */}</p>
-					<Button onClick={handlePrevious} disabled={data.stepIndex === 0}>
+					<p>TotalSteps {totalSteps}</p>
+					<Button onClick={handlePrevious} disabled={step.stepIndex === 0}>
 						Previous
 					</Button>
 					<Button variant='lightGrey'>Close</Button>
 					<Button
 						onClick={handleNext}
-						disabled={data.stepIndex === totalSteps - 1}
+						disabled={step.stepIndex === totalSteps - 1}
 					>
 						Next
 					</Button>
 				</Modal>
-			)}
+			)} */}
 		</div>
 	);
 };
 
-const GuideStepFooter = ({ mode, onSave, onCancel }) => {
+const GuideStepFooter = ({
+	isShownStep,
+	// onSave, onCancel
+}) => {
 	const cssClassList = `${styles.stepFooter} ${
-		mode === 'expanded' ? styles.expanded : ''
-	} ${mode === 'folded' ? styles.folded : ''}`;
+		isShownStep ? styles.expanded : ''
+	} ${!isShownStep ? styles.folded : ''}`;
 
 	return (
 		<div className={cssClassList}>

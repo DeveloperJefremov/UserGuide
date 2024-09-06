@@ -9,26 +9,26 @@ export default function GuideSetsList() {
 	const [guideSetsList, setGuideSetsList] = useState(mockData);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [newSetTitle, setNewSetTitle] = useState('');
-	const [setListMode, setSetListMode] = useState('folded');
+	const [mode, setMode] = useState('display');
 	const [currentSetId, setCurrentSetId] = useState(null);
 	// const [targetElementId, setTargetElementId] = useState('');
 
 	const handleCreateSet = () => {
 		setNewSetTitle('');
-		setSetListMode('create');
+		setMode('create');
 		setIsModalOpen(true);
 	};
 
 	const handleLaunchSet = () => {
-		setSetListMode('execute');
-		console.log('Launching set:', { setListMode });
+		setMode('execute');
+		console.log('Launching set:', { mode });
 	};
 
 	const handleEditSet = id => {
 		const selectedSet = guideSetsList.find(set => set.id === id);
 		setNewSetTitle(selectedSet.data[0].setHeader); // Заполняем заголовок выбранного набора
 		setCurrentSetId(id); // Запоминаем ID текущего набора
-		setSetListMode('edit');
+		setMode('edit');
 		setIsModalOpen(true);
 	};
 
@@ -45,7 +45,7 @@ export default function GuideSetsList() {
 			return;
 		}
 
-		if (setListMode === 'create') {
+		if (mode === 'create') {
 			// Создаем новый набор
 			const newSet = {
 				id: guideSetsList.length + 1,
@@ -57,7 +57,7 @@ export default function GuideSetsList() {
 				],
 			};
 			setGuideSetsList([...guideSetsList, newSet]);
-		} else if (setListMode === 'edit') {
+		} else if (mode === 'edit') {
 			// Обновляем существующий набор
 			const updatedGuideSetsList = guideSetsList.map(guideSet => {
 				if (guideSet.id === currentSetId) {
@@ -105,7 +105,7 @@ export default function GuideSetsList() {
 			{isModalOpen && (
 				<Modal onClick={handleCancel}>
 					<GuideSetHeaderForm
-						setListMode={setListMode}
+						mode={mode}
 						title={newSetTitle}
 						onTitleChange={setNewSetTitle}
 						onSave={handleSaveNewSet}
@@ -116,17 +116,20 @@ export default function GuideSetsList() {
 
 			<h2>Guide Sets List:</h2>
 			<ul>
-				{guideSetsList.map(guideSet => (
+				{guideSetsList.map((guideSet, index) => (
 					<li key={guideSet.id}>
-						<GuideSet
-							handleEditSet={() => handleEditSet(guideSet.id)} // Передаем ID для редактирования
-							handleDeleteSet={() => handleDeleteSet(guideSet.id)} // Передаем ID для удаления
-							setListMode={setListMode}
-							data={guideSet.data}
-							onLaunchSet={handleLaunchSet}
-							setGuideSetsList={setGuideSetsList}
-							guideSetsList={guideSetsList}
-						/>
+						<div key={guideSet.data[0]?.setHeader || `set-${index}`}>
+							<GuideSet
+								handleEditSet={() => handleEditSet(guideSet.id)} // Передаем ID для редактирования
+								handleDeleteSet={() => handleDeleteSet(guideSet.id)} // Передаем ID для удаления
+								mode={mode}
+								//FIXME: Need finish handler
+								onModeChange={newMode => setMode(newMode)}
+								onLaunchSet={handleLaunchSet}
+								setGuideSetsList={setGuideSetsList}
+								guideSet={guideSet}
+							/>
+						</div>
 					</li>
 				))}
 			</ul>

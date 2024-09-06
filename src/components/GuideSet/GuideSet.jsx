@@ -1,76 +1,86 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import GuideStepsList from '../GuideStepsList/GuideStepsList';
 import styles from './GuideSet.module.css';
 
 export default function GuideSet({
-	setListMode, // Начальное состояние: 'folded' или 'expanded'
-	data = [],
+	onModeChange,
+	mode, // Начальное состояние: 'folded' или 'expanded'
+	setData = [],
 	title,
 	handleSetChange,
 	onCreateSet,
 	onLaunchSet,
-	guideSetsList,
+	guideSet,
 	setGuideSetsList,
 	handleEditSet,
 	handleDeleteSet,
 }) {
 	// Устанавливаем режим (свёрнутый или развернутый)
-	const [setMode, setSetMode] = useState(setListMode);
+	// const [setMode, setSetMode] = useState(setListMode);
+	const [isShownSet, setIsShownSet] = useState(false);
 
 	// Логика переключения режима отображения
-	const toggleSetMode = () => {
-		setSetMode(prevMode =>
-			prevMode === 'folded' || setMode === 'create' ? 'expanded' : 'folded'
-		);
-	};
+	// const toggleSetMode = () => {
+	// 	onModeChange(prevMode =>
+	// 		prevMode === 'folded' || setMode === 'create' ? 'expanded' : 'folded'
+	// 	);
+	// };
 
 	// const totalSteps = data ? data.length : 0;
+	useEffect(() => {
+		console.log(setData);
+	}, [setData]);
 
-	if (!data && title !== 'Create New Set') return null;
+	if (!setData && title !== 'Create New Set') return null;
 
 	return (
 		<div className={styles.guideSet}>
 			<GuideSetHeader
-				setMode={setMode} // Передаем текущее состояние в Header
+				isShownSet={isShownSet} // Передаем текущее состояние в Header
 				handleEditSet={handleEditSet}
 				handleDeleteSet={handleDeleteSet}
-				title={data && data[0] ? data[0].setHeader : title}
-				onToggleContent={toggleSetMode} // Добавляем логику переключения
+				title={guideSet.setHeader}
+				//TODO
+				onToggleContent={() => setIsShownSet(prev => !prev)} // Добавляем логику переключения
 			/>
 
 			{/* Отображаем GuideSetBody и GuideSetFooter только в режиме expanded */}
-			{setMode === 'expanded' && (
-				<GuideSetBody setMode={setMode}>
+			{isShownSet && (
+				<GuideSetBody isShownSet={isShownSet}>
 					<GuideStepsList
-						setListMode={setListMode}
+						mode={mode}
+						onModeChange={onModeChange}
 						// totalSteps={totalSteps}
-						data={data}
-						key={data.id}
-						setGuideSetsList={setGuideSetsList}
-						guideSetsList={guideSetsList}
+						// stepsData={setData}
+						key={setData.id}
+						// setGuideSetsList={setGuideSetsList}
+						steps={guideSet.setBody}
 					/>
 				</GuideSetBody>
 			)}
 
-			{setMode === 'expanded' && (
-				<GuideSetFooter onLaunchSet={onLaunchSet} setMode={setMode} />
+			{isShownSet && (
+				<GuideSetFooter
+					footerText={guideSet.setFooter}
+					onLaunchSet={onLaunchSet}
+					setMode={isShownSet}
+				/>
 			)}
 		</div>
 	);
 }
 
 const GuideSetHeader = ({
-	setMode,
+	isShownSet,
 	handleDeleteSet,
 	handleEditSet,
 	title,
 	onToggleContent,
 }) => {
 	// Определяем текст для кнопки в зависимости от состояния setMode
-	console.log(setMode);
-	let displayButtonText =
-		setMode === 'folded' || setMode === 'create' ? '+' : '-';
+	console.log(isShownSet);
+	let displayButtonText = !isShownSet ? '+' : '-';
 
 	return (
 		<div className={styles.guideSetHeader}>
@@ -92,21 +102,22 @@ const GuideSetHeader = ({
 	);
 };
 
-const GuideSetBody = ({ children, setMode }) => {
+const GuideSetBody = ({ children, isShownSet }) => {
 	// Применяем CSS классы в зависимости от состояния setMode
 	let cssClassList = `${styles.setBody} ${
-		setMode === 'expanded' ? styles.expanded : styles.folded
+		isShownSet ? styles.expanded : styles.folded
 	}`;
 
 	return <div className={cssClassList}>{children}</div>;
 };
 
-const GuideSetFooter = ({ onLaunchSet, setMode }) => {
+const GuideSetFooter = ({ footerText, onLaunchSet, isShownSet }) => {
 	const cssClassList = `${styles.stepFooter} ${
-		setMode === 'expanded' || setMode === 'edit' ? styles.expanded : ''
-	} ${setMode === 'folded' ? styles.folded : ''}`;
+		isShownSet ? styles.expanded : ''
+	} ${!isShownSet ? styles.folded : ''}`;
 	return (
 		<div className={cssClassList}>
+			{footerText && <p>{footerText}</p>}
 			{onLaunchSet && (
 				<Button onClick={onLaunchSet} variant='default' size='lg'>
 					Launch: Tutorial

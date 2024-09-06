@@ -39,6 +39,7 @@ export default [
 
 			'no-unused-vars': 'off',
 			'no-undef': 'error',
+			'no-debugger': 'off',
 		},
 	},
 ];
