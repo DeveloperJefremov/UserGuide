@@ -8,7 +8,7 @@ export default function GuideStep({
 	step,
 	// handleNext,
 	// handlePrevious,
-	//onChange, FIXME: need implement changin logic which send new wxwmplar of steo
+	//onChange, FIXME: need implement changing logic which send new exemplar of step
 	handleEditStep,
 	handleDeleteStep,
 	// totalSteps,
@@ -30,23 +30,6 @@ export default function GuideStep({
 	useEffect(() => {
 		console.log('step - ', step);
 	}, [step]);
-
-	// const [isModalOpen, setIsModalOpen] = useState(false);
-
-	// useEffect(() => {
-	// 	console.dir(handleEditStep instanceof Function);
-	// }, [handleEditStep]);
-
-	// Следим за изменением setListMode
-	// useEffect(() => {
-	// 	if (setListMode === 'execute') {
-	// 		setStepMode('execute'); // Устанавливаем stepMode в 'execute'
-	// 		setIsModalOpen(true); // Открываем модальное окно
-	// 	} else {
-	// 		setStepMode('folded'); // Возвращаем в 'folded' если setListMode изменился
-	// 		setIsModalOpen(false); // Закрываем модальное окно
-	// 	}
-	// }, [setListMode]);
 
 	const handleImgCheckboxChange = async event => {
 		const checked = event.target.checked;
@@ -89,59 +72,27 @@ export default function GuideStep({
 		}
 	};
 
-	const setModeHandler = clickEvent => {
+	const displayHandler = clickEvent => {
 		const buttonClick = clickEvent.target.getAttribute('data-button-clicked');
 		console.log('mode setModeHandler - ', buttonClick);
 
 		if (buttonClick === 'display') {
 			setIsShownStep(prevState => !prevState);
 		}
-
-		// if (buttonClick === 'edit') {
-		// 	setStepMode(() => 'edit');
-		// }
-
-		// if (buttonClick === 'delete') {
-		// 	// Логика для кнопки удаления (если требуется)
-		// }
-
-		// if (buttonClick === 'create' && handleCreateStep) {
-		// 	handleCreateStep(formData); // Передаем данные формы при создании
-		// 	setStepMode('folded'); // Возвращаемся в свернутый режим
-		// }
 	};
 
-	const handleSave = () => {
-		// Сохраняем изменения
-		// console.log('Saved data:', formData);
-		// setStepMode('folded'); // Возвращаем в свернутый режим после сохранения
-		setIsShownStep(false);
-	};
+	// const handleSave = () => {
+	// 	setIsShownStep(false);
+	// };
 
-	const handleCancel = () => {
-		// Отменяем изменения, возвращаемся к исходным данным
-		setFormData(
-			...step
-			// 	{
+	// const handleCancel = () => {
+	// 	setFormData(...step);
+	// 	setIsShownStep(false);
+	// };
 
-			// 	title: data.title,
-			// 	description: data.description,
-			// 	elementId: step.elementId,
-			// 	imgChecked: step.imgChecked,
-			// 	imgWidth: step.imgWidth,
-			// 	imgHeight: step.imgHeight,
-			// 	imageUrl: step.imageUrl,
-			// }
-		);
-		setIsShownStep(false);
-		// setStepMode('folded'); // Возвращаем в свернутый режим при отмене
-	};
-
-	const handleFormChange = newFormData => {
-		setFormData(newFormData); // Обновляем состояние при изменении в форме
-	};
-
-	// Обработчик для кнопки "Previous"
+	// const handleFormChange = (value, fieldName) => {
+	// 	setFormData(prev => ({ ...prev, [fieldName]: value }));
+	// };
 
 	return (
 		<div className={styles.step}>
@@ -151,7 +102,7 @@ export default function GuideStep({
 				handleDeleteStep={handleDeleteStep}
 				handleEditStep={handleEditStep}
 				isShownStep={isShownStep}
-				onDisplayChange={setModeHandler}
+				onDisplayChange={displayHandler}
 				step={step}
 				// handleFormChange={handleFormChange}
 				// handleImgCheckboxChange={handleImgCheckboxChange}
@@ -161,8 +112,9 @@ export default function GuideStep({
 				// handleNext={handleNext}
 				// totalSteps={totalSteps}
 				// mode={mode}
+				// onChange={handleFormChange}
 				isShownStep={isShownStep}
-				step={step}
+				step={formData}
 				handleImgCheckboxChange={handleImgCheckboxChange}
 				// currentStepIndex={currentStepIndex}
 			/>
@@ -236,69 +188,75 @@ const GuideStepHeader = ({
 };
 
 const GuideStepBody = ({
+	formData,
+	// onChange,
 	// handleNext,
 	// handlePrevious,
 	// totalSteps,
 	isShownStep,
 	// mode,
-	step,
+
 	// handleImgCheckboxChange,
 }) => {
 	let cssClassList = `${styles.stepBody} ${
 		isShownStep ? styles.expanded : ''
 	} ${!isShownStep ? styles.folded : ''}`;
 
-	// useEffect(() => {
-	// 	console.log('mode in body: ', mode);
-	// }, [mode]);
+	useEffect(() => {
+		console.log('step in body: ', formData);
+	}, [formData]);
 	return (
 		<div className={cssClassList}>
 			<section className={styles.stepContent}>
 				<div className={styles.stepDetails}>
-					{step.description && (
+					{formData.description && (
 						<label>
 							Description:
 							<textarea
+								// onChange={event => onChange(event.target.value, 'description')}
 								className={styles.textarea}
 								name='description'
-								value={step.description}
+								value={formData.description}
 								disabled
 							/>
 						</label>
 					)}
-					{step.pageUrl && (
+					{formData.pageUrl && (
 						<label>
 							PageUrl:
 							<input
+								// onChange={event => onChange(event.target.value, 'pageUrl')}
 								className={styles.input}
 								type='text'
 								name='pageUrl'
-								value={step.pageUrl}
+								value={formData.pageUrl}
 								disabled
 							/>
 						</label>
 					)}
-					{step.elementId && (
+					{formData.elementId && (
 						<label>
 							Element ID:
 							<input
+								// onChange={event => onChange(event.target.value, 'elementId')}
 								className={styles.input}
 								type='text'
 								name='elementId'
-								value={step.elementId}
+								value={formData.elementId}
 								disabled
 							/>
 						</label>
 					)}
-					{step.imgChecked && step.imageUrl && (
+					{formData.imgChecked && formData.imageUrl && (
 						<div>
 							<label>
 								Image Width:
 								<input
+									// onChange={event => onChange(event.target.value, 'imgWidth')}
 									type='number'
 									name='imgWidth'
 									min='1'
-									value={step.imgWidth}
+									value={formData.imgWidth}
 									className={styles.input}
 									disabled
 								/>
@@ -306,20 +264,21 @@ const GuideStepBody = ({
 							<label>
 								Image Height:
 								<input
+									// onChange={event => onChange(event.target.value, 'imgHeight')}
 									type='number'
 									name='imgHeight'
 									min='1'
-									value={step.imgHeight}
+									value={formData.imgHeight}
 									className={styles.input}
 									disabled
 								/>
 							</label>
 							<img
 								className={styles.stepImagePreview}
-								src={step.imageUrl}
-								alt={step.title}
-								width={step.imgWidth}
-								height={step.imgHeight}
+								src={formData.imageUrl}
+								alt={formData.title}
+								width={formData.imgWidth}
+								height={formData.imgHeight}
 							/>
 						</div>
 					)}

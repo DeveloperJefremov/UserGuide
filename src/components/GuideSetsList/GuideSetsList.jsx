@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import mockData from '../../data/MockData';
+import mockData, { MockGuideSets } from '../../data/MockData';
 import Button from '../Button/Button';
 import GuideSet from '../GuideSet/GuideSet';
 import GuideSetHeaderForm from '../GuideSet/GuideSetHeaderForm';
 import Modal from '../UI/Modal';
 
 export default function GuideSetsList() {
-	const [guideSetsList, setGuideSetsList] = useState(mockData);
+	const [guideSetsList, setGuideSetsList] = useState(MockGuideSets);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [newSetTitle, setNewSetTitle] = useState('');
 	const [mode, setMode] = useState('display');
@@ -118,7 +118,7 @@ export default function GuideSetsList() {
 			<ul>
 				{guideSetsList.map((guideSet, index) => (
 					<li key={guideSet.id}>
-						<div key={guideSet.data[0]?.setHeader || `set-${index}`}>
+						<div key={guideSet.id || `set-${index}`}>
 							<GuideSet
 								handleEditSet={() => handleEditSet(guideSet.id)} // Передаем ID для редактирования
 								handleDeleteSet={() => handleDeleteSet(guideSet.id)} // Передаем ID для удаления

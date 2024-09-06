@@ -6,16 +6,17 @@ import styles from './GuideSet.module.css';
 export default function GuideSet({
 	onModeChange,
 	mode, // Начальное состояние: 'folded' или 'expanded'
-	setData = [],
+	// setData = [],
 	title,
-	handleSetChange,
-	onCreateSet,
+	// handleSetChange,
+	// onCreateSet,
 	onLaunchSet,
 	guideSet,
-	setGuideSetsList,
+	// setGuideSetsList,
 	handleEditSet,
 	handleDeleteSet,
 }) {
+	// console.log(guideSet);
 	// Устанавливаем режим (свёрнутый или развернутый)
 	// const [setMode, setSetMode] = useState(setListMode);
 	const [isShownSet, setIsShownSet] = useState(false);
@@ -29,10 +30,10 @@ export default function GuideSet({
 
 	// const totalSteps = data ? data.length : 0;
 	useEffect(() => {
-		console.log(setData);
-	}, [setData]);
+		console.log('guideSet', guideSet);
+	}, [guideSet]);
 
-	if (!setData && title !== 'Create New Set') return null;
+	if (!guideSet && title !== 'Create New Set') return null;
 
 	return (
 		<div className={styles.guideSet}>
@@ -46,19 +47,19 @@ export default function GuideSet({
 			/>
 
 			{/* Отображаем GuideSetBody и GuideSetFooter только в режиме expanded */}
-			{isShownSet && (
-				<GuideSetBody isShownSet={isShownSet}>
-					<GuideStepsList
-						mode={mode}
-						onModeChange={onModeChange}
-						// totalSteps={totalSteps}
-						// stepsData={setData}
-						key={setData.id}
-						// setGuideSetsList={setGuideSetsList}
-						steps={guideSet.setBody}
-					/>
-				</GuideSetBody>
-			)}
+			{/* {isShownSet && ( */}
+			<GuideSetBody isShownSet={isShownSet}>
+				<GuideStepsList
+					mode={mode}
+					onModeChange={onModeChange}
+					// totalSteps={totalSteps}
+					// stepsData={setData}
+					key={guideSet.id}
+					// setGuideSetsList={setGuideSetsList}
+					steps={guideSet.setBody}
+				/>
+			</GuideSetBody>
+			{/* )} */}
 
 			{isShownSet && (
 				<GuideSetFooter

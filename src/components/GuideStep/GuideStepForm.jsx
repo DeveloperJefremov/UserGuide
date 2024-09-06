@@ -22,9 +22,9 @@ export default function GuideStepForm({
 			[name]: type === 'checkbox' ? checked : value,
 		};
 		setFormData(updatedData);
-		if (onChange) {
-			onChange(updatedData); // Передаем изменения в родительский компонент
-		}
+		// if (onChange) {
+		// 	onChange(updatedData); // Передаем изменения в родительский компонент
+		// }
 	};
 
 	const handleImgCheckboxChange = async e => {

@@ -1,4 +1,25 @@
 // const apiUrl = 'https://dog.ceo/api/breeds/image/random';
+export const MockGuideSets = [
+	{
+		id: 1,
+		setHeader: 'Set Header 1',
+		setFooter: 'Set footer 1',
+		setBody: [
+			{
+				id: '1',
+				order: 1,
+				title: 'Step 1: Introduction',
+				description: 'This is the first step of the guide.',
+				pageUrl: 'enter page url',
+				elementId: 'btn-1',
+				imgChecked: true,
+				imgWidth: 200,
+				imgHeight: 200,
+				imageUrl: 'https://images.dog.ceo/breeds/labrador/n02099712_7866.jpg',
+			},
+		],
+	},
+];
 
 const mockData = [
 	{
