@@ -4,14 +4,20 @@ import GuideStep from '../GuideStep/GuideStep';
 import GuideStepForm from '../GuideStep/GuideStepForm';
 import Modal from '../UI/Modal';
 import styles from './GuideStepsList.module.css';
+
 export default function GuideStepsList({
 	mode,
 	onModeChange,
 	steps: initialSteps,
+	guideSetId,
+	activeGuideSetId,
+	isGuideModalOpen,
 }) {
 	const [steps, setSteps] = useState(initialSteps || []);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [currentStepIndex, setCurrentStepIndex] = useState(0); // Для хранения индекса редактируемого шага
+	const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 }); // Позиция модального окна
+
 	const [formData, setFormData] = useState({
 		title: '',
 		description: '',
@@ -140,6 +146,11 @@ export default function GuideStepsList({
 		const element = document.getElementById(elementId); // Найти элемент по ID
 		if (element) {
 			element.classList.add(styles.highlight); // Добавить класс для выделения из модуля
+			const rect = element.getBoundingClientRect(); // Получаем координаты элемента
+			setModalPosition({
+				top: rect.top + window.scrollY,
+				left: rect.left + window.scrollX + rect.width + 10, // Модальное окно справа от элемента
+			});
 		}
 	};
 
@@ -147,23 +158,27 @@ export default function GuideStepsList({
 	const removeHighlightElement = elementId => {
 		const element = document.getElementById(elementId); // Найти элемент по ID
 		if (element) {
-			element.classList.remove(styles.highlight); // Убрать класс выделения из модуля
+			element.classList.remove(styles.highlight); // Убрать класс выделения
 		}
 	};
 
 	useEffect(() => {
-		// Когда шаг меняется и если у шага есть elementId, выделяем элемент
-		if (mode === 'execute' && steps[currentStepIndex]?.elementId) {
+		// Когда шаг меняется и если у шага есть elementId и набор активен, выделяем элемент
+		if (
+			mode === 'execute' &&
+			activeGuideSetId === guideSetId && // Проверяем, является ли этот набор активным
+			steps[currentStepIndex]?.elementId
+		) {
 			highlightElement(steps[currentStepIndex].elementId);
 		}
 
-		// Убираем выделение при закрытии модального окна или смене шага
+		// Убираем выделение при закрытии модального окна, смене шага или изменении активного набора
 		return () => {
 			if (steps[currentStepIndex]?.elementId) {
 				removeHighlightElement(steps[currentStepIndex].elementId);
 			}
 		};
-	}, [currentStepIndex, mode, steps]);
+	}, [currentStepIndex, mode, steps, activeGuideSetId, guideSetId]);
 
 	return (
 		<div>
@@ -200,33 +215,42 @@ export default function GuideStepsList({
 				})}
 			</ul>
 
-			{mode === 'execute' && steps[currentStepIndex] && (
-				<Modal>
-					<h3>{steps[currentStepIndex]?.title}</h3>
-					{steps[currentStepIndex]?.imageUrl && (
-						<img
-							src={steps[currentStepIndex].imageUrl}
-							alt={steps[currentStepIndex].title}
-							width={steps[currentStepIndex].imgWidth}
-							height={steps[currentStepIndex].imgHeight}
-						/>
-					)}
-					<p>{steps[currentStepIndex]?.description}</p>
-					<p>Total Steps: {`${currentStepIndex + 1} of ${steps.length}`}</p>
-					<Button onClick={handlePrevious} disabled={currentStepIndex === 0}>
-						Previous
-					</Button>
-					<Button variant='lightGrey' onClick={handleCancel}>
-						Close
-					</Button>
-					<Button
-						onClick={handleNext}
-						disabled={currentStepIndex === steps.length - 1}
+			{isGuideModalOpen &&
+				mode === 'execute' &&
+				activeGuideSetId === guideSetId &&
+				steps[currentStepIndex] && (
+					<Modal
+						style={{
+							position: 'absolute',
+							top: `${modalPosition.top}px`,
+							left: `${modalPosition.left}px`,
+						}}
 					>
-						Next
-					</Button>
-				</Modal>
-			)}
+						<h3>{steps[currentStepIndex]?.title}</h3>
+						{steps[currentStepIndex]?.imageUrl && (
+							<img
+								src={steps[currentStepIndex].imageUrl}
+								alt={steps[currentStepIndex].title}
+								width={steps[currentStepIndex].imgWidth}
+								height={steps[currentStepIndex].imgHeight}
+							/>
+						)}
+						<p>{steps[currentStepIndex]?.description}</p>
+						<p>Total Steps: {`${currentStepIndex + 1} of ${steps.length}`}</p>
+						<Button onClick={handlePrevious} disabled={currentStepIndex === 0}>
+							Previous
+						</Button>
+						<Button variant='lightGrey' onClick={handleCancel}>
+							Close
+						</Button>
+						<Button
+							onClick={handleNext}
+							disabled={currentStepIndex === steps.length - 1}
+						>
+							Next
+						</Button>
+					</Modal>
+				)}
 		</div>
 	);
 }

@@ -4,12 +4,14 @@ import GuideStepsList from '../GuideStepsList/GuideStepsList';
 import styles from './GuideSet.module.css';
 
 export default function GuideSet({
+	isGuideModalOpen,
 	onModeChange,
 	mode, // Начальное состояние: 'folded' или 'expanded'
 	// setData = [],
 	title,
 	// handleSetChange,
 	// onCreateSet,
+	activeGuideSetId,
 	onLaunchSet,
 	guideSet,
 	// setGuideSetsList,
@@ -29,9 +31,9 @@ export default function GuideSet({
 	// };
 
 	// const totalSteps = data ? data.length : 0;
-	useEffect(() => {
-		console.log('guideSet', guideSet);
-	}, [guideSet]);
+	// useEffect(() => {
+	// 	console.log('guideSet', guideSet);
+	// }, [guideSet]);
 
 	if (!guideSet && title !== 'Create New Set') return null;
 
@@ -50,6 +52,9 @@ export default function GuideSet({
 			{isShownSet && (
 				<GuideSetBody isShownSet={isShownSet}>
 					<GuideStepsList
+						isGuideModalOpen={isGuideModalOpen}
+						guideSetId={guideSet.id}
+						activeGuideSetId={activeGuideSetId}
 						mode={mode}
 						onModeChange={onModeChange}
 						// totalSteps={totalSteps}

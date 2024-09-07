@@ -12,6 +12,8 @@ export default function GuideSetsList() {
 	const [mode, setMode] = useState('display');
 	const [currentSetId, setCurrentSetId] = useState(null);
 	// const [targetElementId, setTargetElementId] = useState('');
+	const [activeGuideSetId, setActiveGuideSetId] = useState(null);
+	const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
 
 	const handleCreateSet = () => {
 		setNewSetTitle('');
@@ -19,7 +21,9 @@ export default function GuideSetsList() {
 		setIsModalOpen(true);
 	};
 
-	const handleLaunchSet = () => {
+	const handleLaunchSet = setId => {
+		setIsGuideModalOpen(true);
+		setActiveGuideSetId(setId);
 		setMode('execute');
 		console.log('Launching set:', { mode });
 	};
@@ -121,8 +125,10 @@ export default function GuideSetsList() {
 								handleDeleteSet={() => handleDeleteSet(guideSet.id)} // Передаем ID для удаления
 								mode={mode}
 								//FIXME: Need finish handler
+								isGuideModalOpen={isGuideModalOpen}
 								onModeChange={newMode => setMode(newMode)}
-								onLaunchSet={handleLaunchSet}
+								onLaunchSet={() => handleLaunchSet(guideSet.id)}
+								activeGuideSetId={activeGuideSetId}
 								setGuideSetsList={setGuideSetsList}
 								guideSet={guideSet}
 							/>
