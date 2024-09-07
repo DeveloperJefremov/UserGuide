@@ -3,7 +3,7 @@ import Button from '../Button/Button';
 import GuideStep from '../GuideStep/GuideStep';
 import GuideStepForm from '../GuideStep/GuideStepForm';
 import Modal from '../UI/Modal';
-
+import styles from './GuideStepsList.module.css';
 export default function GuideStepsList({
 	mode,
 	onModeChange,
@@ -134,6 +134,36 @@ export default function GuideStepsList({
 			setCurrentStepIndex(prev => prev - 1);
 		}
 	};
+
+	// Функция для выделения элемента
+	const highlightElement = elementId => {
+		const element = document.getElementById(elementId); // Найти элемент по ID
+		if (element) {
+			element.classList.add(styles.highlight); // Добавить класс для выделения из модуля
+		}
+	};
+
+	// Функция для снятия выделения с элемента
+	const removeHighlightElement = elementId => {
+		const element = document.getElementById(elementId); // Найти элемент по ID
+		if (element) {
+			element.classList.remove(styles.highlight); // Убрать класс выделения из модуля
+		}
+	};
+
+	useEffect(() => {
+		// Когда шаг меняется и если у шага есть elementId, выделяем элемент
+		if (mode === 'execute' && steps[currentStepIndex]?.elementId) {
+			highlightElement(steps[currentStepIndex].elementId);
+		}
+
+		// Убираем выделение при закрытии модального окна или смене шага
+		return () => {
+			if (steps[currentStepIndex]?.elementId) {
+				removeHighlightElement(steps[currentStepIndex].elementId);
+			}
+		};
+	}, [currentStepIndex, mode, steps]);
 
 	return (
 		<div>
