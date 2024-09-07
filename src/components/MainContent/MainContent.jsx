@@ -23,33 +23,6 @@ const MainContentBody = ({ children }) => {
 	return <div className={styles.mainContentBody}>{children}</div>;
 };
 
-// const MainContentBodyOld = () => {
-// 	const [steps, setSteps] = useState(mockData);
-// 	const [guideSteps, setGuideSteps] = useState(mockData);
-
-// 	const handleSaveStep = newStep => {
-// 		setSteps(prevSteps => [...prevSteps, newStep]);
-// 	};
-
-// 	const handleEditStep = updatedStep => {
-// 		setSteps(prevSteps =>
-// 			prevSteps.map(step => (step.id === updatedStep.id ? updatedStep : step))
-// 		);
-// 	};
-
-// 	const handleDeleteStep = stepId => {
-// 		setSteps(prevSteps => prevSteps.filter(step => step.id !== stepId));
-// 	};
-
-// 	return (
-// 		<>
-// 			<div className={styles.mainContentBody}>
-// 				<div className={styles.main}></div>
-// 			</div>
-// 		</>
-// 	);
-// };
-
 export default function MainContent() {
 	return (
 		<div className={styles.mainContent}>

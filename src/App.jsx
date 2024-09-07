@@ -9,7 +9,6 @@ function App() {
 			<FirstSideBar />
 			<SecondSideBar />
 			<MainContent />
-			{/* <MainContentBody /> */}
 		</div>
 	);
 }

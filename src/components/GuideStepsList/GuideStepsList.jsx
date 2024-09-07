@@ -80,7 +80,6 @@ export default function GuideStepsList({
 			);
 			setSteps(updatedSteps);
 
-			// Закрываем модальное окно
 			setIsModalOpen(false);
 			setCurrentStepIndex(0);
 		}

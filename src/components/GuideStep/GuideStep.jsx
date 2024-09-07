@@ -6,19 +6,10 @@ import GuideStepForm from './GuideStepForm';
 
 export default function GuideStep({
 	step,
-	// handleNext,
-	// handlePrevious,
-	//onChange, FIXME: need implement changing logic which send new exemplar of step
+
 	handleEditStep,
 	handleDeleteStep,
-	// totalSteps,
-	// mode,
-	// currentStepIndex, // Передаем индекс текущего шага из родительского компонента
 }) {
-	// useEffect(() => {
-	// 	console.log('step', step);
-	// }, [step]);
-
 	const [isShownStep, setIsShownStep] = useState(false);
 	const [formData, setFormData] = useState({
 		title: step.title,
@@ -85,48 +76,21 @@ export default function GuideStep({
 		}
 	};
 
-	// const handleSave = () => {
-	// 	setIsShownStep(false);
-	// };
-
-	// const handleCancel = () => {
-	// 	setFormData(...step);
-	// 	setIsShownStep(false);
-	// };
-
-	// const handleFormChange = (value, fieldName) => {
-	// 	setFormData(prev => ({ ...prev, [fieldName]: value }));
-	// };
-
 	return (
 		<div className={styles.step}>
-			{/* <h2>setListMode: {mode}</h2> */}
-
 			<GuideStepHeader
 				handleDeleteStep={handleDeleteStep}
 				handleEditStep={handleEditStep}
 				isShownStep={isShownStep}
 				onDisplayChange={displayHandler}
 				step={step}
-				// handleFormChange={handleFormChange}
-				// handleImgCheckboxChange={handleImgCheckboxChange}
 			/>
 			<GuideStepBody
-				// handlePrevious={handlePrevious}
-				// handleNext={handleNext}
-				// totalSteps={totalSteps}
-				// mode={mode}
-				// onChange={handleFormChange}
 				isShownStep={isShownStep}
 				step={step}
 				handleImgCheckboxChange={handleImgCheckboxChange}
-				// currentStepIndex={currentStepIndex}
 			/>
-			<GuideStepFooter
-				isShownStep={isShownStep}
-				// onSave={handleSave}
-				// onCancel={handleCancel}
-			/>
+			<GuideStepFooter isShownStep={isShownStep} />
 		</div>
 	);
 }
@@ -137,8 +101,6 @@ const GuideStepHeader = ({
 	isShownStep,
 	onDisplayChange,
 	step,
-	// handleFormChange,
-	// handleImgCheckboxChange,
 }) => {
 	let displayButtonText = isShownStep ? '-' : '+';
 
@@ -149,15 +111,10 @@ const GuideStepHeader = ({
 				<p>Order: {step.order}</p>
 			</div>
 			<div className={styles.headerRight}>
-				<Button
-					size='sm'
-					variant='grey'
-					// data-button-clicked='edit'
-					onClick={handleEditStep}
-				>
+				<Button size='sm' variant='grey' onClick={handleEditStep}>
 					Edit
 				</Button>
-				{/* {mode === 'edit' && ( */}
+
 				<Button
 					size='sm'
 					variant='default'
@@ -174,34 +131,15 @@ const GuideStepHeader = ({
 				>
 					{displayButtonText}
 				</Button>
-				{/* )} */}
 			</div>
-			{/* {mode === 'edit' ? (
-				<Modal>
-					<GuideStepForm
-						// mode={mode}
-						//FIXME: props
-						formData={step}
-						onChange={handleFormChange}
-						onImgCheckboxChange={handleImgCheckboxChange}
-					/>
-				</Modal>
-			) : null} */}
 		</div>
 	);
 };
 
 const GuideStepBody = ({
 	step,
-	formData,
-	// onChange,
-	// handleNext,
-	// handlePrevious,
-	// totalSteps,
-	isShownStep,
-	// mode,
 
-	// handleImgCheckboxChange,
+	isShownStep,
 }) => {
 	let cssClassList = `${styles.stepBody} ${
 		isShownStep ? styles.expanded : ''
@@ -215,7 +153,6 @@ const GuideStepBody = ({
 						<label>
 							Description:
 							<textarea
-								// onChange={event => onChange(event.target.value, 'description')}
 								className={styles.textarea}
 								name='description'
 								value={step.description}
@@ -227,7 +164,6 @@ const GuideStepBody = ({
 						<label>
 							PageUrl:
 							<input
-								// onChange={event => onChange(event.target.value, 'pageUrl')}
 								className={styles.input}
 								type='text'
 								name='pageUrl'
@@ -240,7 +176,6 @@ const GuideStepBody = ({
 						<label>
 							Element ID:
 							<input
-								// onChange={event => onChange(event.target.value, 'elementId')}
 								className={styles.input}
 								type='text'
 								name='elementId'
@@ -254,7 +189,6 @@ const GuideStepBody = ({
 							<label>
 								Image Width:
 								<input
-									// onChange={event => onChange(event.target.value, 'imgWidth')}
 									type='number'
 									name='imgWidth'
 									min='1'
@@ -266,7 +200,6 @@ const GuideStepBody = ({
 							<label>
 								Image Height:
 								<input
-									// onChange={event => onChange(event.target.value, 'imgHeight')}
 									type='number'
 									name='imgHeight'
 									min='1'
@@ -286,54 +219,14 @@ const GuideStepBody = ({
 					)}
 				</div>
 			</section>
-			{/* {setListMode === 'execute' && (
-				<Modal>
-					<h3>{step.title}</h3>
-					{step.imageUrl && (
-						<img
-							src={step.imageUrl}
-							alt={step.title}
-							width={step.imgWidth}
-							height={step.imgHeight}
-						/>
-					)}
-					<p>TotalSteps {totalSteps}</p>
-					<Button onClick={handlePrevious} disabled={step.stepIndex === 0}>
-						Previous
-					</Button>
-					<Button variant='lightGrey'>Close</Button>
-					<Button
-						onClick={handleNext}
-						disabled={step.stepIndex === totalSteps - 1}
-					>
-						Next
-					</Button>
-				</Modal>
-			)} */}
 		</div>
 	);
 };
 
-const GuideStepFooter = ({
-	isShownStep,
-	// onSave, onCancel
-}) => {
+const GuideStepFooter = ({ isShownStep }) => {
 	const cssClassList = `${styles.stepFooter} ${
 		isShownStep ? styles.expanded : ''
 	} ${!isShownStep ? styles.folded : ''}`;
 
-	return (
-		<div className={cssClassList}>
-			{/* {mode === 'edit' ? (
-				<div className={styles.stepFooter}>
-					<Button variant='lightGrey' size='md' onCancel={onCancel}>
-						Cancel
-					</Button>
-					<Button variant='default' size='md' onSave={onSave}>
-						Save
-					</Button>
-				</div>
-			) : null} */}
-		</div>
-	);
+	return <div className={cssClassList}></div>;
 };

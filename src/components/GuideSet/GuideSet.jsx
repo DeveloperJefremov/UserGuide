@@ -6,34 +6,15 @@ import styles from './GuideSet.module.css';
 export default function GuideSet({
 	isGuideModalOpen,
 	onModeChange,
-	mode, // Начальное состояние: 'folded' или 'expanded'
-	// setData = [],
+	mode,
 	title,
-	// handleSetChange,
-	// onCreateSet,
 	activeGuideSetId,
 	onLaunchSet,
 	guideSet,
-	// setGuideSetsList,
 	handleEditSet,
 	handleDeleteSet,
 }) {
-	// console.log(guideSet);
-	// Устанавливаем режим (свёрнутый или развернутый)
-	// const [setMode, setSetMode] = useState(setListMode);
 	const [isShownSet, setIsShownSet] = useState(false);
-
-	// Логика переключения режима отображения
-	// const toggleSetMode = () => {
-	// 	onModeChange(prevMode =>
-	// 		prevMode === 'folded' || setMode === 'create' ? 'expanded' : 'folded'
-	// 	);
-	// };
-
-	// const totalSteps = data ? data.length : 0;
-	// useEffect(() => {
-	// 	console.log('guideSet', guideSet);
-	// }, [guideSet]);
 
 	if (!guideSet && title !== 'Create New Set') return null;
 
@@ -44,11 +25,9 @@ export default function GuideSet({
 				handleEditSet={handleEditSet}
 				handleDeleteSet={handleDeleteSet}
 				title={guideSet.setHeader}
-				//TODO
 				onToggleContent={() => setIsShownSet(prev => !prev)} // Добавляем логику переключения
 			/>
 
-			{/* Отображаем GuideSetBody и GuideSetFooter только в режиме expanded */}
 			{isShownSet && (
 				<GuideSetBody isShownSet={isShownSet}>
 					<GuideStepsList
@@ -57,10 +36,7 @@ export default function GuideSet({
 						activeGuideSetId={activeGuideSetId}
 						mode={mode}
 						onModeChange={onModeChange}
-						// totalSteps={totalSteps}
-						// stepsData={setData}
 						key={guideSet.id}
-						// setGuideSetsList={setGuideSetsList}
 						steps={guideSet.setBody}
 					/>
 				</GuideSetBody>
@@ -84,7 +60,6 @@ const GuideSetHeader = ({
 	title,
 	onToggleContent,
 }) => {
-	// Определяем текст для кнопки в зависимости от состояния setMode
 	console.log(isShownSet);
 	let displayButtonText = !isShownSet ? '+' : '-';
 
@@ -99,7 +74,6 @@ const GuideSetHeader = ({
 					Delete: Tutorial
 				</Button>
 
-				{/* Кнопка для переключения свёрнутого/развернутого состояния */}
 				<Button size='icon' variant='lightGrey' onClick={onToggleContent}>
 					{displayButtonText}
 				</Button>
@@ -109,7 +83,6 @@ const GuideSetHeader = ({
 };
 
 const GuideSetBody = ({ children, isShownSet }) => {
-	// Применяем CSS классы в зависимости от состояния setMode
 	let cssClassList = `${styles.setBody} ${
 		isShownSet ? styles.expanded : styles.folded
 	}`;

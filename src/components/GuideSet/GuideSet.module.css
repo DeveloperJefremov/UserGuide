@@ -35,16 +35,6 @@
 	align-items: center;
 }
 
-/* .createStepButton {
-	background-color: #28a745; 
-	color: white;
-	border: none;
-	padding: 5px 10px;
-	cursor: pointer;
-	border-radius: 4px;
-	transition: background-color 0.3s ease;
-} */
-
 .toggleButton {
 	font-size: 1.5rem;
 	border: none;

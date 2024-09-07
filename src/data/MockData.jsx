@@ -25,7 +25,7 @@ export const MockGuideSets = [
 				pageUrl: 'enter page url',
 				elementId: 'btn-2',
 				imgChecked: false,
-				imgWidth: 300,
+				imgWidth: 200,
 				imgHeight: 200,
 				imageUrl: 'https://images.dog.ceo/breeds/clumber/n02101556_5023.jpg',
 			},
@@ -45,7 +45,7 @@ export const MockGuideSets = [
 				pageUrl: 'enter page url',
 				elementId: 'link-1',
 				imgChecked: false,
-				imgWidth: 300,
+				imgWidth: 200,
 				imgHeight: 200,
 				imageUrl:
 					'https://images.dog.ceo/breeds/spaniel-sussex/n02102480_6569.jpg',
@@ -59,8 +59,8 @@ export const MockGuideSets = [
 				pageUrl: 'enter page url',
 				elementId: 'link-2',
 				imgChecked: true,
-				imgWidth: 500,
-				imgHeight: 400,
+				imgWidth: 200,
+				imgHeight: 200,
 				imageUrl:
 					'https://images.dog.ceo/breeds/spaniel-japanese/n02085782_230.jpg',
 			},

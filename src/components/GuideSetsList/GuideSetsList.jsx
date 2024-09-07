@@ -11,7 +11,7 @@ export default function GuideSetsList() {
 	const [newSetTitle, setNewSetTitle] = useState('');
 	const [mode, setMode] = useState('display');
 	const [currentSetId, setCurrentSetId] = useState(null);
-	// const [targetElementId, setTargetElementId] = useState('');
+
 	const [activeGuideSetId, setActiveGuideSetId] = useState(null);
 	const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
 
@@ -80,20 +80,6 @@ export default function GuideSetsList() {
 		setIsModalOpen(false); // Закрываем окно
 		setNewSetTitle(''); // Очищаем заголовок
 	};
-
-	// const handleLaunchSet = id => {
-	// 	const element = document.getElementById(id); // Получаем элемент по id
-	// 	if (element) {
-	// 		const rect = element.getBoundingClientRect();
-	// 		setPosition({
-	// 			top: `${rect.top + window.scrollY}px`,
-	// 			left: `${rect.right + window.scrollX + 30}px`, // Отступ вправо на 30px
-	// 		});
-	// 		setTargetElementId(id);
-	// 		setShowModal(true); // Показать модальное окно
-	// 		console.log('position', position);
-	// 	}
-	// };
 
 	return (
 		<div>
