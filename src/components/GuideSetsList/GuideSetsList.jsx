@@ -4,6 +4,7 @@ import Button from '../Button/Button';
 import GuideSet from '../GuideSet/GuideSet';
 import GuideSetHeaderForm from '../GuideSet/GuideSetHeaderForm';
 import Modal from '../UI/Modal';
+import styles from './GuideSetsList.module.css';
 
 export default function GuideSetsList() {
 	const [guideSetsList, setGuideSetsList] = useState(MockGuideSets);
@@ -104,7 +105,7 @@ export default function GuideSetsList() {
 			<h2>Guide Sets List:</h2>
 			<ul>
 				{guideSetsList.map((guideSet, index) => (
-					<li key={guideSet.id}>
+					<li className={styles.fontList} key={guideSet.id}>
 						<div key={guideSet.id || `set-${index}`}>
 							<GuideSet
 								handleEditSet={() => handleEditSet(guideSet.id)} // Передаем ID для редактирования

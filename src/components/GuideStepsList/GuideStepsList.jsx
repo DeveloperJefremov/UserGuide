@@ -204,12 +204,14 @@ export default function GuideStepsList({
 			<ul>
 				{steps.map((step, stepIndex) => {
 					return (
-						<GuideStep
-							key={`step-${step.id}`}
-							step={step}
-							handleEditStep={() => handleEditStep(stepIndex)}
-							handleDeleteStep={() => handleDeleteStep(stepIndex)}
-						/>
+						<li className={styles.fontList} key={step.id}>
+							<GuideStep
+								key={`step-${step.id}`}
+								step={step}
+								handleEditStep={() => handleEditStep(stepIndex)}
+								handleDeleteStep={() => handleDeleteStep(stepIndex)}
+							/>
+						</li>
 					);
 				})}
 			</ul>
