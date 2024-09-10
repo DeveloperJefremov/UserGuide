@@ -82,11 +82,13 @@ export default function GuideSetsList() {
 	};
 
 	return (
-		<div>
-			<h2>Create New Set</h2>
-			<Button onClick={handleCreateSet} variant='lightGrey' size='lg'>
-				Add: Tutorial
-			</Button>
+		<section className={styles.guideSetsList}>
+			<article className={styles.createSection}>
+				<h2>Create New Set</h2>
+				<Button onClick={handleCreateSet} variant='lightGrey' size='lg'>
+					Add: Tutorial
+				</Button>
+			</article>
 
 			{isModalOpen && (
 				<Modal onClick={handleCancel}>
@@ -120,6 +122,6 @@ export default function GuideSetsList() {
 					</li>
 				))}
 			</ul>
-		</div>
+		</section>
 	);
 }

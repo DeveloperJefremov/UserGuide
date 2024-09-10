@@ -1,3 +1,16 @@
+.guideSetsList {
+	display: block;
+	margin-right: 50px;
+}
 .fontList {
 	list-style: none;
+}
+
+.createSection {
+	flex-shrink: 0; /* Чтобы секция не сжималась */
+	padding: 10px;
+	display: flex;
+	justify-content: end;
+	align-items: end;
+	flex-direction: column;
 }

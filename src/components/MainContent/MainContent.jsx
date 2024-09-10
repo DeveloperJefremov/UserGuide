@@ -27,7 +27,7 @@ const MainContentBody = ({ children }) => {
 
 export default function MainContent() {
 	return (
-		<div className={styles.mainContent}>
+		<section className={styles.mainContent}>
 			<MainContentHeader
 				title='User Guide'
 				description='User guides are a type of technical documentation that enables customers and end-users with step-by-step instructions on how to execute a task or process.'
@@ -38,6 +38,6 @@ export default function MainContent() {
 			</MainContentBody>
 
 			<MainContentFooter info='2024 Your Company. All rights reserved.' />
-		</div>
+		</section>
 	);
 }

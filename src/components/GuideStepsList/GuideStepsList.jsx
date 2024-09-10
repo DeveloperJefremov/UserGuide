@@ -180,8 +180,8 @@ export default function GuideStepsList({
 	}, [currentStepIndex, mode, steps, activeGuideSetId, guideSetId]);
 
 	return (
-		<section>
-			<article>
+		<section className={styles.guideStepsList}>
+			<article className={styles.createSection}>
 				<h2>Create New Lesson</h2>
 				<Button size='large' variant='lightGrey' onClick={handleCreateStep}>
 					Add: Lesson

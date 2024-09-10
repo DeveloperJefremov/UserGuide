@@ -1,11 +1,15 @@
 /* src/components/FirstSideBar.module.css */
 .first-sidebar {
-	grid-area: sidebar1;
+	position: fixed;
+	box-sizing: border-box;
+
+	display: flex;
+	flex-direction: column;
 	width: 150px;
 	height: 100vh;
 	background-color: #f4f4f4;
 	padding: 10px;
-	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+
 	overflow-y: auto; /* Позволяет скроллить, если содержимое не помещается */
 }
 
@@ -16,11 +20,12 @@
 .element-container {
 	display: flex;
 	flex-direction: column;
-	gap: 10px; /* Расстояние между элементами */
+	gap: 15px; /* Расстояние между элементами */
 }
 
 .sidebar-element {
 	display: flex;
+	justify-content: center;
 	align-items: center;
 	gap: 10px; /* Расстояние между иконкой/кнопкой и текстом */
 }
