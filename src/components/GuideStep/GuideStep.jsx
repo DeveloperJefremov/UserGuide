@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
-import Modal from '../UI/Modal';
+
 import styles from './GuideStep.module.css';
-import GuideStepForm from './GuideStepForm';
 
 export default function GuideStep({
 	step,
@@ -77,7 +76,7 @@ export default function GuideStep({
 	};
 
 	return (
-		<div className={styles.step}>
+		<section className={styles.step}>
 			<GuideStepHeader
 				handleDeleteStep={handleDeleteStep}
 				handleEditStep={handleEditStep}
@@ -91,7 +90,7 @@ export default function GuideStep({
 				handleImgCheckboxChange={handleImgCheckboxChange}
 			/>
 			<GuideStepFooter isShownStep={isShownStep} />
-		</div>
+		</section>
 	);
 }
 
@@ -105,10 +104,10 @@ const GuideStepHeader = ({
 	let displayButtonText = isShownStep ? '-' : '+';
 
 	return (
-		<div className={styles.stepHeader}>
+		<header className={styles.stepHeader}>
 			<div className={styles.headerLeft}>
 				<h3>{step.title}</h3>
-				<p>Order: {step.order}</p>
+				<h4>Order: {step.order}</h4>
 			</div>
 			<div className={styles.headerRight}>
 				<Button size='sm' variant='grey' onClick={handleEditStep}>
@@ -132,7 +131,7 @@ const GuideStepHeader = ({
 					{displayButtonText}
 				</Button>
 			</div>
-		</div>
+		</header>
 	);
 };
 
@@ -146,8 +145,8 @@ const GuideStepBody = ({
 	} ${!isShownStep ? styles.folded : ''}`;
 
 	return (
-		<div className={cssClassList}>
-			<section className={styles.stepContent}>
+		<main className={cssClassList}>
+			<article className={styles.stepContent}>
 				<div className={styles.stepDetails}>
 					{step.description && (
 						<label>
@@ -218,8 +217,8 @@ const GuideStepBody = ({
 						</div>
 					)}
 				</div>
-			</section>
-		</div>
+			</article>
+		</main>
 	);
 };
 
@@ -228,5 +227,5 @@ const GuideStepFooter = ({ isShownStep }) => {
 		isShownStep ? styles.expanded : ''
 	} ${!isShownStep ? styles.folded : ''}`;
 
-	return <div className={cssClassList}></div>;
+	return <footer className={cssClassList}></footer>;
 };

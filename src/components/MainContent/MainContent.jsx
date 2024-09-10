@@ -3,24 +3,26 @@ import styles from './MainContent.module.css';
 
 const MainContentHeader = ({ title, description }) => {
 	return (
-		<div className={styles.mainContentHeader}>
+		<header className={styles.mainContentHeader}>
 			<h1>{title}</h1>
-			<h2>{description}</h2>
-			<button className={styles.loginButton}>Login as admin</button>
-		</div>
+			<p>{description}</p>
+			<button type='button' className={styles.loginButton}>
+				Login as admin
+			</button>
+		</header>
 	);
 };
 
 const MainContentFooter = ({ info }) => {
 	return (
-		<div className={styles.mainContentFooter}>
-			<div>{info}</div>
-		</div>
+		<footer className={styles.mainContentFooter}>
+			<small>{info}</small>
+		</footer>
 	);
 };
 
 const MainContentBody = ({ children }) => {
-	return <div className={styles.mainContentBody}>{children}</div>;
+	return <main className={styles.mainContentBody}>{children}</main>;
 };
 
 export default function MainContent() {

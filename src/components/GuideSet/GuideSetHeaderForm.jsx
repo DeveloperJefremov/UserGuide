@@ -10,13 +10,14 @@ const GuideSetHeaderForm = ({
 	onCancel, // Функция для отмены
 }) => {
 	return (
-		<div className={styles.guideSetHeader}>
-			<h2>
+		<form className={styles.guideSetHeader}>
+			<label htmlFor='titleInput'>
 				{mode === 'edit' ? 'Edit Tutorial Title' : 'Create New Tutorial Title'}
-			</h2>
+			</label>
 
 			{/* Поле для ввода заголовка */}
 			<input
+				id='titleInput'
 				type='text'
 				value={title}
 				onChange={e => onTitleChange(e.target.value)}
@@ -32,7 +33,7 @@ const GuideSetHeaderForm = ({
 					Save
 				</Button>
 			</div>
-		</div>
+		</form>
 	);
 };
 

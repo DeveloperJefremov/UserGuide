@@ -16,6 +16,7 @@ const Button = ({ children, variant = 'default', size = 'md', ...props }) => {
 
 	return (
 		<button
+			type='button'
 			className={` ${styles.button} ${variantMap[variant] ?? ''} ${
 				sizeMap[size] ?? ''
 			}`}

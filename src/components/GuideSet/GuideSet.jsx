@@ -19,7 +19,7 @@ export default function GuideSet({
 	if (!guideSet && title !== 'Create New Set') return null;
 
 	return (
-		<div className={styles.guideSet}>
+		<section className={styles.guideSet}>
 			<GuideSetHeader
 				isShownSet={isShownSet} // Передаем текущее состояние в Header
 				handleEditSet={handleEditSet}
@@ -49,7 +49,7 @@ export default function GuideSet({
 					setMode={isShownSet}
 				/>
 			)}
-		</div>
+		</section>
 	);
 }
 
@@ -64,7 +64,7 @@ const GuideSetHeader = ({
 	let displayButtonText = !isShownSet ? '+' : '-';
 
 	return (
-		<div className={styles.guideSetHeader}>
+		<header className={styles.guideSetHeader}>
 			<h2>{title}</h2>
 			<div className={styles.buttonContainer}>
 				<Button onClick={handleEditSet} variant='lightGrey' size='lg'>
@@ -78,7 +78,7 @@ const GuideSetHeader = ({
 					{displayButtonText}
 				</Button>
 			</div>
-		</div>
+		</header>
 	);
 };
 
@@ -87,7 +87,7 @@ const GuideSetBody = ({ children, isShownSet }) => {
 		isShownSet ? styles.expanded : styles.folded
 	}`;
 
-	return <div className={cssClassList}>{children}</div>;
+	return <main className={cssClassList}>{children}</main>;
 };
 
 const GuideSetFooter = ({ footerText, onLaunchSet, isShownSet }) => {
@@ -95,13 +95,13 @@ const GuideSetFooter = ({ footerText, onLaunchSet, isShownSet }) => {
 		isShownSet ? styles.expanded : ''
 	} ${!isShownSet ? styles.folded : ''}`;
 	return (
-		<div className={cssClassList}>
+		<footer className={cssClassList}>
 			{footerText && <p>{footerText}</p>}
 			{onLaunchSet && (
 				<Button onClick={onLaunchSet} variant='default' size='lg'>
 					Launch: Tutorial
 				</Button>
 			)}
-		</div>
+		</footer>
 	);
 };

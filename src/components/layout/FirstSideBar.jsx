@@ -68,7 +68,7 @@ const FirstSideBar = () => {
 	];
 
 	return (
-		<div className={styles['first-sidebar']}>
+		<aside className={styles['first-sidebar']}>
 			<h2>1 SideBar</h2>
 			<div className={styles['element-container']}>
 				{elements.map(element => (
@@ -106,7 +106,7 @@ const FirstSideBar = () => {
 					</div>
 				))}
 			</div>
-		</div>
+		</aside>
 	);
 };
 

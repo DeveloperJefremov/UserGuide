@@ -12,7 +12,6 @@ export default function GuideSetsList() {
 	const [newSetTitle, setNewSetTitle] = useState('');
 	const [mode, setMode] = useState('display');
 	const [currentSetId, setCurrentSetId] = useState(null);
-
 	const [activeGuideSetId, setActiveGuideSetId] = useState(null);
 	const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
 
@@ -78,8 +77,8 @@ export default function GuideSetsList() {
 	};
 
 	const handleCancel = () => {
-		setIsModalOpen(false); // Закрываем окно
-		setNewSetTitle(''); // Очищаем заголовок
+		setIsModalOpen(false);
+		setNewSetTitle('');
 	};
 
 	return (
@@ -89,7 +88,6 @@ export default function GuideSetsList() {
 				Add: Tutorial
 			</Button>
 
-			{/* Модальное окно с формой */}
 			{isModalOpen && (
 				<Modal onClick={handleCancel}>
 					<GuideSetHeaderForm
@@ -108,10 +106,9 @@ export default function GuideSetsList() {
 					<li className={styles.fontList} key={guideSet.id}>
 						<div key={guideSet.id || `set-${index}`}>
 							<GuideSet
-								handleEditSet={() => handleEditSet(guideSet.id)} // Передаем ID для редактирования
-								handleDeleteSet={() => handleDeleteSet(guideSet.id)} // Передаем ID для удаления
+								handleEditSet={() => handleEditSet(guideSet.id)}
+								handleDeleteSet={() => handleDeleteSet(guideSet.id)}
 								mode={mode}
-								//FIXME: Need finish handler
 								isGuideModalOpen={isGuideModalOpen}
 								onModeChange={newMode => setMode(newMode)}
 								onLaunchSet={() => handleLaunchSet(guideSet.id)}

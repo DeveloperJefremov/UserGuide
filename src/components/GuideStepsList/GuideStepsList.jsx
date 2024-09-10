@@ -180,8 +180,8 @@ export default function GuideStepsList({
 	}, [currentStepIndex, mode, steps, activeGuideSetId, guideSetId]);
 
 	return (
-		<div>
-			<div>
+		<section>
+			<article>
 				<h2>Create New Lesson</h2>
 				<Button size='large' variant='lightGrey' onClick={handleCreateStep}>
 					Add: Lesson
@@ -198,7 +198,7 @@ export default function GuideStepsList({
 						/>
 					</Modal>
 				)}
-			</div>
+			</article>
 
 			<h2>Guide Steps List:</h2>
 			<ul>
@@ -252,6 +252,6 @@ export default function GuideStepsList({
 						</Button>
 					</Modal>
 				)}
-		</div>
+		</section>
 	);
 }

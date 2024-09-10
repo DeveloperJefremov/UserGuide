@@ -71,75 +71,77 @@ export default function GuideStepForm({
 	};
 
 	return (
-		<div className={styles.stepDetails}>
-			<label>
-				Title:
+		<form className={styles.stepDetails}>
+			<label htmlFor='title'> Title:</label>
+			<input
+				id='title'
+				className={styles.input}
+				type='text'
+				name='title'
+				value={formData.title}
+				onChange={handleInputChange}
+				disabled={mode !== 'create' && mode !== 'edit'}
+			/>
+
+			<label htmlFor='order'>Order:</label>
+			<input
+				id='order'
+				className={styles.input}
+				type='number'
+				name='order'
+				value={formData.order}
+				onChange={handleInputChange}
+				disabled={mode !== 'create' && mode !== 'edit'}
+			/>
+
+			<label htmlFor='description'>Description:</label>
+			<textarea
+				id='description'
+				className={styles.textarea}
+				name='description'
+				value={formData.description}
+				onChange={handleInputChange}
+				disabled={mode !== 'create' && mode !== 'edit'}
+			/>
+
+			<label htmlFor='pageUrl'>Page URL:</label>
+			<input
+				id='pageUrl'
+				className={styles.input}
+				name='pageUrl'
+				value={formData.pageUrl}
+				onChange={handleInputChange}
+				disabled={mode !== 'create' && mode !== 'edit'}
+			/>
+
+			<label htmlFor='elementId'>Element ID:</label>
+			<input
+				id='elementId'
+				className={styles.input}
+				type='text'
+				name='elementId'
+				value={formData.elementId}
+				onChange={handleInputChange}
+				disabled={mode !== 'create' && mode !== 'edit'}
+			/>
+
+			<fieldset>
+				<legend>Image Settings</legend>
+				<label htmlFor='imgChecked'>Image:</label>
 				<input
-					className={styles.input}
-					type='text'
-					name='title'
-					value={formData.title}
-					onChange={handleInputChange}
-					disabled={mode !== 'create' && mode !== 'edit'}
-				/>
-			</label>
-			<label>
-				Order:
-				<input
-					className={styles.input}
-					type='number'
-					name='order'
-					value={formData.order}
-					onChange={handleInputChange}
-					disabled={mode !== 'create' && mode !== 'edit'}
-				/>
-			</label>
-			<label>
-				Description:
-				<textarea
-					className={styles.textarea}
-					name='description'
-					value={formData.description}
-					onChange={handleInputChange}
-					disabled={mode !== 'create' && mode !== 'edit'}
-				/>
-			</label>
-			<label>
-				PageUrl:
-				<input
-					className={styles.input}
-					name='pageUrl'
-					value={formData.pageUrl}
-					onChange={handleInputChange}
-					disabled={mode !== 'create' && mode !== 'edit'}
-				/>
-			</label>
-			<label>
-				Element ID:
-				<input
-					className={styles.input}
-					type='text'
-					name='elementId'
-					value={formData.elementId}
-					onChange={handleInputChange}
-					disabled={mode !== 'create' && mode !== 'edit'}
-				/>
-			</label>
-			<label>
-				Image:
-				<input
+					id='imgChecked'
 					name='imgChecked'
 					type='checkbox'
 					checked={formData.imgChecked}
 					onChange={handleImgCheckboxChange}
 					disabled={mode !== 'create' && mode !== 'edit'}
 				/>
-			</label>
-			{formData.imgChecked && formData.imageUrl && (
-				<>
-					<label>
-						Image Width:
+
+				{formData.imgChecked && formData.imageUrl && (
+					<>
+						<label htmlFor='imgWidth'>Image Width:</label>
 						<input
+							id='imgWidth'
 							type='number'
 							name='imgWidth'
 							min='1'
@@ -148,10 +150,9 @@ export default function GuideStepForm({
 							disabled={mode !== 'create' && mode !== 'edit'}
 							className={styles.input}
 						/>
-					</label>
-					<label>
-						Image Height:
+						<label htmlFor='imgHeight'>Image Height:</label>
 						<input
+							id='imgHeight'
 							type='number'
 							name='imgHeight'
 							min='1'
@@ -160,16 +161,16 @@ export default function GuideStepForm({
 							disabled={mode !== 'create' && mode !== 'edit'}
 							className={styles.input}
 						/>
-					</label>
-					<img
-						className={styles.stepImagePreview}
-						src={formData.imageUrl}
-						alt={formData.title}
-						width={formData.imgWidth}
-						height={formData.imgHeight}
-					/>
-				</>
-			)}
+						<img
+							className={styles.stepImagePreview}
+							src={formData.imageUrl}
+							alt={formData.title}
+							width={formData.imgWidth}
+							height={formData.imgHeight}
+						/>
+					</>
+				)}
+			</fieldset>
 			<div style={{ textAlign: 'right' }}>
 				<Button variant='lightGrey' size='md' onClick={handleCancel}>
 					Cancel
@@ -178,6 +179,6 @@ export default function GuideStepForm({
 					Save
 				</Button>
 			</div>
-		</div>
+		</form>
 	);
 }

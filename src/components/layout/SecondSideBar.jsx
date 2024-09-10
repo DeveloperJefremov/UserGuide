@@ -68,13 +68,14 @@ const SecondSideBar = () => {
 	];
 
 	return (
-		<div className={styles['second-sidebar']}>
+		<aside className={styles['second-sidebar']}>
 			<h2>2 SideBar</h2>
 			<div className={styles['element-container']}>
 				{elements.map(element => (
 					<div key={element.id} className={styles['sidebar-element']}>
 						{element.type === 'button' && (
 							<button
+								type='button'
 								id={element.id}
 								className={styles['sidebar-button']}
 								onClick={element.onClick}
@@ -106,7 +107,7 @@ const SecondSideBar = () => {
 					</div>
 				))}
 			</div>
-		</div>
+		</aside>
 	);
 };
 
