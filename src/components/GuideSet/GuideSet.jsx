@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from '../Button/Button';
 import GuideStepsList from '../GuideStepsList/GuideStepsList';
 import styles from './GuideSet.module.css';
@@ -19,7 +19,7 @@ export default function GuideSet({
 	if (!guideSet && title !== 'Create New Set') return null;
 
 	return (
-		<section className={styles.guideSet}>
+		<div className={styles.guideSet}>
 			<GuideSetHeader
 				isShownSet={isShownSet} // Передаем текущее состояние в Header
 				handleEditSet={handleEditSet}
@@ -43,13 +43,9 @@ export default function GuideSet({
 			)}
 
 			{isShownSet && (
-				<GuideSetFooter
-					footerText={guideSet.setFooter}
-					onLaunchSet={onLaunchSet}
-					setMode={isShownSet}
-				/>
+				<GuideSetFooter onLaunchSet={onLaunchSet} setMode={isShownSet} />
 			)}
-		</section>
+		</div>
 	);
 }
 
@@ -65,8 +61,8 @@ const GuideSetHeader = ({
 
 	return (
 		<header className={styles.guideSetHeader}>
-			<h2>{title}</h2>
-			<div className={styles.buttonContainer}>
+			<h3>{title}</h3>
+			<div className={styles.guideSetHeader__buttonContainer}>
 				<Button onClick={handleEditSet} variant='lightGrey' size='lg'>
 					Edit: Tutorial
 				</Button>
@@ -90,13 +86,12 @@ const GuideSetBody = ({ children, isShownSet }) => {
 	return <main className={cssClassList}>{children}</main>;
 };
 
-const GuideSetFooter = ({ footerText, onLaunchSet, isShownSet }) => {
+const GuideSetFooter = ({ onLaunchSet, isShownSet }) => {
 	const cssClassList = `${styles.stepFooter} ${
 		isShownSet ? styles.expanded : ''
 	} ${!isShownSet ? styles.folded : ''}`;
 	return (
 		<footer className={cssClassList}>
-			{footerText && <p>{footerText}</p>}
 			{onLaunchSet && (
 				<Button onClick={onLaunchSet} variant='default' size='lg'>
 					Launch: Tutorial

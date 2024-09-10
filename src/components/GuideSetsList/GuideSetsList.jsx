@@ -40,7 +40,7 @@ export default function GuideSetsList() {
 		const updatedGuideSetsList = guideSetsList.filter(
 			guideSet => guideSet.id !== id
 		);
-		setGuideSetsList(updatedGuideSetsList); // Обновляем список, исключая удалённый набор
+		setGuideSetsList(updatedGuideSetsList);
 	};
 
 	const handleSaveNewSet = () => {
@@ -82,31 +82,34 @@ export default function GuideSetsList() {
 	};
 
 	return (
-		<section className={styles.guideSetsList}>
-			<article className={styles.createSection}>
-				<h2>Create New Set</h2>
-				<Button onClick={handleCreateSet} variant='lightGrey' size='lg'>
-					Add: Tutorial
-				</Button>
-			</article>
+		<div className={styles.guideSetsList}>
+			<header className={styles.guideSetsList__header}>
+				<section className={styles.guideSetsList__createSection}>
+					<h2>Create New Set</h2>
+					<Button onClick={handleCreateSet} variant='lightGrey' size='lg'>
+						Add: Tutorial
+					</Button>
 
-			{isModalOpen && (
-				<Modal onClick={handleCancel}>
-					<GuideSetHeaderForm
-						mode={mode}
-						title={newSetTitle}
-						onTitleChange={setNewSetTitle}
-						onSave={handleSaveNewSet}
-						onCancel={handleCancel}
-					/>
-				</Modal>
-			)}
+					{isModalOpen && (
+						<Modal onClick={handleCancel}>
+							<GuideSetHeaderForm
+								mode={mode}
+								title={newSetTitle}
+								onTitleChange={setNewSetTitle}
+								onSave={handleSaveNewSet}
+								onCancel={handleCancel}
+							/>
+						</Modal>
+					)}
+				</section>
 
-			<h2>Guide Sets List:</h2>
+				<h2>Guide Sets List:</h2>
+			</header>
+
 			<ul>
 				{guideSetsList.map((guideSet, index) => (
 					<li className={styles.fontList} key={guideSet.id}>
-						<div key={guideSet.id || `set-${index}`}>
+						<article key={guideSet.id || `set-${index}`}>
 							<GuideSet
 								handleEditSet={() => handleEditSet(guideSet.id)}
 								handleDeleteSet={() => handleDeleteSet(guideSet.id)}
@@ -118,10 +121,10 @@ export default function GuideSetsList() {
 								setGuideSetsList={setGuideSetsList}
 								guideSet={guideSet}
 							/>
-						</div>
+						</article>
 					</li>
 				))}
 			</ul>
-		</section>
+		</div>
 	);
 }

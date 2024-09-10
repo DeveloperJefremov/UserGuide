@@ -1,16 +1,25 @@
 .guideSetsList {
-	display: block;
+	padding-top: 15px;
+	display: flex;
+	flex-direction: column;
 	margin-right: 50px;
 }
-.fontList {
-	list-style: none;
+
+.guideSetsList__header {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+	align-items: center;
 }
 
-.createSection {
+.guideSetsList__createSection {
 	flex-shrink: 0; /* Чтобы секция не сжималась */
 	padding: 10px;
 	display: flex;
-	justify-content: end;
-	align-items: end;
+
 	flex-direction: column;
+}
+
+.fontList {
+	list-style: none;
 }

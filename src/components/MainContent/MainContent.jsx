@@ -1,43 +1,46 @@
+import Button from '../Button/Button';
 import GuideSetsList from '../GuideSetsList/GuideSetsList';
 import styles from './MainContent.module.css';
 
 const MainContentHeader = ({ title, description }) => {
 	return (
-		<header className={styles.mainContentHeader}>
-			<h1>{title}</h1>
-			<p>{description}</p>
-			<button type='button' className={styles.loginButton}>
+		<header className={styles.mainHeader}>
+			<h1 className={styles.mainHeader__title}>{title}</h1>
+			<p className={styles.mainHeader__text}>{description}</p>
+			<Button
+				size='lg'
+				variant='lightGrey'
+				className={styles.mainHeader__loginButton}
+			>
 				Login as admin
-			</button>
+			</Button>
 		</header>
 	);
 };
 
+const MainContentBody = ({ children }) => {
+	return <main className={styles.mainBody}>{children}</main>;
+};
+
 const MainContentFooter = ({ info }) => {
 	return (
-		<footer className={styles.mainContentFooter}>
-			<small>{info}</small>
+		<footer className={styles.mainFooter}>
+			<small className={styles.mainFooter__info}>{info}</small>
 		</footer>
 	);
 };
 
-const MainContentBody = ({ children }) => {
-	return <main className={styles.mainContentBody}>{children}</main>;
-};
-
 export default function MainContent() {
 	return (
-		<section className={styles.mainContent}>
+		<div className={styles.mainContent}>
 			<MainContentHeader
 				title='User Guide'
 				description='User guides are a type of technical documentation that enables customers and end-users with step-by-step instructions on how to execute a task or process.'
 			/>
-
 			<MainContentBody>
 				<GuideSetsList />
 			</MainContentBody>
-
 			<MainContentFooter info='2024 Your Company. All rights reserved.' />
-		</section>
+		</div>
 	);
 }

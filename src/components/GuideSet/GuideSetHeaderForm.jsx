@@ -11,21 +11,20 @@ const GuideSetHeaderForm = ({
 }) => {
 	return (
 		<form className={styles.guideSetHeader}>
-			<label htmlFor='titleInput'>
+			<label htmlFor='titleInput' className={styles.guideSetHeader__label}>
 				{mode === 'edit' ? 'Edit Tutorial Title' : 'Create New Tutorial Title'}
 			</label>
 
-			{/* Поле для ввода заголовка */}
 			<input
 				id='titleInput'
 				type='text'
 				value={title}
 				onChange={e => onTitleChange(e.target.value)}
-				className={styles.titleInput}
+				className={styles.guideSetHeader__titleInput}
 				placeholder='Enter title'
 			/>
 
-			<div className={styles.buttonContainer}>
+			<div className={styles.guideSetHeader__buttonContainer}>
 				<Button onClick={onCancel} variant='lightGrey' size='lg'>
 					Cancel
 				</Button>

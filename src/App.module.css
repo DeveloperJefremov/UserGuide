@@ -1,13 +1,6 @@
-.App {
+.appContainer {
 	display: flex;
-	flex-grow: 1;
-	flex-direction: row; /* Располагаем элементы по горизонтали */
+	flex-direction: row;
+	min-height: 100vh;
 	height: 100vh;
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-.App > * {
-	flex-shrink: 0; /* Запрещаем уменьшение боковых панелей */
 }

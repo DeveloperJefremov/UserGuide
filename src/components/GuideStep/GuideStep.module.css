@@ -11,13 +11,16 @@
 	margin-bottom: 10px;
 	display: flex;
 	justify-content: space-between;
-	padding: 10px;
 }
 
-.stepDetails {
-	flex-direction: column;
+.stepContent__form {
+	display: flex;
+	justify-content: space-around;
 }
 
+.stepContent__image {
+	display: flex;
+}
 .stepDetails label {
 	display: block;
 	margin-bottom: 10px;
@@ -25,6 +28,7 @@
 
 .input,
 .textarea {
+	resize: none;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	padding: 8px;
@@ -39,57 +43,33 @@
 	outline: none;
 }
 
-.stepImagePreview {
-	display: block;
-	margin-top: 10px;
-	max-width: 100%;
-	height: auto;
-}
-
 /* header */
 .stepHeader {
 	/* outline: 2px solid red; */
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 10px 20px;
+	/* padding: 10px 20px; */
 
 	border-bottom: 1px solid #ddd;
-	margin-bottom: 10px;
+	/* margin-bottom: 10px; */
 }
 
-.headerLeft {
+.stepHeader__text {
 	display: flex;
+
 	flex-direction: column;
 }
 
-.headerLeft h3 {
-	margin: 0;
-	font-size: 18px;
-}
-
-.headerLeft p {
-	margin: 0;
-	font-size: 14px;
-	color: #777;
-}
-
-.headerRight {
+.stepHeader__buttonContainer {
 	display: flex;
-	gap: 10px;
+	align-items: center;
+	gap: 15px;
 }
 
 /* footer */
 .stepFooter {
 	display: flex; /* Добавлено для работы с flex-контейнером */
-	justify-content: flex-end; /* Кнопки будут располагаться справа */
-	opacity: 0; /* Start with 0 opacity */
-	transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
-	max-height: 0; /* Collapsed by default */
-	overflow: hidden; /* Hide content that exceeds max-height */
-	padding: 0 20px; /* Изменено: убираем вертикальный padding в свернутом состоянии */
-	border-top: 1px solid #ddd;
-	box-sizing: border-box; /* Учитываем padding и border в высоте */
 }
 
 .expanded .stepFooter {
@@ -102,39 +82,6 @@
 	opacity: 0; /* Ensure opacity is 0 */
 	max-height: 0; /* Max-height 0 to hide the content */
 	padding: 0 20px; /* Изменено: убираем вертикальный padding в свернутом состоянии */
-}
-.saveBtn {
-	margin-top: 20px;
-	padding: 8px 16px;
-	font-size: 14px;
-	background-color: #007bff;
-	color: #fff;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	transition: background-color 0.3s ease; /* Добавим плавный переход */
-}
-
-.saveBtn:hover {
-	background-color: #0056b3;
-}
-
-.cancelBtn {
-	margin-top: 20px;
-	padding: 8px 16px;
-	font-size: 14px;
-	background-color: #f4f4f4;
-	color: #333;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	cursor: pointer;
-	transition: background-color 0.3s ease, color 0.3s ease; /* Добавим плавный переход */
-	margin-right: 10px; /* Отступ между кнопками */
-}
-
-.cancelBtn:hover {
-	background-color: #e0e0e0;
-	color: #000;
 }
 
 /* step body */

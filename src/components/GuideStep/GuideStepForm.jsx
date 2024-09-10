@@ -71,7 +71,7 @@ export default function GuideStepForm({
 	};
 
 	return (
-		<form className={styles.stepDetails}>
+		<form className={styles.guideStepForm}>
 			<label htmlFor='title'> Title:</label>
 			<input
 				id='title'
@@ -171,7 +171,7 @@ export default function GuideStepForm({
 					</>
 				)}
 			</fieldset>
-			<div style={{ textAlign: 'right' }}>
+			<div className={styles.guideStepForm__buttonContainer}>
 				<Button variant='lightGrey' size='md' onClick={handleCancel}>
 					Cancel
 				</Button>

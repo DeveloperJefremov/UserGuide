@@ -1,6 +1,8 @@
 /* src/components/SecondSideBar.module.css */
 .second-sidebar {
 	position: fixed;
+	top: 0;
+	left: 0;
 	box-sizing: border-box;
 
 	display: flex;
@@ -22,19 +24,19 @@
 	display: flex;
 
 	flex-direction: column;
-	gap: 15px; /* Расстояние между элементами */
+	gap: 15px;
 }
 
 .sidebar-element {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 10px; /* Расстояние между иконкой/кнопкой и текстом */
+	gap: 10px;
 }
 
 .sidebar-button {
 	padding: 10px;
-	background-color: #007bff; /* Основной цвет кнопки */
+	background-color: #007bff;
 	color: white;
 	border: none;
 	border-radius: 5px;
@@ -44,7 +46,7 @@
 }
 
 .sidebar-button:hover {
-	background-color: #0056b3; /* Темнее при наведении */
+	background-color: #0056b3;
 }
 
 .sidebar-link {

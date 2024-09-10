@@ -171,7 +171,6 @@ export default function GuideStepsList({
 			highlightElement(steps[currentStepIndex].elementId);
 		}
 
-		// Убираем выделение при закрытии модального окна, смене шага или изменении активного набора
 		return () => {
 			if (steps[currentStepIndex]?.elementId) {
 				removeHighlightElement(steps[currentStepIndex].elementId);
@@ -180,27 +179,29 @@ export default function GuideStepsList({
 	}, [currentStepIndex, mode, steps, activeGuideSetId, guideSetId]);
 
 	return (
-		<section className={styles.guideStepsList}>
-			<article className={styles.createSection}>
-				<h2>Create New Lesson</h2>
-				<Button size='large' variant='lightGrey' onClick={handleCreateStep}>
-					Add: Lesson
-				</Button>
+		<div className={styles.guideStepsList}>
+			<header className={styles.guideStepsList__header}>
+				<section className={styles.guideSetsList__createSection}>
+					<h2>Create New Lesson</h2>
+					<Button size='lg' variant='lightGrey' onClick={handleCreateStep}>
+						Add: Lesson
+					</Button>
 
-				{isModalOpen && (
-					<Modal onClick={handleCancel}>
-						<GuideStepForm
-							mode={mode}
-							formData={formData}
-							onChange={handleFormChange}
-							handleSaveStep={handleSaveStep}
-							handleCancel={handleCancel}
-						/>
-					</Modal>
-				)}
-			</article>
+					{isModalOpen && (
+						<Modal onClick={handleCancel}>
+							<GuideStepForm
+								mode={mode}
+								formData={formData}
+								onChange={handleFormChange}
+								handleSaveStep={handleSaveStep}
+								handleCancel={handleCancel}
+							/>
+						</Modal>
+					)}
+				</section>
 
-			<h2>Guide Steps List:</h2>
+				<h2>Guide Steps List:</h2>
+			</header>
 			<ul>
 				{steps.map((step, stepIndex) => {
 					return (
@@ -252,6 +253,6 @@ export default function GuideStepsList({
 						</Button>
 					</Modal>
 				)}
-		</section>
+		</div>
 	);
 }

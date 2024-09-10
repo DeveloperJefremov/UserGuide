@@ -5,9 +5,10 @@ import MainContent from './components/MainContent/MainContent';
 
 function App() {
 	return (
-		<div className={styles.App}>
+		<div className={styles.appContainer}>
 			<FirstSideBar />
 			<SecondSideBar />
+
 			<MainContent />
 		</div>
 	);

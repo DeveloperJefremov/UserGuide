@@ -76,7 +76,7 @@ export default function GuideStep({
 	};
 
 	return (
-		<section className={styles.step}>
+		<div className={styles.step}>
 			<GuideStepHeader
 				handleDeleteStep={handleDeleteStep}
 				handleEditStep={handleEditStep}
@@ -90,7 +90,7 @@ export default function GuideStep({
 				handleImgCheckboxChange={handleImgCheckboxChange}
 			/>
 			<GuideStepFooter isShownStep={isShownStep} />
-		</section>
+		</div>
 	);
 }
 
@@ -105,11 +105,11 @@ const GuideStepHeader = ({
 
 	return (
 		<header className={styles.stepHeader}>
-			<div className={styles.headerLeft}>
-				<h3>{step.title}</h3>
-				<h4>Order: {step.order}</h4>
+			<div className={styles.stepHeader__text}>
+				<h4>{step.title}</h4>
+				<h5>Order: {step.order}</h5>
 			</div>
-			<div className={styles.headerRight}>
+			<div className={styles.stepHeader__buttonContainer}>
 				<Button size='sm' variant='grey' onClick={handleEditStep}>
 					Edit
 				</Button>
@@ -147,11 +147,12 @@ const GuideStepBody = ({
 	return (
 		<main className={cssClassList}>
 			<article className={styles.stepContent}>
-				<div className={styles.stepDetails}>
+				<form className={styles.stepContent__form}>
 					{step.description && (
-						<label>
+						<label htmlFor='description'>
 							Description:
 							<textarea
+								id='description'
 								className={styles.textarea}
 								name='description'
 								value={step.description}
@@ -160,9 +161,10 @@ const GuideStepBody = ({
 						</label>
 					)}
 					{step.pageUrl && (
-						<label>
+						<label htmlFor='PageUrl'>
 							PageUrl:
 							<input
+								id='pageUrl'
 								className={styles.input}
 								type='text'
 								name='pageUrl'
@@ -172,9 +174,10 @@ const GuideStepBody = ({
 						</label>
 					)}
 					{step.elementId && (
-						<label>
+						<label htmlFor='elementId'>
 							Element ID:
 							<input
+								id='elementId'
 								className={styles.input}
 								type='text'
 								name='elementId'
@@ -184,10 +187,12 @@ const GuideStepBody = ({
 						</label>
 					)}
 					{step.imgChecked && step.imageUrl && (
-						<div>
-							<label>
+						<fieldset className={styles.stepContent__image}>
+							<legend>Image Section</legend>
+							<label htmlFor='imgWidth'>
 								Image Width:
 								<input
+									id='imgWidth'
 									type='number'
 									name='imgWidth'
 									min='1'
@@ -199,6 +204,7 @@ const GuideStepBody = ({
 							<label>
 								Image Height:
 								<input
+									id='imgHeight'
 									type='number'
 									name='imgHeight'
 									min='1'
@@ -214,9 +220,9 @@ const GuideStepBody = ({
 								width={step.imgWidth}
 								height={step.imgHeight}
 							/>
-						</div>
+						</fieldset>
 					)}
-				</div>
+				</form>
 			</article>
 		</main>
 	);
