@@ -66,7 +66,7 @@ const GuideSetHeader = ({
 				<Button onClick={handleEditSet} variant='lightGrey' size='lg'>
 					Edit: Tutorial
 				</Button>
-				<Button onClick={handleDeleteSet} variant='danger' size='lg'>
+				<Button onClick={handleDeleteSet} variant='default' size='lg'>
 					Delete: Tutorial
 				</Button>
 
