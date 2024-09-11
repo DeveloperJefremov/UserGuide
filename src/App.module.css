@@ -1,6 +1,8 @@
 .appContainer {
-	display: flex;
-	flex-direction: row;
+	display: grid;
+	grid-template-columns: 150px 150px 1fr; /* 2 сайдбара по 150px и основной контент занимает оставшееся место */
+	grid-template-rows: 100vh; /* Полная высота экрана */
 	min-height: 100vh;
 	height: 100vh;
+	gap: 0; /* Можно задать промежуток между колонками, если нужно */
 }

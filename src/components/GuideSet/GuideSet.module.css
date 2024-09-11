@@ -22,26 +22,35 @@
 }
 
 .guideSetFooter {
-	border-top: 1px solid #ddd;
 	transition: opacity 0.3s ease, max-height 0.3s ease;
 	opacity: 0;
 	max-height: 0;
 	overflow: hidden;
 }
 
+/* Убедитесь, что стили для блока установлены корректно */
 .guideSetBody {
-	opacity: 0;
 	transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+	opacity: 0;
 	max-height: 0;
-	overflow: hidden;
+	overflow: hidden; /* Скрывает контент при закрытии */
 }
 
 .expanded .guideSetBody,
 .expanded .guideSetFooter {
 	opacity: 1;
-	max-height: 1000px; /* Или установите значение, подходящее для контента */
+	max-height: 1000px; /* Измените на достаточно большое значение для анимации */
+	overflow: visible;
 }
 
+/* Добавляем авто-подстройку под контент */
+.expanded .guideSetBody,
+.expanded .guideSetFooter {
+	max-height: none; /* Позволяет блоку подстраиваться под содержимое */
+	overflow: visible; /* Включаем видимость содержимого */
+}
+
+/* Стандартное свернутое состояние */
 .folded .guideSetBody,
 .folded .guideSetFooter {
 	opacity: 0;

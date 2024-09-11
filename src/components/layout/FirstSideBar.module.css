@@ -6,11 +6,6 @@
 	height: 100vh;
 	background-color: #f4f4f4;
 	padding: 10px;
-
-	/* Добавляем фиксированное положение */
-	position: fixed;
-	top: 0;
-	left: 0;
 }
 
 .first-sidebar h2 {

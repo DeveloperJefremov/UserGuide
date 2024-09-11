@@ -1,11 +1,9 @@
 .mainContent {
 	padding: 20px;
-	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
+	display: grid;
 
 	/* Добавляем отступ слева, чтобы контент не залазил под сайдбар */
-	margin-left: 300px; /* Ширина сайдбара */
+	/* margin-left: 300px; Ширина сайдбара */
 }
 
 .mainHeader {
