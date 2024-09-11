@@ -68,7 +68,6 @@ export default function GuideStep({
 
 	const displayHandler = clickEvent => {
 		const buttonClick = clickEvent.target.getAttribute('data-button-clicked');
-		console.log('mode setModeHandler - ', buttonClick);
 
 		if (buttonClick === 'display') {
 			setIsShownStep(prevState => !prevState);

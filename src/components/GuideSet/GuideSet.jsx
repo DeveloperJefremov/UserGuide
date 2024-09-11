@@ -18,18 +18,22 @@ export default function GuideSet({
 
 	if (!guideSet && title !== 'Create New Set') return null;
 
+	const onToggleContent = () => {
+		setIsShownSet(prevState => !prevState); // Просто переключаем состояние
+	};
+
 	return (
 		<div className={styles.guideSet}>
 			<GuideSetHeader
-				isShownSet={isShownSet} // Передаем текущее состояние в Header
+				isShownSet={isShownSet}
 				handleEditSet={handleEditSet}
 				handleDeleteSet={handleDeleteSet}
 				title={guideSet.setHeader}
-				onToggleContent={() => setIsShownSet(prev => !prev)} // Добавляем логику переключения
+				onToggleContent={onToggleContent}
 			/>
 
-			{isShownSet && (
-				<GuideSetBody isShownSet={isShownSet}>
+			<div className={isShownSet ? styles.expanded : styles.folded}>
+				<GuideSetBody>
 					<GuideStepsList
 						isGuideModalOpen={isGuideModalOpen}
 						guideSetId={guideSet.id}
@@ -40,11 +44,9 @@ export default function GuideSet({
 						steps={guideSet.setBody}
 					/>
 				</GuideSetBody>
-			)}
 
-			{isShownSet && (
-				<GuideSetFooter onLaunchSet={onLaunchSet} setMode={isShownSet} />
-			)}
+				<GuideSetFooter onLaunchSet={onLaunchSet} />
+			</div>
 		</div>
 	);
 }
@@ -56,7 +58,6 @@ const GuideSetHeader = ({
 	title,
 	onToggleContent,
 }) => {
-	console.log(isShownSet);
 	let displayButtonText = !isShownSet ? '+' : '-';
 
 	return (
@@ -78,20 +79,13 @@ const GuideSetHeader = ({
 	);
 };
 
-const GuideSetBody = ({ children, isShownSet }) => {
-	let cssClassList = `${styles.setBody} ${
-		isShownSet ? styles.expanded : styles.folded
-	}`;
-
-	return <main className={cssClassList}>{children}</main>;
+const GuideSetBody = ({ children }) => {
+	return <main className={styles.guideSetBody}>{children}</main>;
 };
 
-const GuideSetFooter = ({ onLaunchSet, isShownSet }) => {
-	const cssClassList = `${styles.stepFooter} ${
-		isShownSet ? styles.expanded : ''
-	} ${!isShownSet ? styles.folded : ''}`;
+const GuideSetFooter = ({ onLaunchSet }) => {
 	return (
-		<footer className={cssClassList}>
+		<footer className={styles.guideSetFooter}>
 			{onLaunchSet && (
 				<Button onClick={onLaunchSet} variant='default' size='lg'>
 					Launch: Tutorial

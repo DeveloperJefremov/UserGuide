@@ -10,16 +10,19 @@
 	margin-top: 10px;
 	margin-bottom: 10px;
 	display: flex;
-	justify-content: space-between;
+
+	/* justify-content: space-between; */
 }
 
 .stepContent__form {
 	display: flex;
-	justify-content: space-around;
+
+	flex-direction: column;
 }
 
 .stepContent__image {
 	display: flex;
+	flex-direction: column;
 }
 .stepDetails label {
 	display: block;
@@ -51,7 +54,7 @@
 	align-items: center;
 	/* padding: 10px 20px; */
 
-	border-bottom: 1px solid #ddd;
+	/* border-bottom: 1px solid #ddd; */
 	/* margin-bottom: 10px; */
 }
 
@@ -127,24 +130,3 @@
 	}
 }
 /* step body end */
-/* use later */
-
-.executeButton:hover {
-	background-color: #45a049;
-}
-.highlighted::before {
-	content: '';
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 120%; /* Ширина чуть больше родительского элемента */
-	height: 130%; /* Высота чуть больше родительского элемента */
-	outline: 1px solid #ccc;
-	z-index: 30; /* Устанавливаем z-index выше для подсветки */
-	/* border: 2px solid beige; */
-	border-radius: 10px;
-	background-color: rgba(222, 225, 138, 0.5); /* Бежевый цвет с прозрачностью */
-	pointer-events: none; /* Чтобы подсветка не мешала кликам по элементу */
-
-	transform: translate(-50%, -50%); /* Центрируем по X и Y */
-}
